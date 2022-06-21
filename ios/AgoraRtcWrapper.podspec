@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Agora' => 'developer@agora.io' }
   s.source           = { :path => '.' }
-  s.dependency 'AgoraRtcEngine_iOS_Beta', '4.0.0-beta.1'
-  s.vendored_frameworks = 'AgoraRtcWrapper.xcframework'
+#  s.dependency 'AgoraRtcEngine_iOS_Beta', '4.0.0-beta.1'
+  s.vendored_frameworks = 'AgoraRtcWrapper.xcframework', 'libs/AgoraDav1dExtension.xcframework', 'libs/Agoraffmpeg.xcframework', 'libs/AgoraPvcExtension.xcframework', 'libs/AgoraQualityEduVideoProcess.xcframework', 'libs/AgoraReplayKitExtension.xcframework', 'libs/AgoraRtcKit.xcframework', 'libs/AgoraRTE.xcframework', 'libs/AgoraSuperResolutionExtension.xcframework', 'libs/AgoraVideoProcessExtension.xcframework', 'libs/AgoraVideoSegmentationExtension.xcframework', 'libs/BeQuic.xcframework'
 end
