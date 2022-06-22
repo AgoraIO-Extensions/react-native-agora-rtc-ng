@@ -7,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import {
+  AudioProfileType,
+  AudioScenarioType,
   ChannelProfileType,
   ClientRoleType,
   createAgoraRtcEngine,
@@ -37,6 +39,7 @@ interface State extends BaseAudioComponentState {
   includeAudioFilters: EarMonitoringFilterType;
   enableInEarMonitoring: boolean;
   inEarMonitoringVolume: number;
+  channelProfile: ChannelProfileType;
 }
 
 export default class JoinChannelAudio
@@ -60,6 +63,7 @@ export default class JoinChannelAudio
       includeAudioFilters: EarMonitoringFilterType.EarMonitoringFilterNone,
       enableInEarMonitoring: false,
       inEarMonitoringVolume: 100,
+      channelProfile: ChannelProfileType.ChannelProfileLiveBroadcasting,
     };
   }
 
@@ -67,7 +71,7 @@ export default class JoinChannelAudio
    * Step 1: initRtcEngine
    */
   protected async initRtcEngine() {
-    const { appId } = this.state;
+    const { appId, channelProfile } = this.state;
     if (!appId) {
       console.error(`appId is invalid`);
     }
@@ -77,7 +81,7 @@ export default class JoinChannelAudio
     this.engine.initialize({
       appId,
       // Should use ChannelProfileLiveBroadcasting on most of cases
-      channelProfile: ChannelProfileType.ChannelProfileLiveBroadcasting,
+      channelProfile,
     });
 
     if (Platform.OS === 'android') {
@@ -89,6 +93,11 @@ export default class JoinChannelAudio
 
     // Only need to enable audio on this case
     this.engine.enableAudio();
+
+    this.engine.setAudioProfile(
+      AudioProfileType.AudioProfileDefault,
+      AudioScenarioType.AudioScenarioGameStreaming
+    );
   }
 
   /**
@@ -258,6 +267,7 @@ export default class JoinChannelAudio
       includeAudioFilters,
       enableInEarMonitoring,
       inEarMonitoringVolume,
+      channelProfile,
     } = this.state;
 
     const renderSlider = (
@@ -283,6 +293,17 @@ export default class JoinChannelAudio
 
     return (
       <>
+        <View style={styles.container}>
+          <PickerView
+            title={'channelProfile'}
+            type={ChannelProfileType}
+            selectedValue={channelProfile}
+            onValueChange={(value: ChannelProfileType) => {
+              this.setState({ channelProfile: value });
+            }}
+          />
+        </View>
+        <Divider />
         {renderSlider('recordingSignalVolume', recordingSignalVolume, 0, 400)}
         <Button
           title={'adjust Recording Signal Volume'}
@@ -323,9 +344,16 @@ export default class JoinChannelAudio
       muteLocalAudioStream,
       enableSpeakerphone,
       enableInEarMonitoring,
+      channelProfile,
     } = this.state;
     return (
       <>
+        <ActionItem
+          title={`set Channel Profile`}
+          onPress={() => {
+            this.engine?.setChannelProfile(channelProfile);
+          }}
+        />
         <ActionItem
           title={`${enableLocalAudio ? 'disable' : 'enable'} Local Audio`}
           onPress={

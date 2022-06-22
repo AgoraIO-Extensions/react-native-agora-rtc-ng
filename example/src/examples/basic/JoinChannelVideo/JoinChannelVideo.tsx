@@ -7,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import {
+  AudioProfileType,
+  AudioScenarioType,
   ChannelProfileType,
   ClientRoleType,
   createAgoraRtcEngine,
@@ -33,6 +35,7 @@ interface State extends BaseVideoComponentState {
   switchCamera: boolean;
   renderByTextureView: boolean;
   setupMode: VideoViewSetupMode;
+  channelProfile: ChannelProfileType;
 }
 
 export default class JoinChannelVideo
@@ -52,6 +55,7 @@ export default class JoinChannelVideo
       switchCamera: false,
       renderByTextureView: false,
       setupMode: VideoViewSetupMode.VideoViewSetupReplace,
+      channelProfile: ChannelProfileType.ChannelProfileLiveBroadcasting,
     };
   }
 
@@ -59,7 +63,7 @@ export default class JoinChannelVideo
    * Step 1: initRtcEngine
    */
   protected async initRtcEngine() {
-    const { appId } = this.state;
+    const { appId, channelProfile } = this.state;
     if (!appId) {
       console.error(`appId is invalid`);
     }
@@ -69,7 +73,7 @@ export default class JoinChannelVideo
     this.engine.initialize({
       appId,
       // Should use ChannelProfileLiveBroadcasting on most of cases
-      channelProfile: ChannelProfileType.ChannelProfileLiveBroadcasting,
+      channelProfile,
     });
 
     if (Platform.OS === 'android') {
@@ -83,6 +87,19 @@ export default class JoinChannelVideo
     // Need to enable video on this case
     // If you only call `enableAudio`, only relay the audio stream to the target channel
     this.engine.enableVideo();
+
+    this.engine.setAudioProfile(
+      AudioProfileType.AudioProfileDefault,
+      AudioScenarioType.AudioScenarioGameStreaming
+    );
+    this.engine.setVideoEncoderConfiguration({
+      dimensions: {
+        width: 640,
+        height: 360,
+      },
+      frameRate: 15,
+      bitrate: 800,
+    });
 
     // Start preview before joinChannel
     this.engine.startPreview();
@@ -219,10 +236,26 @@ export default class JoinChannelVideo
   }
 
   protected renderBottom(): React.ReactNode {
-    const { startPreview, joinChannelSuccess, renderByTextureView, setupMode } =
-      this.state;
+    const {
+      startPreview,
+      joinChannelSuccess,
+      renderByTextureView,
+      setupMode,
+      channelProfile,
+    } = this.state;
     return (
       <>
+        <View style={styles.container}>
+          <PickerView
+            title={'channelProfile'}
+            type={ChannelProfileType}
+            selectedValue={channelProfile}
+            onValueChange={(value: ChannelProfileType) => {
+              this.setState({ channelProfile: value });
+            }}
+          />
+        </View>
+        <Divider />
         <ActionItem
           disabled={
             (!startPreview && !joinChannelSuccess) || Platform.OS !== 'android'
@@ -267,9 +300,15 @@ export default class JoinChannelVideo
   }
 
   protected renderFloat(): React.ReactNode {
-    const { startPreview, joinChannelSuccess } = this.state;
+    const { startPreview, joinChannelSuccess, channelProfile } = this.state;
     return (
       <>
+        <ActionItem
+          title={`set Channel Profile`}
+          onPress={() => {
+            this.engine?.setChannelProfile(channelProfile);
+          }}
+        />
         <ActionItem
           disabled={!startPreview && !joinChannelSuccess}
           title={`switchCamera`}
