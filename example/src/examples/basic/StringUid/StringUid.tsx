@@ -85,7 +85,7 @@ export default class StringUid
     // 2. If app certificate is turned on at dashboard, token is needed
     // when joining channel. The channel name and uid used to calculate
     // the token has to match the ones used for channel join
-    this.engine?.joinChannelWithUserAccount2(token, channelId, userAccount, {
+    this.engine?.joinChannelWithUserAccount(token, channelId, userAccount, {
       // Make myself as the broadcaster to send stream to remote
       clientRoleType: ClientRoleType.ClientRoleBroadcaster,
     });
