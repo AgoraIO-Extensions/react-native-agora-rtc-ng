@@ -108,16 +108,13 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     return super.unregisterMediaMetadataObserver(observer, type);
   }
 
-  joinChannel(
+  joinChannelWithOptions(
     token: string,
     channelId: string,
     uid: number,
-    options?: ChannelMediaOptions
+    options: ChannelMediaOptions
   ): number {
-    const apiType =
-      options === undefined
-        ? 'RtcEngine_joinChannel'
-        : 'RtcEngine_joinChannel2';
+    const apiType = 'RtcEngine_joinChannel2';
     const jsonParams = {
       token,
       channelId,

@@ -3764,10 +3764,35 @@ export class IRtcEngineImpl implements IRtcEngine {
   joinChannel(
     token: string,
     channelId: string,
-    uid: number,
-    options?: ChannelMediaOptions
+    info: string,
+    uid: number
   ): number {
     const apiType = 'RtcEngine_joinChannel';
+    const jsonParams = {
+      token,
+      channelId,
+      info,
+      uid,
+      toJSON: () => {
+        return {
+          token,
+          channelId,
+          info,
+          uid,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  joinChannelWithOptions(
+    token: string,
+    channelId: string,
+    uid: number,
+    options: ChannelMediaOptions
+  ): number {
+    const apiType = 'RtcEngine_joinChannelWithOptions';
     const jsonParams = {
       token,
       channelId,

@@ -1557,8 +1557,15 @@ export abstract class IRtcEngine {
   abstract joinChannel(
     token: string,
     channelId: string,
+    info: string,
+    uid: number
+  ): number;
+
+  abstract joinChannelWithOptions(
+    token: string,
+    channelId: string,
     uid: number,
-    options?: ChannelMediaOptions
+    options: ChannelMediaOptions
   ): number;
 
   abstract leaveChannel(options?: LeaveChannelOptions): number;
