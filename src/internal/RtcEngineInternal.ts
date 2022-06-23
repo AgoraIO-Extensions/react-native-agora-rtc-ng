@@ -32,7 +32,11 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   )[] = [];
 
   initialize(context: RtcEngineContext): number {
-    return super.initialize(context);
+    const ret = super.initialize(context);
+    callIrisApi.call(this, 'RtcEngine_setAppType', {
+      appType: 8,
+    });
+    return ret;
   }
 
   release(sync: boolean = false) {
