@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -238,7 +232,7 @@ export default class SetBeautyEffectOptions
     const { startPreview, joinChannelSuccess, enableBeautyEffect } = this.state;
     return (
       <>
-        <Button
+        <ActionItem
           disabled={!(startPreview || joinChannelSuccess)}
           title={`${enableBeautyEffect ? 'disable' : 'enable'} Beauty Effect`}
           onPress={

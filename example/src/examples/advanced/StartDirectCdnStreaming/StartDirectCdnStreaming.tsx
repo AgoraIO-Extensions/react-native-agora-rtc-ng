@@ -251,6 +251,7 @@ export default class StartDirectCdnStreaming
       orientationMode,
       degradationPreference,
       mirrorMode,
+      startDirectCdnStreaming,
     } = this.state;
     return (
       <>
@@ -371,6 +372,11 @@ export default class StartDirectCdnStreaming
           />
         </View>
         <Divider />
+        <ActionItem
+          disabled={startDirectCdnStreaming}
+          title={`set Direct Cdn Streaming Video Configuration`}
+          onPress={this.setDirectCdnStreamingVideoConfiguration}
+        />
       </>
     );
   }
@@ -388,11 +394,6 @@ export default class StartDirectCdnStreaming
               ? this.stopDirectCdnStreaming
               : this.startDirectCdnStreaming
           }
-        />
-        <ActionItem
-          disabled={startDirectCdnStreaming}
-          title={`set Direct Cdn Streaming Video Configuration`}
-          onPress={this.setDirectCdnStreamingVideoConfiguration}
         />
       </>
     );

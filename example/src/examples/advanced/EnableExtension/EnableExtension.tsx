@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform, TextInput } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -13,6 +13,7 @@ import {
   STYLES,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
+import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
   provider: string;
@@ -222,7 +223,7 @@ export default class EnableExtension
     const { joinChannelSuccess, enableExtension } = this.state;
     return (
       <>
-        <Button
+        <ActionItem
           disabled={joinChannelSuccess}
           title={`${enableExtension ? 'disable' : 'enable'} Encryption`}
           onPress={

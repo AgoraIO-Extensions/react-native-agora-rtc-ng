@@ -228,8 +228,10 @@ export default class MediaPlayer
         break;
       case MediaPlayerState.PlayerStatePlaybackCompleted:
       case MediaPlayerState.PlayerStatePlaybackAllLoopsCompleted:
-      case MediaPlayerState.PlayerStateStopped:
         this.setState({ play: false });
+        break;
+      case MediaPlayerState.PlayerStateStopped:
+        this.setState({ open: false, play: false, pause: false });
         break;
       case MediaPlayerState.PlayerStatePausingInternal:
         break;

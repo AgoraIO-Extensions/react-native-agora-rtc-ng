@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   PermissionsAndroid,
   Platform,
   StyleSheet,
@@ -24,6 +23,7 @@ import {
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
+import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
   background_source_type: BackgroundSourceType;
@@ -230,7 +230,7 @@ export default class EnableVirtualBackground
       this.state;
     return (
       <>
-        <Button
+        <ActionItem
           disabled={!(startPreview || joinChannelSuccess)}
           title={`${
             enableVirtualBackground ? 'disable' : 'enable'

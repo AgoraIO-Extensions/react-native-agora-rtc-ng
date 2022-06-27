@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   PermissionsAndroid,
   Platform,
   StyleSheet,
@@ -26,6 +25,7 @@ import {
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
+import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
   encryptionMode: EncryptionMode;
@@ -207,7 +207,7 @@ export default class EnableEncryption
     const { joinChannelSuccess, enableEncryption } = this.state;
     return (
       <>
-        <Button
+        <ActionItem
           disabled={joinChannelSuccess}
           title={`${enableEncryption ? 'disable' : 'enable'} Encryption`}
           onPress={
