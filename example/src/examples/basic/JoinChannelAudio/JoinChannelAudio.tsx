@@ -17,6 +17,9 @@ import {
   LocalAudioStreamState,
   MediaDeviceType,
   RtcConnection,
+  RtcStats,
+  UserOfflineReasonType,
+  WarnCodeType,
 } from 'react-native-agora-rtc-ng';
 
 import {
@@ -197,6 +200,34 @@ export default class JoinChannelAudio
    */
   protected releaseRtcEngine() {
     this.engine?.release();
+  }
+
+  onWarning(warn: WarnCodeType, msg: string) {
+    super.onWarning(warn, msg);
+  }
+
+  onError(err: ErrorCodeType, msg: string) {
+    super.onError(err, msg);
+  }
+
+  onJoinChannelSuccess(connection: RtcConnection, elapsed: number) {
+    super.onJoinChannelSuccess(connection, elapsed);
+  }
+
+  onLeaveChannel(connection: RtcConnection, stats: RtcStats) {
+    super.onLeaveChannel(connection, stats);
+  }
+
+  onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
+    super.onUserJoined(connection, remoteUid, elapsed);
+  }
+
+  onUserOffline(
+    connection: RtcConnection,
+    remoteUid: number,
+    reason: UserOfflineReasonType
+  ) {
+    super.onUserOffline(connection, remoteUid, reason);
   }
 
   onAudioDeviceStateChanged(
