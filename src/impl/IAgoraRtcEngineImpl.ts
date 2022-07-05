@@ -39,6 +39,7 @@ import {
   AudioEffectPreset,
   VoiceConversionPreset,
   VideoMirrorModeType,
+  EarMonitoringFilterType,
   AudioSessionOperationRestriction,
   Rectangle,
   ScreenCaptureParameters,
@@ -2317,7 +2318,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     return jsonResults.result;
   }
 
-  enableInEarMonitoring(enabled: boolean, includeAudioFilters: number): number {
+  enableInEarMonitoring(
+    enabled: boolean,
+    includeAudioFilters: EarMonitoringFilterType
+  ): number {
     const apiType = 'RtcEngine_enableInEarMonitoring';
     const jsonParams = {
       enabled,

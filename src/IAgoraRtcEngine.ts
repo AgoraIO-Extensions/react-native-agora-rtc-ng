@@ -57,6 +57,7 @@ import {
   AudioEffectPreset,
   VoiceConversionPreset,
   VideoMirrorModeType,
+  EarMonitoringFilterType,
   AudioSessionOperationRestriction,
   DeviceInfo,
   VideoContentHint,
@@ -367,9 +368,9 @@ export enum LocalProxyMode {
 }
 
 export class LocalAccessPointConfiguration {
-  ipList?: string;
+  ipList?: string[];
   ipListSize?: number;
-  domainList?: string;
+  domainList?: string[];
   domainListSize?: number;
   verifyDomainName?: string;
   mode?: LocalProxyMode;
@@ -423,7 +424,7 @@ export abstract class IRtcEngineEventHandler {
 
   onVideoDeviceStateChanged?(
     deviceId: string,
-    deviceType: number,
+    deviceType: MediaDeviceType,
     deviceState: number
   ): void;
 
@@ -432,8 +433,8 @@ export abstract class IRtcEngineEventHandler {
   onNetworkQuality?(
     connection: RtcConnection,
     remoteUid: number,
-    txQuality: number,
-    rxQuality: number
+    txQuality: QualityType,
+    rxQuality: QualityType
   ): void;
 
   onIntraRequestReceived?(connection: RtcConnection): void;
@@ -1199,7 +1200,7 @@ export abstract class IRtcEngine {
 
   abstract enableInEarMonitoring(
     enabled: boolean,
-    includeAudioFilters: number
+    includeAudioFilters: EarMonitoringFilterType
   ): number;
 
   abstract setInEarMonitoringVolume(volume: number): number;
