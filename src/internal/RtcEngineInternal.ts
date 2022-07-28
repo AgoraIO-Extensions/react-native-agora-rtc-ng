@@ -25,6 +25,10 @@ import {
 } from '../AgoraBase';
 import { RtcConnection } from '../IAgoraRtcEngineEx';
 import { IAudioDeviceManager } from '../IAudioDeviceManager';
+import { IMediaEngine } from '../IAgoraMediaEngine';
+import { IMediaRecorder } from '../IAgoraMediaRecorder';
+import { IMediaEngineImpl } from '../impl/IAgoraMediaEngineImpl';
+import { IMediaRecorderImpl } from '../impl/IAgoraMediaRecorderImpl';
 
 export class RtcEngineInternal extends IRtcEngineExImpl {
   static _handlers: (
@@ -359,5 +363,13 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
 
   getVideoDeviceManager(): IVideoDeviceManager {
     throw 'Not support';
+  }
+
+  getMediaEngine(): IMediaEngine {
+    return new IMediaEngineImpl();
+  }
+
+  getMediaRecorder(): IMediaRecorder {
+    return new IMediaRecorderImpl();
   }
 }
