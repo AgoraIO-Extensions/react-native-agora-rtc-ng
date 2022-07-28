@@ -125,7 +125,7 @@ export default class JoinMultipleChannel
       {
         // Make myself as the broadcaster to send stream to remote
         clientRoleType: ClientRoleType.ClientRoleBroadcaster,
-        publishAudioTrack: false,
+        publishMicrophoneTrack: false,
         publishCameraTrack: false,
       }
     );
@@ -160,7 +160,7 @@ export default class JoinMultipleChannel
       {
         // Make myself as the broadcaster to send stream to remote
         clientRoleType: ClientRoleType.ClientRoleBroadcaster,
-        publishAudioTrack: false,
+        publishMicrophoneTrack: false,
         publishCameraTrack: false,
       }
     );
@@ -172,14 +172,14 @@ export default class JoinMultipleChannel
   publishStreamToChannel = () => {
     const { channelId, channelId2, uid, uid2 } = this.state;
     this.engine?.updateChannelMediaOptionsEx(
-      { publishAudioTrack: false, publishCameraTrack: false },
+      { publishMicrophoneTrack: false, publishCameraTrack: false },
       {
         channelId: channelId2,
         localUid: uid2,
       }
     );
     this.engine?.updateChannelMediaOptionsEx(
-      { publishAudioTrack: true, publishCameraTrack: true },
+      { publishMicrophoneTrack: true, publishCameraTrack: true },
       {
         channelId,
         localUid: uid,
@@ -193,14 +193,14 @@ export default class JoinMultipleChannel
   publishStreamToChannel2 = () => {
     const { channelId, channelId2, uid, uid2 } = this.state;
     this.engine?.updateChannelMediaOptionsEx(
-      { publishAudioTrack: false, publishCameraTrack: false },
+      { publishMicrophoneTrack: false, publishCameraTrack: false },
       {
         channelId,
         localUid: uid,
       }
     );
     this.engine?.updateChannelMediaOptionsEx(
-      { publishAudioTrack: true, publishCameraTrack: true },
+      { publishMicrophoneTrack: true, publishCameraTrack: true },
       {
         channelId: channelId2,
         localUid: uid2,

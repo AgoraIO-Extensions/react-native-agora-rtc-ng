@@ -1,7 +1,7 @@
 import React from 'react';
 import { PermissionsAndroid, Platform, TextInput } from 'react-native';
 import {
-  AudioMixingErrorType,
+  AudioMixingReasonType,
   AudioMixingStateType,
   ChannelProfileType,
   ClientRoleType,
@@ -178,15 +178,9 @@ export default class AudioMixing
 
   onAudioMixingStateChanged(
     state: AudioMixingStateType,
-    errorCode: AudioMixingErrorType
+    reason: AudioMixingReasonType
   ) {
-    this.info(
-      'onAudioMixingStateChanged',
-      'state',
-      state,
-      'errorCode',
-      errorCode
-    );
+    this.info('onAudioMixingStateChanged', 'state', state, 'reason', reason);
     switch (state) {
       case AudioMixingStateType.AudioMixingStatePlaying:
         this.setState({ startAudioMixing: true, pauseAudioMixing: false });
@@ -196,8 +190,6 @@ export default class AudioMixing
         break;
       case AudioMixingStateType.AudioMixingStateStopped:
       case AudioMixingStateType.AudioMixingStateFailed:
-      case AudioMixingStateType.AudioMixingStateCompleted:
-      case AudioMixingStateType.AudioMixingStateAllLoopsCompleted:
         this.setState({ startAudioMixing: false });
         break;
     }

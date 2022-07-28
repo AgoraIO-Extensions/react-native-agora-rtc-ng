@@ -35,8 +35,8 @@ export default class EnableExtension
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      provider: 'agora_segmentation',
-      extension: 'PortraitSegmentation',
+      provider: 'agora_video_filters_segmentation',
+      extension: 'portrait_segmentation',
       enableExtension: false,
     };
   }

@@ -13,6 +13,7 @@ import {
   ClientRoleType,
   createAgoraRtcEngine,
   IRtcEngineEventHandler,
+  SegmentationProperty,
 } from 'react-native-agora-rtc-ng';
 import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
@@ -85,8 +86,8 @@ export default class EnableVirtualBackground
       this.engine?.loadExtensionProvider('agora_segmentation_extension');
     }
     this.engine?.enableExtension(
-      'agora_segmentation',
-      'PortraitSegmentation',
+      'agora_video_filters_segmentation',
+      'portrait_segmentation',
       true
     );
 
@@ -138,12 +139,16 @@ export default class EnableVirtualBackground
       return;
     }
 
-    this.engine?.enableVirtualBackground(true, {
-      background_source_type,
-      color,
-      source: await this.getAbsolutePath(source),
-      blur_degree,
-    });
+    this.engine?.enableVirtualBackground(
+      true,
+      {
+        background_source_type,
+        color,
+        source: await this.getAbsolutePath(source),
+        blur_degree,
+      },
+      {}
+    );
     this.setState({ enableVirtualBackground: true });
   };
 
@@ -151,7 +156,7 @@ export default class EnableVirtualBackground
    * Step 3-2: disableVirtualBackground
    */
   disableVirtualBackground = () => {
-    this.engine?.enableVirtualBackground(false, {});
+    this.engine?.enableVirtualBackground(false, {}, {});
     this.setState({ enableVirtualBackground: false });
   };
 

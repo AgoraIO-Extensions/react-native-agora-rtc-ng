@@ -11,7 +11,6 @@ import {
 import {
   ChannelProfileType,
   ClientRoleType,
-  ContentInspectDeviceType,
   ContentInspectResult,
   ContentInspectType,
   createAgoraRtcEngine,
@@ -29,11 +28,8 @@ import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
 
 interface State extends BaseVideoComponentState {
-  DeviceWork: boolean;
-  DeviceworkType: ContentInspectDeviceType;
-  CloudWork: boolean;
   moduleTypes: ContentInspectType[];
-  frequency: number;
+  interval: number;
   enableContentInspect: boolean;
 }
 
@@ -54,11 +50,8 @@ export default class EnableContentInspect
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      DeviceWork: true,
-      DeviceworkType: ContentInspectDeviceType.ContentInspectDeviceAgora,
-      CloudWork: false,
       moduleTypes: [],
-      frequency: 1,
+      interval: 1,
       enableContentInspect: false,
     };
   }
@@ -86,6 +79,11 @@ export default class EnableContentInspect
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         PermissionsAndroid.PERMISSIONS.CAMERA,
       ]);
+    }
+
+    // Must call after initialize and before joinChannel
+    if (Platform.OS === 'android') {
+      this.engine?.loadExtensionProvider('agora_content_inspect_extension');
     }
 
     // Need to enable video on this case
@@ -127,24 +125,19 @@ export default class EnableContentInspect
    * Step 3-1: enableContentInspect
    */
   enableContentInspect = () => {
-    const { DeviceWork, DeviceworkType, CloudWork, moduleTypes, frequency } =
-      this.state;
+    const { moduleTypes, interval } = this.state;
     if (moduleTypes.length <= 0) {
       console.error('moduleTypes is not enough');
       return;
     }
-    if (frequency <= 0) {
-      console.error('frequency is invalid');
+    if (interval <= 0) {
+      console.error('interval is invalid');
       return;
     }
 
-    this.engine?.SetContentInspect({
-      enable: true,
-      DeviceWork,
-      DeviceworkType,
-      CloudWork,
+    this.engine?.enableContentInspect(true, {
       modules: moduleTypes.map((value) => {
-        return { type: value, frequency };
+        return { type: value, interval };
       }),
       moduleCount: moduleTypes.length,
     });
@@ -156,9 +149,7 @@ export default class EnableContentInspect
    * Step 3-2: disableContentInspect
    */
   disableContentInspect = () => {
-    this.engine?.SetContentInspect({
-      enable: false,
-    });
+    this.engine?.enableContentInspect(false, {});
     this.setState({ enableContentInspect: false });
   };
 
@@ -181,39 +172,9 @@ export default class EnableContentInspect
   }
 
   protected renderBottom(): React.ReactNode {
-    const { DeviceWork, DeviceworkType, CloudWork, moduleTypes, frequency } =
-      this.state;
+    const { moduleTypes, interval } = this.state;
     return (
       <>
-        <ActionItem
-          title={'DeviceWork'}
-          isShowSwitch={true}
-          onSwitchValueChange={(value) => {
-            this.setState({ DeviceWork: value });
-          }}
-          switchValue={DeviceWork}
-        />
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'DeviceworkType'}
-            type={ContentInspectDeviceType}
-            selectedValue={DeviceworkType}
-            onValueChange={(value) => {
-              this.setState({ DeviceworkType: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <ActionItem
-          title={'CloudWork'}
-          isShowSwitch={true}
-          onSwitchValueChange={(value) => {
-            this.setState({ CloudWork: value });
-          }}
-          switchValue={CloudWork}
-        />
-        <Divider />
         <View style={styles.container}>
           <PickerView
             title={'moduleTypes'}
@@ -247,14 +208,12 @@ export default class EnableContentInspect
         <Divider />
         <TextInput
           style={STYLES.input}
-          onChangeText={(text) => this.setState({ frequency: +text })}
+          onChangeText={(text) => this.setState({ interval: +text })}
           keyboardType={'numeric'}
-          placeholder={`frequency (defaults: ${frequency})`}
+          placeholder={`interval (defaults: ${interval})`}
           placeholderTextColor={'gray'}
           value={
-            frequency === this.createState().frequency
-              ? ''
-              : frequency.toString()
+            interval === this.createState().interval ? '' : interval.toString()
           }
         />
       </>

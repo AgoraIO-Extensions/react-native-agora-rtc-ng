@@ -115,17 +115,13 @@ export default class TakeSnapshot
    * Step 3: takeSnapshot
    */
   takeSnapshot = () => {
-    const { channelId, targetUid, filePath } = this.state;
+    const { targetUid, filePath } = this.state;
     if (!filePath) {
       console.error('filePath is invalid');
       return;
     }
 
-    this.engine?.takeSnapshot({
-      channel: channelId,
-      uid: targetUid,
-      filePath: `${filePath}/${targetUid}.jpg`,
-    });
+    this.engine?.takeSnapshot(targetUid, `${filePath}/${targetUid}.jpg`);
   };
 
   /**
@@ -144,6 +140,7 @@ export default class TakeSnapshot
 
   onSnapshotTaken(
     connection: RtcConnection,
+    uid: number,
     filePath: string,
     width: number,
     height: number,
@@ -153,6 +150,8 @@ export default class TakeSnapshot
       'onSnapshotTaken',
       'connection',
       connection,
+      'uid',
+      uid,
       'filePath',
       filePath,
       'width',
