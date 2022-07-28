@@ -6,6 +6,7 @@ import {
   VideoEncoderConfiguration,
   VideoCanvas,
   VideoStreamType,
+  VideoSubscriptionOptions,
   SpatialAudioParams,
   VideoMirrorModeType,
   ConnectionStateType,
@@ -14,6 +15,7 @@ import {
   UserInfo,
   VideoSourceType,
   SimulcastStreamConfig,
+  SimulcastStreamMode,
   DataStreamConfig,
 } from '../AgoraBase';
 import { RenderModeType } from '../AgoraMediaBase';
@@ -165,6 +167,116 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
         return {
           uid,
           streamType,
+          connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  setSubscribeAudioBlacklistEx(
+    uidList: number[],
+    uidNumber: number,
+    connection: RtcConnection
+  ): number {
+    const apiType = 'RtcEngineEx_setSubscribeAudioBlacklistEx';
+    const jsonParams = {
+      uidList,
+      uidNumber,
+      connection,
+      toJSON: () => {
+        return {
+          uidList,
+          uidNumber,
+          connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  setSubscribeAudioWhitelistEx(
+    uidList: number[],
+    uidNumber: number,
+    connection: RtcConnection
+  ): number {
+    const apiType = 'RtcEngineEx_setSubscribeAudioWhitelistEx';
+    const jsonParams = {
+      uidList,
+      uidNumber,
+      connection,
+      toJSON: () => {
+        return {
+          uidList,
+          uidNumber,
+          connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  setSubscribeVideoBlacklistEx(
+    uidList: number[],
+    uidNumber: number,
+    connection: RtcConnection
+  ): number {
+    const apiType = 'RtcEngineEx_setSubscribeVideoBlacklistEx';
+    const jsonParams = {
+      uidList,
+      uidNumber,
+      connection,
+      toJSON: () => {
+        return {
+          uidList,
+          uidNumber,
+          connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  setSubscribeVideoWhitelistEx(
+    uidList: number[],
+    uidNumber: number,
+    connection: RtcConnection
+  ): number {
+    const apiType = 'RtcEngineEx_setSubscribeVideoWhitelistEx';
+    const jsonParams = {
+      uidList,
+      uidNumber,
+      connection,
+      toJSON: () => {
+        return {
+          uidList,
+          uidNumber,
+          connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  setRemoteVideoSubscriptionOptionsEx(
+    uid: number,
+    options: VideoSubscriptionOptions,
+    connection: RtcConnection
+  ): number {
+    const apiType = 'RtcEngineEx_setRemoteVideoSubscriptionOptionsEx';
+    const jsonParams = {
+      uid,
+      options,
+      connection,
+      toJSON: () => {
+        return {
+          uid,
+          options,
           connection,
         };
       },
@@ -502,21 +614,58 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
     return jsonResults.result;
   }
 
-  addPublishStreamUrlEx(
-    url: string,
-    transcodingEnabled: boolean,
+  setDualStreamModeEx(
+    sourceType: VideoSourceType,
+    mode: SimulcastStreamMode,
+    streamConfig: SimulcastStreamConfig,
     connection: RtcConnection
   ): number {
-    const apiType = 'RtcEngineEx_addPublishStreamUrlEx';
+    const apiType = 'RtcEngineEx_setDualStreamModeEx';
     const jsonParams = {
-      url,
-      transcodingEnabled,
+      sourceType,
+      mode,
+      streamConfig,
       connection,
       toJSON: () => {
         return {
-          url,
-          transcodingEnabled,
+          sourceType,
+          mode,
+          streamConfig,
           connection,
+        };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  enableWirelessAccelerate(enabled: boolean): number {
+    const apiType = 'RtcEngineEx_enableWirelessAccelerate';
+    const jsonParams = {
+      enabled,
+      toJSON: () => {
+        return { enabled };
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  takeSnapshotEx(
+    connection: RtcConnection,
+    uid: number,
+    filePath: string
+  ): number {
+    const apiType = 'RtcEngineEx_takeSnapshotEx';
+    const jsonParams = {
+      connection,
+      uid,
+      filePath,
+      toJSON: () => {
+        return {
+          connection,
+          uid,
+          filePath,
         };
       },
     };

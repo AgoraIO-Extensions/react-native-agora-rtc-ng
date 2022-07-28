@@ -22,6 +22,10 @@ export enum LogLevel {
    * 0x0008: Output FATAL level log information.
    */
   LogLevelFatal = 0x0008,
+  /*
+   * @ignore
+   */
+  LogLevelApiCall = 0x0010,
 }
 
 /*

@@ -1,6 +1,7 @@
 import {
   QualityAdaptIndication,
   VideoCodecType,
+  CaptureBrightnessLevelType,
   VideoStreamType,
   AudioSampleRateType,
   VideoFormat,
@@ -9,7 +10,6 @@ import {
   ClientRoleType,
   AudienceLatencyLevelType,
   ChannelProfileType,
-  WarnCodeType,
   ErrorCodeType,
   QualityType,
   LastmileProbeResult,
@@ -38,6 +38,9 @@ import {
   ChannelMediaRelayEvent,
   ConnectionStateType,
   ConnectionChangedReasonType,
+  WlaccMessageReason,
+  WlaccSuggestAction,
+  WlAccStats,
   NetworkType,
   EncryptionErrorType,
   PermissionType,
@@ -50,24 +53,33 @@ import {
   LastmileProbeConfig,
   VideoEncoderConfiguration,
   BeautyOptions,
+  LowlightEnhanceOptions,
+  VideoDenoiserOptions,
+  ColorEnhanceOptions,
   VirtualBackgroundSource,
+  SegmentationProperty,
   VideoCanvas,
+  VideoSubscriptionOptions,
+  AudioEncodedFrameObserverConfig,
+  IAudioEncodedFrameObserver,
   SpatialAudioParams,
   VoiceBeautifierPreset,
   AudioEffectPreset,
   VoiceConversionPreset,
   VideoMirrorModeType,
   EarMonitoringFilterType,
+  SenderOptions,
   AudioSessionOperationRestriction,
   DeviceInfo,
   VideoContentHint,
+  ScreenScenarioType,
+  ScreenCaptureParameters2,
   LiveTranscoding,
   LocalTranscoderConfiguration,
   VideoOrientation,
   EncryptionConfig,
   ChannelMediaRelayConfiguration,
   AudioProfileType,
-  FishCorrectionParams,
   ClientRoleOptions,
   AudioRecordingConfiguration,
   SimulcastStreamConfig,
@@ -76,13 +88,11 @@ import {
 } from './AgoraBase';
 import {
   RenderModeType,
-  NlpAggressiveness,
   ContentInspectResult,
   MediaSourceType,
   RawAudioFrameOpModeType,
-  SnapShotConfig,
+  IAudioSpectrumObserver,
   ContentInspectConfig,
-  AdvancedAudioOptions,
 } from './AgoraMediaBase';
 import { RtcConnection } from './IAgoraRtcEngineEx';
 import {
@@ -92,7 +102,9 @@ import {
 } from './IAgoraRhythmPlayer';
 import { LogConfig, LogFilterType, LogLevel } from './IAgoraLog';
 import { IMediaPlayer } from './IAgoraMediaPlayer';
+import { AudioMixingDualMonoMode, IMediaEngine } from './IAgoraMediaEngine';
 import { IAudioDeviceManager } from './IAudioDeviceManager';
+import { IMediaRecorder } from './IAgoraMediaRecorder';
 
 /*
  * @ignore
@@ -144,36 +156,40 @@ export enum AudioMixingStateType {
    * 714: An error occurs during the playback of the audio mixing file.
    */
   AudioMixingStateFailed = 714,
-  /*
-   * (715): The music file is played once.
-   */
-  AudioMixingStateCompleted = 715,
-  /*
-   * (716): The music file is all played out.
-   */
-  AudioMixingStateAllLoopsCompleted = 716,
 }
 
 /*
- * Errors that may occur when playing a music file.
+ * @ignore
  */
-export enum AudioMixingErrorType {
+export enum AudioMixingReasonType {
   /*
-   * The SDK cannot open the music file.
+   * @ignore
    */
-  AudioMixingErrorCanNotOpen = 701,
+  AudioMixingReasonCanNotOpen = 701,
   /*
-   * The SDK opens the music file too frequently.
+   * @ignore
    */
-  AudioMixingErrorTooFrequentCall = 702,
+  AudioMixingReasonTooFrequentCall = 702,
   /*
-   * The playback of the music file is interrupted.
+   * @ignore
    */
-  AudioMixingErrorInterruptedEof = 703,
+  AudioMixingReasonInterruptedEof = 703,
   /*
-   * 710: The music file is playing.
+   * @ignore
    */
-  AudioMixingErrorOk = 0,
+  AudioMixingReasonOneLoopCompleted = 721,
+  /*
+   * @ignore
+   */
+  AudioMixingReasonAllLoopsCompleted = 723,
+  /*
+   * @ignore
+   */
+  AudioMixingReasonStoppedByUser = 724,
+  /*
+   * @ignore
+   */
+  AudioMixingReasonOk = 0,
 }
 
 /*
@@ -414,6 +430,14 @@ export class LocalVideoStats {
    * The video packet loss rate (%) from the local client to the Agora server before applying the anti-packet loss strategies.
    */
   txPacketLossRate?: number;
+  /*
+   * @ignore
+   */
+  captureBrightnessLevel?: CaptureBrightnessLevelType;
+  /*
+   * @ignore
+   */
+  dualStreamEnabled?: boolean;
 }
 
 /*
@@ -698,7 +722,7 @@ export enum CameraDirection {
 }
 
 /*
- * The cloud proxy type.
+ * @ignore
  */
 export enum CloudProxyType {
   /*
@@ -731,6 +755,10 @@ export class CameraCapturerConfiguration {
    * See VideoFormat .
    */
   format?: VideoFormat;
+  /*
+   * @ignore
+   */
+  followEncodeDimensionRatio?: boolean;
 }
 
 /*
@@ -766,33 +794,7 @@ export class ScreenCaptureConfiguration {
 /*
  * @ignore
  */
-export class AudioOptionsExternal {
-  /*
-   * @ignore
-   */
-  enable_aec_external_custom_?: boolean;
-  /*
-   * @ignore
-   */
-  enable_agc_external_custom_?: boolean;
-  /*
-   * @ignore
-   */
-  enable_ans_external_custom_?: boolean;
-  /*
-   * @ignore
-   */
-  aec_aggressiveness_external_custom_?: NlpAggressiveness;
-  /*
-   * @ignore
-   */
-  enable_aec_external_loopback_?: boolean;
-}
-
-/*
- * @ignore
- */
-export class SIZE {
+export class Size {
   /*
    * @ignore
    */
@@ -890,6 +892,30 @@ export class ScreenCaptureSourceInfo {
 }
 
 /*
+ * The advanced options for audio.
+ */
+export class AdvancedAudioOptions {
+  /*
+   * The number of channels for audio preprocessing. See AudioProcessingChannels .
+   */
+  audioProcessingChannels?: number;
+}
+
+/*
+ * @ignore
+ */
+export class ImageTrackOptions {
+  /*
+   * @ignore
+   */
+  imageUrl?: string;
+  /*
+   * @ignore
+   */
+  fps?: number;
+}
+
+/*
  * The channel media options.
  * Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishAudioTrack, publishCustomAudioTrack and publishMediaPlayerAudioTrack can be true at the same time; but only one of publishCameraTrack, publishScreenTrack, publishCustomVideoTrack, and publishEncodedVideoTrack can be true at the same time.
  */
@@ -907,11 +933,17 @@ export class ChannelMediaOptions {
    */
   publishSecondaryCameraTrack?: boolean;
   /*
-   * Whether to publish the captured audio:
-   * true: (Default) Publish the captured audio.
-   * false: Do not publish the captured audio.
+   * @ignore
    */
-  publishAudioTrack?: boolean;
+  publishMicrophoneTrack?: boolean;
+  /*
+   * @ignore
+   */
+  publishScreenCaptureVideo?: boolean;
+  /*
+   * @ignore
+   */
+  publishScreenCaptureAudio?: boolean;
   /*
    * Whether to publish the captured video from the screen:
    * true: Publish the captured video from the screen.
@@ -991,10 +1023,6 @@ export class ChannelMediaOptions {
    */
   autoSubscribeVideo?: boolean;
   /*
-   * @ignore
-   */
-  startPreview?: boolean;
-  /*
    * Whether to enable audio capturing or playback.
    * true: (Default) Enable audio capturing and playback.
    * false Do not enable audio capturing or playback.
@@ -1045,7 +1073,15 @@ export class ChannelMediaOptions {
   /*
    * @ignore
    */
-  audioOptionsExternal?: AudioOptionsExternal;
+  isInteractiveAudience?: boolean;
+  /*
+   * @ignore
+   */
+  customVideoTrackId?: number;
+  /*
+   * @ignore
+   */
+  isAudioFilterable?: boolean;
 }
 
 /*
@@ -1055,11 +1091,37 @@ export enum LocalProxyMode {
   /*
    * @ignore
    */
-  kConnectivityFirst = 0,
+  ConnectivityFirst = 0,
   /*
    * @ignore
    */
-  kLocalOnly = 1,
+  LocalOnly = 1,
+}
+
+/*
+ * The cloud proxy type.
+ */
+export enum ProxyType {
+  /*
+   * @ignore
+   */
+  NoneProxyType = 0,
+  /*
+   * @ignore
+   */
+  UdpProxyType = 1,
+  /*
+   * @ignore
+   */
+  TcpProxyType = 2,
+  /*
+   * @ignore
+   */
+  LocalProxyType = 3,
+  /*
+   * @ignore
+   */
+  TcpProxyAutoFallbackType = 4,
 }
 
 /*
@@ -1140,7 +1202,13 @@ export abstract class IRtcEngineEventHandler {
   /*
    * @ignore
    */
-  onWarning?(warn: WarnCodeType, msg: string): void;
+  onProxyConnected?(
+    channel: string,
+    uid: number,
+    proxyType: ProxyType,
+    localProxyIp: string,
+    elapsed: number
+  ): void;
 
   /*
    * @ignore
@@ -1500,7 +1568,7 @@ export abstract class IRtcEngineEventHandler {
   ): void;
 
   /*
-   * Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) leaves the channel.
+   *  Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) leaves the channel.
    * In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.
    * In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17. The SDK triggers this callback under one of the following circumstances:
    * A remote user/hostjoinChannelWithOptions joins the channel by calling the method.
@@ -1758,7 +1826,7 @@ export abstract class IRtcEngineEventHandler {
    */
   onAudioMixingStateChanged?(
     state: AudioMixingStateType,
-    errorCode: AudioMixingErrorType
+    reason: AudioMixingReasonType
   ): void;
 
   /*
@@ -1987,6 +2055,7 @@ export abstract class IRtcEngineEventHandler {
    */
   onSnapshotTaken?(
     connection: RtcConnection,
+    uid: number,
     filePath: string,
     width: number,
     height: number,
@@ -2050,51 +2119,6 @@ export abstract class IRtcEngineEventHandler {
    * @param eventCode The event code of media push. See RtmpStreamingEvent .
    */
   onRtmpStreamingEvent?(url: string, eventCode: RtmpStreamingEvent): void;
-
-  /*
-   * Occurs when an RTMP or RTMPS stream is published.
-   * Deprecated:
-   * Please use onRtmpStreamingStateChanged instead. Reports the result of publishing an RTMP or RTMPS stream.
-   *
-   * @param url The CDN streaming URL.
-   *
-   * @param error Error codes of the RTMP or RTMPS streaming.
-   *  ERR_OK (0): The publishing succeeds.
-   *  ERR_FAILED (1): The publishing fails.
-   *  ERR_INVALID_ARGUMENT (-2): Invalid argument used.
-   *  If you do not call setLiveTranscoding to configure
-   *  LiveTranscoding before calling addPublishStreamUrl , the SDK reports
-   *  ERR_INVALID_ARGUMENT.
-   *  ERR_TIMEDOUT (10): The publishing timed out.
-   *  ERR_ALREADY_IN_USE (19): The chosen URL address is
-   *  already in use for CDN live streaming.
-   *  ERR_ENCRYPTED_STREAM_NOT_ALLOWED_PUBLISH (130): You
-   *  cannot publish an encrypted stream.
-   *  ERR_PUBLISH_STREAM_CDN_ERROR (151): CDN related
-   *  error. Remove the original URL address and add a new one by calling
-   *  the removePublishStreamUrl and addPublishStreamUrl methods.
-   *  ERR_PUBLISH_STREAM_NUM_REACH_LIMIT (152): The host
-   *  manipulates more than 10 URLs. Delete the unnecessary URLs before
-   *  adding new ones.
-   *  ERR_PUBLISH_STREAM_NOT_AUTHORIZED (153): The host
-   *  manipulates other hosts' URLs. Please check your app logic.
-   *  ERR_PUBLISH_STREAM_INTERNAL_SERVER_ERROR (154): An
-   *  error occurs in Agora's streaming server. Call the removePublishStreamUrl method to publish the streaming
-   *  again.
-   *  ERR_PUBLISH_STREAM_FORMAT_NOT_SUPPORTED (156): The
-   *  format of the CDN streaming URL is not supported. Check whether the
-   *  URL format is correct.
-   */
-  onStreamPublished?(url: string, error: ErrorCodeType): void;
-
-  /*
-   * Occurs when the media push stops.
-   * Deprecated:
-   * Please use onRtmpStreamingStateChanged instead.
-   *
-   * @param url Removes an RTMP or RTMPS URL of the media push.
-   */
-  onStreamUnpublished?(url: string): void;
 
   /*
    * Occurs when the publisher's transcoding is updated.
@@ -2211,6 +2235,25 @@ export abstract class IRtcEngineEventHandler {
     connection: RtcConnection,
     state: ConnectionStateType,
     reason: ConnectionChangedReasonType
+  ): void;
+
+  /*
+   * @ignore
+   */
+  onWlAccMessage?(
+    connection: RtcConnection,
+    reason: WlaccMessageReason,
+    action: WlaccSuggestAction,
+    wlAccMsg: string
+  ): void;
+
+  /*
+   * @ignore
+   */
+  onWlAccStats?(
+    connection: RtcConnection,
+    currentStats: WlAccStats,
+    averageStats: WlAccStats
   ): void;
 
   /*
@@ -2346,6 +2389,7 @@ export abstract class IRtcEngineEventHandler {
    * @param elapseSinceLastState The time elapsed (ms) from the previous state to the current state.
    */
   onVideoPublishStateChanged?(
+    source: VideoSourceType,
     channel: string,
     oldState: StreamPublishState,
     newState: StreamPublishState,
@@ -2366,7 +2410,7 @@ export abstract class IRtcEngineEventHandler {
    */
   onExtensionEvent?(
     provider: string,
-    extName: string,
+    extension: string,
     key: string,
     value: string
   ): void;
@@ -2379,7 +2423,7 @@ export abstract class IRtcEngineEventHandler {
    *
    * @param extName The name of the extension.
    */
-  onExtensionStarted?(provider: string, extName: string): void;
+  onExtensionStarted?(provider: string, extension: string): void;
 
   /*
    * Occurs when the extension is disabled.
@@ -2389,16 +2433,25 @@ export abstract class IRtcEngineEventHandler {
    *
    * @param provider The name of the extension provider.
    */
-  onExtensionStopped?(provider: string, extName: string): void;
+  onExtensionStopped?(provider: string, extension: string): void;
 
   /*
-   * @ignore
+   * Occurs when the extension runs incorrectly.
+   * When calling enableExtension (true) fails or the extension runs in error, the extension triggers this callback and reports the error code and reason.
+   *
+   * @param provider The name of the extension provider.
+   *
+   * @param extName The name of the extension.
+   *
+   * @param error The error code. For details, see the extension documentation provided by the extension provider.
+   *
+   * @param msg Reason. For details, see the extension documentation provided by the extension provider.
    */
-  onExtensionErrored?(
+  onExtensionError?(
     provider: string,
-    extName: string,
+    extension: string,
     error: number,
-    msg: string
+    message: string
   ): void;
 
   /*
@@ -2433,6 +2486,19 @@ export abstract class IVideoDeviceManager {
   /*
    * @ignore
    */
+  abstract numberOfCapabilities(deviceIdUTF8: string): number;
+
+  /*
+   * @ignore
+   */
+  abstract getCapability(
+    deviceIdUTF8: string,
+    deviceCapabilityNumber: number
+  ): VideoFormat;
+
+  /*
+   * @ignore
+   */
   abstract startDeviceTest(hwnd: any): number;
 
   /*
@@ -2454,12 +2520,6 @@ export class RtcEngineContext {
    * The App ID issued by Agora for your project. Only users in apps with the same App ID can join the same channel and communicate with each other. An App ID can only be used to create one IRtcEngine instance. To change your App ID, call release to destroy the current IRtcEngine instance, and then create a new one.
    */
   appId?: string;
-  /*
-   * Whether to allow the SDK to use audio devices:
-   * true: (Default) Allow the SDK to use audio devices.
-   * false: Do not allow the SDK to use audio devices.
-   */
-  enableAudioDevice?: boolean;
   /*
    * The channel profile. See ChannelProfileType .
    */
@@ -2711,6 +2771,10 @@ export class DirectCdnStreamingMediaOptions {
    * @ignore
    */
   publishMediaPlayerId?: number;
+  /*
+   * @ignore
+   */
+  customVideoTrackId?: number;
 }
 
 /*
@@ -2917,6 +2981,33 @@ export abstract class IRtcEngine {
   ): number;
 
   /*
+   * @ignore
+   */
+  abstract setLowlightEnhanceOptions(
+    enabled: boolean,
+    options: LowlightEnhanceOptions,
+    type?: MediaSourceType
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract setVideoDenoiserOptions(
+    enabled: boolean,
+    options: VideoDenoiserOptions,
+    type?: MediaSourceType
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract setColorEnhanceOptions(
+    enabled: boolean,
+    options: ColorEnhanceOptions,
+    type?: MediaSourceType
+  ): number;
+
+  /*
    * Enables/Disables the virtual background (beta feature).
    * The virtual background function allows you to replace the original background image of the local user or to blur the background. After successfully enabling the virtual background function, all users in the channel can see the customized background.
    * Enabling the virtual background function involves a series of method calls. The calling sequence is as follows:
@@ -2951,7 +3042,9 @@ export abstract class IRtcEngine {
    */
   abstract enableVirtualBackground(
     enabled: boolean,
-    backgroundSource: VirtualBackgroundSource
+    backgroundSource: VirtualBackgroundSource,
+    segproperty: SegmentationProperty,
+    type?: MediaSourceType
   ): number;
 
   /*
@@ -3057,6 +3150,11 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract disableAudio(): number;
+
+  /*
+   * @ignore
+   */
+  abstract setAudioScenario(scenario: AudioScenarioType): number;
 
   /*
    * Enables/Disables the local audio capture.
@@ -3232,6 +3330,14 @@ export abstract class IRtcEngine {
   ): number;
 
   /*
+   * @ignore
+   */
+  abstract setRemoteVideoSubscriptionOptions(
+    uid: number,
+    options: VideoSubscriptionOptions
+  ): number;
+
+  /*
    * Sets the default video-stream type of the remotely subscribed video stream when the remote user sends dual streams.
    * Under limited network conditions, if the publisher has not disabled the dual-stream mode using enableDualStreamMode (false), the receiver can choose to receive either the high-quality video stream or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate.
    * By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.
@@ -3245,6 +3351,38 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract setRemoteDefaultVideoStreamType(streamType: VideoStreamType): number;
+
+  /*
+   * @ignore
+   */
+  abstract setSubscribeAudioBlacklist(
+    uidList: number[],
+    uidNumber: number
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract setSubscribeAudioWhitelist(
+    uidList: number[],
+    uidNumber: number
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract setSubscribeVideoBlacklist(
+    uidList: number[],
+    uidNumber: number
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract setSubscribeVideoWhitelist(
+    uidList: number[],
+    uidNumber: number
+  ): number;
 
   /*
    * Enables the reporting of users' volume indication.
@@ -3268,6 +3406,14 @@ export abstract class IRtcEngine {
     interval: number,
     smooth: number,
     reportVad: boolean
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract registerAudioEncodedFrameObserver(
+    config: AudioEncodedFrameObserverConfig,
+    observer: IAudioEncodedFrameObserver
   ): number;
 
   /*
@@ -3328,6 +3474,16 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract resumeAudioMixing(): number;
+
+  /*
+   * @ignore
+   */
+  abstract selectAudioTrack(index: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract getAudioTrackCount(): number;
 
   /*
    * Adjusts the volume during audio mixing.
@@ -3419,6 +3575,11 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract setAudioMixingPosition(pos: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract setAudioMixingDualMonoMode(mode: AudioMixingDualMonoMode): number;
 
   /*
    * Sets the pitch of the local music file.
@@ -3651,6 +3812,21 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract unloadAllEffects(): number;
+
+  /*
+   * @ignore
+   */
+  abstract getEffectDuration(filePath: string): number;
+
+  /*
+   * @ignore
+   */
+  abstract setEffectPosition(soundId: number, pos: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract getEffectCurrentPosition(soundId: number): number;
 
   /*
    * Enables/Disables stereo panning for remote users.
@@ -4102,6 +4278,20 @@ export abstract class IRtcEngine {
   abstract disableAudioSpectrumMonitor(): number;
 
   /*
+   * @ignore
+   */
+  abstract registerAudioSpectrumObserver(
+    observer: IAudioSpectrumObserver
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract unregisterAudioSpectrumObserver(
+    observer: IAudioSpectrumObserver
+  ): number;
+
+  /*
    * Adjusts the capturing signal volume.
    * You can call this method either before or after joining a channel.
    *
@@ -4175,7 +4365,7 @@ export abstract class IRtcEngine {
   /*
    * @ignore
    */
-  abstract adjustLoopbackRecordingVolume(volume: number): number;
+  abstract adjustLoopbackSignalVolume(volume: number): number;
 
   /*
    * @ignore
@@ -4223,7 +4413,10 @@ export abstract class IRtcEngine {
    * 0: Success.
    * < 0: Failure.
    */
-  abstract loadExtensionProvider(path: string): number;
+  abstract loadExtensionProvider(
+    path: string,
+    unloadAfterUse?: boolean
+  ): number;
 
   /*
    * Sets the properties of the extension provider.
@@ -4315,6 +4508,26 @@ export abstract class IRtcEngine {
   abstract setCameraCapturerConfiguration(
     config: CameraCapturerConfiguration
   ): number;
+
+  /*
+   * @ignore
+   */
+  abstract createCustomVideoTrack(): number;
+
+  /*
+   * @ignore
+   */
+  abstract createCustomEncodedVideoTrack(senderOption: SenderOptions): number;
+
+  /*
+   * @ignore
+   */
+  abstract destroyCustomVideoTrack(videoTrackId: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract destroyCustomEncodedVideoTrack(videoTrackId: number): number;
 
   /*
    * Switches between front and rear cameras.
@@ -4551,8 +4764,8 @@ export abstract class IRtcEngine {
    * @ignore
    */
   abstract getScreenCaptureSources(
-    thumbSize: SIZE,
-    iconSize: SIZE,
+    thumbSize: Size,
+    iconSize: Size,
     includeScreen: boolean
   ): ScreenCaptureSourceInfo[];
 
@@ -4612,6 +4825,11 @@ export abstract class IRtcEngine {
   /*
    * @ignore
    */
+  abstract setScreenCaptureScenario(screenScenario: ScreenScenarioType): number;
+
+  /*
+   * @ignore
+   */
   abstract updateScreenCaptureRegion(regionRect: Rectangle): number;
 
   /*
@@ -4620,6 +4838,16 @@ export abstract class IRtcEngine {
   abstract updateScreenCaptureParameters(
     captureParams: ScreenCaptureParameters
   ): number;
+
+  /*
+   * @ignore
+   */
+  abstract startScreenCapture(captureParams: ScreenCaptureParameters2): number;
+
+  /*
+   * @ignore
+   */
+  abstract updateScreenCapture(captureParams: ScreenCaptureParameters2): number;
 
   /*
    * @ignore
@@ -4671,62 +4899,6 @@ export abstract class IRtcEngine {
    * -3 (ERR_NOT_READY).
    */
   abstract complain(callId: string, description: string): number;
-
-  /*
-   * Publishes the local stream to a specified CDN live streaming URL.
-   * Deprecated:
-   * This method is deprecated. Use startRtmpStreamWithoutTranscoding or startRtmpStreamWithTranscoding instead according to your needs. After calling this method, you can push media streams in RTMP or RTMPS protocol to the CDN. The SDK triggers the onRtmpStreamingStateChanged callback on the local client to report the state of adding a local stream to the CDN. Call this method after joining a channel.
-   * Ensure that the Media Push function is enabled.
-   * This method takes effect only when you are a host in live interactive streaming.
-   * This method adds only one streaming URL to the CDN each time it is called. To push multiple URLs, call this method multiple times.
-   *
-   * @param url The Media Push URL in the RTMP or RTMPS format. The maximum length of this parameter is 1024 bytes. The URL address must not contain special characters, such as Chinese language characters.
-   *
-   * @param transcodingEnabled Whether to enable transcoding. Transcoding in a CDN live streaming converts the audio and video streams before pushing them to the CDN server. It applies to scenarios where a channel has multiple broadcasters and composite layout is needed.
-   *  true: Enable transcoding.
-   *  false: Disable transcoding. If you set this parameter as true, ensurethat you call the setLiveTranscoding method before calling this method.
-   *
-   * @returns
-   * 0: Success. < 0: Failure.
-   * -2: Invalid parameter, usually an empty URL or a string with a length of 0.
-   * -7: The engine is not initialized when streaming.
-   */
-  abstract addPublishStreamUrl(
-    url: string,
-    transcodingEnabled: boolean
-  ): number;
-
-  /*
-   * Removes an RTMP or RTMPS stream from the CDN.
-   * Deprecated:
-   * This method is deprecated. This method is deprecated. Use stopRtmpStream instead. After a successful method call, the SDK triggers the onRtmpStreamingStateChanged callback on the local client to report the result of deleting the URL. Before calling this method, make sure that the media push function has been enabled.
-   * This method takes effect only when you are a host in live interactive streaming.
-   * Call this method after joining a channel.
-   * This method removes only one media push URL each time it is called. To remove multiple URLs, call this method multiple times.
-   *
-   * @param url The media push URL in the RTMP or RTMPS format. The maximum length of this parameter is 1024 bytes. The media push URL must not contain special characters, such as Chinese characters.
-   *
-   * @returns
-   * 0: Success.
-   * < 0: Failure.
-   */
-  abstract removePublishStreamUrl(url: string): number;
-
-  /*
-   * Sets the transcoding configurations for Media Push.
-   * Deprecated:
-   * This method is deprecated. Use startRtmpStreamWithTranscoding or updateRtmpTranscoding instead according to your needs. This method sets the video layout and audio settings for Media Push. The SDK triggers the onTranscodingUpdated callback when you call this method to update the transcoding settings. This method takes effect only when you are a host in live interactive streaming.
-   * Ensure that you enable the RTMP Converter service before using this function. See Prerequisites in the advanced guide Push Streams to CDN.
-   * If you call this method to set the transcoding configuration for the first time, the SDK does not trigger the onTranscodingUpdated callback.
-   * Call this method after joining a channel.
-   *
-   * @param transcoding The transcoding configurations for Media Push. See LiveTranscoding.
-   *
-   * @returns
-   * 0: Success.
-   * < 0: Failure.
-   */
-  abstract setLiveTranscoding(transcoding: LiveTranscoding): number;
 
   /*
    * Starts pushing media streams to a CDN without transcoding.
@@ -5314,21 +5486,6 @@ export abstract class IRtcEngine {
   ): number;
 
   /*
-   * @ignore
-   */
-  abstract takeSnapshot(config: SnapShotConfig): number;
-
-  /*
-   * @ignore
-   */
-  abstract SetContentInspect(config: ContentInspectConfig): number;
-
-  /*
-   * @ignore
-   */
-  abstract switchChannel(token: string, channel: string): number;
-
-  /*
    * Enables the virtual metronome.
    * In music education, physical education and other scenarios, teachers usually need to use a metronome so that students can practice with the correct beat. The meter is composed of a downbeat and upbeats. The first beat of each measure is called a downbeat, and the rest are called upbeats.
    * In this method, you need to set the paths of the upbeat and downbeat files, the number of beats per measure, the tempo, and whether to send the sound of the metronome to remote users. After enabling the virtual metronome, the SDK plays the specified audio effect file from the beginning, and controls the playback duration of each file according to beatsPerMinute you set in AgoraRhythmPlayerConfig . For example, if you set beatsPerMinute as 60, the SDK plays one beat every second. If the file duration exceeds the beat duration, the SDK only plays the audio within the beat duration.
@@ -5376,6 +5533,19 @@ export abstract class IRtcEngine {
   /*
    * @ignore
    */
+  abstract takeSnapshot(uid: number, filePath: string): number;
+
+  /*
+   * @ignore
+   */
+  abstract enableContentInspect(
+    enabled: boolean,
+    config: ContentInspectConfig
+  ): number;
+
+  /*
+   * @ignore
+   */
   abstract adjustCustomAudioPublishVolume(
     sourceId: number,
     volume: number
@@ -5415,14 +5585,6 @@ export abstract class IRtcEngine {
   abstract setLocalAccessPoint(config: LocalAccessPointConfiguration): number;
 
   /*
-   * @ignore
-   */
-  abstract enableFishCorrection(
-    enabled: boolean,
-    params: FishCorrectionParams
-  ): number;
-
-  /*
    * Sets audio advanced options.
    * If you have advanced audio processing requirements, such as capturing and sending stereo audio, you can call this method to set advanced audio options. Call this method after calling joinChannelWithOptions , enableAudio and enableLocalAudio .
    */
@@ -5442,6 +5604,19 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract setAVSyncSource(channelId: string, uid: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract enableVideoImageSource(
+    enable: boolean,
+    options: ImageTrackOptions
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract enableWirelessAccelerate(enabled: boolean): number;
 
   /*
    * Joins a channel.
@@ -5598,10 +5773,12 @@ export abstract class IRtcEngine {
 
   /*
    * Stops the local video preview.
-   * After calling startPreview to start the preview, if you want to close the local video preview, please call this method.
+   * After calling startPreview [1/2] to start the preview, if you want to close the local video preview, please call this method.
    * Please call this method before joining a channel or after leaving a channel.
    *
-   * @param sourceType The type of the video source, see VideoSourceType .
+   * @returns
+   * 0: Success.
+   * < 0: Failure.
    */
   abstract stopPreview(sourceType?: VideoSourceType): number;
 
@@ -5812,6 +5989,16 @@ export abstract class IRtcEngine {
    * @ignore
    */
   abstract getVideoDeviceManager(): IVideoDeviceManager;
+
+  /*
+   * @ignore
+   */
+  abstract getMediaEngine(): IMediaEngine;
+
+  /*
+   * @ignore
+   */
+  abstract getMediaRecorder(): IMediaRecorder;
 
   /*
    * Sends media affiliate information.

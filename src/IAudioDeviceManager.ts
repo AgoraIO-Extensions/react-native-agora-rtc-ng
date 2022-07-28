@@ -127,5 +127,15 @@ export abstract class IAudioDeviceManager {
   /*
    * @ignore
    */
+  abstract followSystemPlaybackDevice(enable: boolean): number;
+
+  /*
+   * @ignore
+   */
+  abstract followSystemRecordingDevice(enable: boolean): number;
+
+  /*
+   * @ignore
+   */
   abstract release(): void;
 }

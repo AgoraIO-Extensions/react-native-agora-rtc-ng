@@ -221,6 +221,26 @@ export enum MediaPlayerEvent {
    * 13: The first video frame is rendered.
    */
   PlayerEventFirstDisplayed = 13,
+  /*
+   * @ignore
+   */
+  PlayerEventReachCacheFileMaxCount = 14,
+  /*
+   * @ignore
+   */
+  PlayerEventReachCacheFileMaxSize = 15,
+  /*
+   * @ignore
+   */
+  PlayerEventTryOpenStart = 16,
+  /*
+   * @ignore
+   */
+  PlayerEventTryOpenSucceed = 17,
+  /*
+   * @ignore
+   */
+  PlayerEventTryOpenFailed = 18,
 }
 
 /*
@@ -328,6 +348,24 @@ export enum MediaPlayerMetadataType {
 }
 
 /*
+ * @ignore
+ */
+export class CacheStatistics {
+  /*
+   * @ignore
+   */
+  fileSize?: number;
+  /*
+   * @ignore
+   */
+  cacheSize?: number;
+  /*
+   * @ignore
+   */
+  downloadSize?: number;
+}
+
+/*
  * Information related to the media player.
  */
 export class PlayerUpdatedInfo {
@@ -339,4 +377,42 @@ export class PlayerUpdatedInfo {
    * The ID of a deivce.
    */
   deviceId?: string;
+  /*
+   * @ignore
+   */
+  cacheStatistics?: CacheStatistics;
+}
+
+/*
+ * @ignore
+ */
+export class MediaSource {
+  /*
+   * @ignore
+   */
+  url?: string;
+  /*
+   * @ignore
+   */
+  uri?: string;
+  /*
+   * @ignore
+   */
+  startPos?: number;
+  /*
+   * @ignore
+   */
+  autoPlay?: boolean;
+  /*
+   * @ignore
+   */
+  enableCache?: boolean;
+  /*
+   * @ignore
+   */
+  isAgoraSource?: boolean;
+  /*
+   * @ignore
+   */
+  isLiveSource?: boolean;
 }
