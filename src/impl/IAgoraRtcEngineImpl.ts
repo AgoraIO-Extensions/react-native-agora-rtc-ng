@@ -88,6 +88,7 @@ import { LogFilterType, LogLevel } from '../IAgoraLog';
 import { AgoraRhythmPlayerConfig } from '../IAgoraRhythmPlayer';
 import { IAudioDeviceManager } from '../IAudioDeviceManager';
 import { IMediaRecorder } from '../IAgoraMediaRecorder';
+import { ILocalSpatialAudioEngine } from '../IAgoraSpatialAudio';
 
 export function processIRtcEngineEventHandler(
   handler: IRtcEngineEventHandler,
@@ -4441,6 +4442,13 @@ export class IRtcEngineImpl implements IRtcEngine {
 
   getMediaRecorder(): IMediaRecorder {
     const apiType = 'RtcEngine_getMediaRecorder';
+    const jsonParams = {};
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  getLocalSpatialAudioEngine(): ILocalSpatialAudioEngine {
+    const apiType = 'RtcEngine_getLocalSpatialAudioEngine';
     const jsonParams = {};
     const jsonResults = callIrisApi.call(this, apiType, jsonParams);
     return jsonResults.result;

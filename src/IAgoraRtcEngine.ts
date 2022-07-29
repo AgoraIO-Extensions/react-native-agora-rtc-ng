@@ -105,6 +105,7 @@ import { IMediaPlayer } from './IAgoraMediaPlayer';
 import { AudioMixingDualMonoMode, IMediaEngine } from './IAgoraMediaEngine';
 import { IAudioDeviceManager } from './IAudioDeviceManager';
 import { IMediaRecorder } from './IAgoraMediaRecorder';
+import { ILocalSpatialAudioEngine } from './IAgoraSpatialAudio';
 
 /*
  * @ignore
@@ -5999,6 +6000,11 @@ export abstract class IRtcEngine {
    * @ignore
    */
   abstract getMediaRecorder(): IMediaRecorder;
+
+  /*
+   * @ignore
+   */
+  abstract getLocalSpatialAudioEngine(): ILocalSpatialAudioEngine;
 
   /*
    * Sends media affiliate information.
