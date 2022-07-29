@@ -1,5 +1,10 @@
 import { callIrisApi } from '../internal/IrisApiEngine';
-import { IMediaPlayer, IMediaPlayerCacheManager } from '../IAgoraMediaPlayer';
+import {
+  IMediaPlayer,
+  IMediaPlayerAudioFrameObserver,
+  IMediaPlayerVideoFrameObserver,
+  IMediaPlayerCacheManager,
+} from '../IAgoraMediaPlayer';
 import {
   MediaSource,
   PlayerStreamInfo,
@@ -7,8 +12,6 @@ import {
 } from '../AgoraMediaPlayerTypes';
 import {
   RenderModeType,
-  IAudioFrameObserver,
-  IVideoFrameObserver,
   IAudioSpectrumObserver,
   AudioDualMonoMode,
 } from '../AgoraMediaBase';
@@ -326,42 +329,6 @@ export class IMediaPlayerImpl implements IMediaPlayer {
     return jsonResults.result;
   }
 
-  unregisterAudioFrameObserver(observer: IAudioFrameObserver): number {
-    const apiType = 'MediaPlayer_unregisterAudioFrameObserver';
-    const jsonParams = {
-      observer,
-      toJSON: () => {
-        return {};
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
-  }
-
-  registerVideoFrameObserver(observer: IVideoFrameObserver): number {
-    const apiType = 'MediaPlayer_registerVideoFrameObserver';
-    const jsonParams = {
-      observer,
-      toJSON: () => {
-        return {};
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
-  }
-
-  unregisterVideoFrameObserver(observer: IVideoFrameObserver): number {
-    const apiType = 'MediaPlayer_unregisterVideoFrameObserver';
-    const jsonParams = {
-      observer,
-      toJSON: () => {
-        return {};
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
-  }
-
   registerMediaPlayerAudioSpectrumObserver(
     observer: IAudioSpectrumObserver,
     intervalInMS: number
@@ -588,8 +555,48 @@ export class IMediaPlayerImpl implements IMediaPlayer {
     return jsonResults.result;
   }
 
-  registerAudioFrameObserver(observer: IAudioFrameObserver): number {
+  registerAudioFrameObserver(observer: IMediaPlayerAudioFrameObserver): number {
     const apiType = 'MediaPlayer_registerAudioFrameObserver';
+    const jsonParams = {
+      observer,
+      toJSON: () => {
+        return {};
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  unregisterAudioFrameObserver(
+    observer: IMediaPlayerAudioFrameObserver
+  ): number {
+    const apiType = 'MediaPlayer_unregisterAudioFrameObserver';
+    const jsonParams = {
+      observer,
+      toJSON: () => {
+        return {};
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  registerVideoFrameObserver(observer: IMediaPlayerVideoFrameObserver): number {
+    const apiType = 'MediaPlayer_registerVideoFrameObserver';
+    const jsonParams = {
+      observer,
+      toJSON: () => {
+        return {};
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
+
+  unregisterVideoFrameObserver(
+    observer: IMediaPlayerVideoFrameObserver
+  ): number {
+    const apiType = 'MediaPlayer_unregisterVideoFrameObserver';
     const jsonParams = {
       observer,
       toJSON: () => {
@@ -740,5 +747,33 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
     const jsonParams = {};
     const jsonResults = callIrisApi.call(this, apiType, jsonParams);
     return jsonResults.result;
+  }
+}
+
+export function processIMediaPlayerAudioFrameObserver(
+  handler: IMediaPlayerAudioFrameObserver,
+  event: string,
+  jsonParams: any
+) {
+  switch (event) {
+    case 'onFrame':
+      if (handler.onFrame !== undefined) {
+        handler.onFrame(jsonParams.frame);
+      }
+      break;
+  }
+}
+
+export function processIMediaPlayerVideoFrameObserver(
+  handler: IMediaPlayerVideoFrameObserver,
+  event: string,
+  jsonParams: any
+) {
+  switch (event) {
+    case 'onFrame':
+      if (handler.onFrame !== undefined) {
+        handler.onFrame(jsonParams.frame);
+      }
+      break;
   }
 }

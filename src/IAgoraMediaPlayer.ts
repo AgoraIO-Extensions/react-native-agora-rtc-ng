@@ -5,8 +5,6 @@ import {
 } from './AgoraMediaPlayerTypes';
 import {
   RenderModeType,
-  IAudioFrameObserver,
-  IVideoFrameObserver,
   IAudioSpectrumObserver,
   AudioDualMonoMode,
 } from './AgoraMediaBase';
@@ -307,21 +305,6 @@ export abstract class IMediaPlayer {
   /*
    * @ignore
    */
-  abstract unregisterAudioFrameObserver(observer: IAudioFrameObserver): number;
-
-  /*
-   * @ignore
-   */
-  abstract registerVideoFrameObserver(observer: IVideoFrameObserver): number;
-
-  /*
-   * @ignore
-   */
-  abstract unregisterVideoFrameObserver(observer: IVideoFrameObserver): number;
-
-  /*
-   * @ignore
-   */
   abstract registerMediaPlayerAudioSpectrumObserver(
     observer: IAudioSpectrumObserver,
     intervalInMS: number
@@ -515,7 +498,30 @@ export abstract class IMediaPlayer {
   /*
    * @ignore
    */
-  abstract registerAudioFrameObserver(observer: IAudioFrameObserver): number;
+  abstract registerAudioFrameObserver(
+    observer: IMediaPlayerAudioFrameObserver
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract unregisterAudioFrameObserver(
+    observer: IMediaPlayerAudioFrameObserver
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract registerVideoFrameObserver(
+    observer: IMediaPlayerVideoFrameObserver
+  ): number;
+
+  /*
+   * @ignore
+   */
+  abstract unregisterVideoFrameObserver(
+    observer: IMediaPlayerVideoFrameObserver
+  ): number;
 
   /*
    * @ignore
@@ -586,4 +592,24 @@ export abstract class IMediaPlayerCacheManager {
    * @ignore
    */
   abstract getCacheFileCount(): number;
+}
+
+/*
+ * @ignore
+ */
+export abstract class IMediaPlayerAudioFrameObserver {
+  /*
+   * @ignore
+   */
+  onFrame?(frame: number): void;
+}
+
+/*
+ * @ignore
+ */
+export abstract class IMediaPlayerVideoFrameObserver {
+  /*
+   * @ignore
+   */
+  onFrame?(frame: number): void;
 }
