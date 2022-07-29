@@ -4481,4 +4481,18 @@ export class IRtcEngineImpl implements IRtcEngine {
     const jsonResults = callIrisApi.call(this, apiType, jsonParams);
     return jsonResults.result;
   }
+
+  unregisterAudioEncodedFrameObserver(
+    observer: IAudioEncodedFrameObserver
+  ): number {
+    const apiType = 'RtcEngine_unregisterAudioEncodedFrameObserver';
+    const jsonParams = {
+      observer,
+      toJSON: () => {
+        return {};
+      },
+    };
+    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
+    return jsonResults.result;
+  }
 }

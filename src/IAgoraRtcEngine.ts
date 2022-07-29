@@ -6034,6 +6034,13 @@ export abstract class IRtcEngine {
    * < 0: Failure.
    */
   abstract setMaxMetadataSize(size: number): number;
+
+  /*
+   * @ignore
+   */
+  abstract unregisterAudioEncodedFrameObserver(
+    observer: IAudioEncodedFrameObserver
+  ): number;
 }
 
 /*

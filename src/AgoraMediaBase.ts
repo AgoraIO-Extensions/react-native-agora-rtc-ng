@@ -761,7 +761,7 @@ export abstract class IAudioSpectrumObserver {
    * @ignore
    */
   onRemoteAudioSpectrum?(
-    spectrums: UserAudioSpectrumInfo,
+    spectrums: UserAudioSpectrumInfo[],
     spectrumNumber: number
   ): boolean;
 }
