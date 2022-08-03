@@ -17,9 +17,8 @@ import {
   BaseComponent,
   STYLES,
 } from '../../../components/BaseComponent';
+import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
-
-const Config = require('../../../config/agora.config.json');
 
 interface State extends BaseAudioComponentState {
   userAccount: string;

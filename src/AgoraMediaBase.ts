@@ -773,7 +773,7 @@ export abstract class IVideoEncodedFrameObserver {
   /*
    * @ignore
    */
-  OnEncodedVideoFrameReceived?(
+  onEncodedVideoFrameReceived?(
     uid: number,
     imageBuffer: Uint8Array,
     length: number,

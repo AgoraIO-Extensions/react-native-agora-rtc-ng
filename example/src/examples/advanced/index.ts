@@ -4,13 +4,17 @@ import ChannelMediaRelay from './ChannelMediaRelay/ChannelMediaRelay';
 import VoiceChanger from './VoiceChanger/VoiceChanger';
 import EnableSpatialAudio from './EnableSpatialAudio/EnableSpatialAudio';
 import MediaPlayer from './MediaPlayer/MediaPlayer';
+import MediaRecorder from './MediaRecorder/MediaRecorder';
 import PlayEffect from './PlayEffect/PlayEffect';
 import TakeSnapshot from './TakeSnapshot/TakeSnapshot';
 import EnableContentInspect from './EnableContentInspect/EnableContentInspect';
 import StartRhythmPlayer from './StartRhythmPlayer/StartRhythmPlayer';
 import SendMultiVideoStream from './SendMultiVideoStream/SendMultiVideoStream';
 import AudioMixing from './AudioMixing/AudioMixing';
+import AudioSpectrum from './AudioSpectrum/AudioSpectrum';
 import RTMPStreaming from './RTMPStreaming/RTMPStreaming';
+import LocalSpatialAudioEngine from './LocalSpatialAudioEngine/LocalSpatialAudioEngine';
+import ScreenShare from './ScreenShare/ScreenShare';
 import EnableEncryption from './EnableEncryption/EnableEncryption';
 import SetVideoEncoderConfiguration from './SetVideoEncoderConfiguration/SetVideoEncoderConfiguration';
 import StartDirectCdnStreaming from './StartDirectCdnStreaming/StartDirectCdnStreaming';
@@ -18,6 +22,8 @@ import EnableVirtualBackground from './EnableVirtualBackground/EnableVirtualBack
 import SendMetadata from './SendMetadata/SendMetadata';
 import EnableExtension from './EnableExtension/EnableExtension';
 import SetBeautyEffectOptions from './SetBeautyEffectOptions/SetBeautyEffectOptions';
+import PushEncodedVideoImage from './PushEncodedVideoImage/PushEncodedVideoImage';
+import PushVideoFrame from './PushVideoFrame/PushVideoFrame';
 
 const Advanced = {
   title: 'Advanced',
@@ -25,6 +31,10 @@ const Advanced = {
     {
       name: 'AudioMixing',
       component: AudioMixing,
+    },
+    {
+      name: 'AudioSpectrum',
+      component: AudioSpectrum,
     },
     {
       name: 'ChannelMediaRelay',
@@ -55,16 +65,36 @@ const Advanced = {
       component: JoinMultipleChannel,
     },
     {
+      name: 'LocalSpatialAudioEngine',
+      component: LocalSpatialAudioEngine,
+    },
+    {
       name: 'MediaPlayer',
       component: MediaPlayer,
+    },
+    {
+      name: 'MediaRecorder',
+      component: MediaRecorder,
     },
     {
       name: 'PlayEffect',
       component: PlayEffect,
     },
     {
+      name: 'PushEncodedVideoImage',
+      component: PushEncodedVideoImage,
+    },
+    {
+      name: 'PushVideoFrame',
+      component: PushVideoFrame,
+    },
+    {
       name: 'RTMPStreaming',
       component: RTMPStreaming,
+    },
+    {
+      name: 'ScreenShare',
+      component: ScreenShare,
     },
     {
       name: 'SendMetadata',

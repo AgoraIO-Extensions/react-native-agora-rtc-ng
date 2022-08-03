@@ -19,6 +19,7 @@ import {
   RtcSurfaceView,
   RtcTextureView,
   UserOfflineReasonType,
+  VideoSourceType,
   VideoViewSetupMode,
   WarnCodeType,
 } from 'react-native-agora-rtc-ng';
@@ -188,18 +189,18 @@ export default class JoinChannelVideo
   }
 
   onLocalVideoStateChanged(
-    connection: RtcConnection,
+    source: VideoSourceType,
     state: LocalVideoStreamState,
-    errorCode: LocalVideoStreamError
+    error: LocalVideoStreamError
   ) {
     this.info(
       'onLocalVideoStateChanged',
-      'connection',
-      connection,
+      'source',
+      source,
       'state',
       state,
-      'errorCode',
-      errorCode
+      'error',
+      error
     );
   }
 

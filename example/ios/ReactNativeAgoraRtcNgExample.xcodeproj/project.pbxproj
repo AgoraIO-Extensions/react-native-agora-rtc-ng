@@ -13,6 +13,7 @@
 		4C39C56BAD484C67AA576FFA /* libPods-ReactNativeAgoraRtcNgExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA3E69C5B9553B26FBA2DF04 /* libPods-ReactNativeAgoraRtcNgExample.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F52D7F472843689D00EBF05A /* Sound_Horizon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F52D7F462843689C00EBF05A /* Sound_Horizon.mp3 */; };
+		F536DA342892D8F900746D33 /* agora-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F536DA332892D8F900746D33 /* agora-logo.png */; };
 		F5CB7BB8284C606400A828C7 /* dang.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F5CB7BB6284C606400A828C7 /* dang.mp3 */; };
 		F5CB7BB9284C606400A828C7 /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F5CB7BB7284C606400A828C7 /* ding.mp3 */; };
 		F5E522822701B8E300A80187 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E522812701B8E300A80187 /* File.swift */; };
@@ -32,6 +33,7 @@
 		E00ACF0FDA8BF921659E2F9A /* Pods-ReactNativeAgoraRtcNgExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeAgoraRtcNgExample.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeAgoraRtcNgExample/Pods-ReactNativeAgoraRtcNgExample.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F52D7F462843689C00EBF05A /* Sound_Horizon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sound_Horizon.mp3; sourceTree = "<group>"; };
+		F536DA332892D8F900746D33 /* agora-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "agora-logo.png"; sourceTree = "<group>"; };
 		F5CB7BB6284C606400A828C7 /* dang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dang.mp3; sourceTree = "<group>"; };
 		F5CB7BB7284C606400A828C7 /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
 		F5E522802701B8E300A80187 /* ReactNativeAgoraRtcNgExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeAgoraRtcNgExample-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		F52D7F452843689C00EBF05A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F536DA332892D8F900746D33 /* agora-logo.png */,
 				F5CB7BB6284C606400A828C7 /* dang.mp3 */,
 				F5CB7BB7284C606400A828C7 /* ding.mp3 */,
 				F52D7F462843689C00EBF05A /* Sound_Horizon.mp3 */,
@@ -158,9 +161,9 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = PV44H27855;
+						DevelopmentTeam = 56S4B84HA8;
 						LastSwiftMigration = 1300;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -192,6 +195,7 @@
 				F52D7F472843689D00EBF05A /* Sound_Horizon.mp3 in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F536DA342892D8F900746D33 /* agora-logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,33 +246,41 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ReactNativeAgoraRtcNgExample/Pods-ReactNativeAgoraRtcNgExample-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraRtcWrapper.framework/AgoraRtcWrapper",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraDav1dExtension/AgoraDav1dExtension.framework/AgoraDav1dExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraPvcExtension/AgoraPvcExtension.framework/AgoraPvcExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraQualityEduVideoProcess/AgoraQualityEduVideoProcess.framework/AgoraQualityEduVideoProcess",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRTE/AgoraRTE.framework/AgoraRTE",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraReplayKitExtension/AgoraReplayKitExtension.framework/AgoraReplayKitExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcKit/AgoraRtcKit.framework/AgoraRtcKit",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraSuperResolutionExtension/AgoraSuperResolutionExtension.framework/AgoraSuperResolutionExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraVideoProcessExtension/AgoraVideoProcessExtension.framework/AgoraVideoProcessExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraVideoSegmentationExtension/AgoraVideoSegmentationExtension.framework/AgoraVideoSegmentationExtension",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Agoraffmpeg/Agoraffmpeg.framework/Agoraffmpeg",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/BeQuic/BeQuic.framework/BeQuic",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraAiNoiseSuppressionExtension.framework/AgoraAiNoiseSuppressionExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraAudioBeautyExtension.framework/AgoraAudioBeautyExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraClearVisionExtension.framework/AgoraClearVisionExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraContentInspectExtension.framework/AgoraContentInspectExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraDav1d.framework/AgoraDav1d",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/Agorafdkaac.framework/Agorafdkaac",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/Agoraffmpeg.framework/Agoraffmpeg",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraPvcExtension.framework/AgoraPvcExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraReplayKitExtension.framework/AgoraReplayKitExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraRtcKit.framework/AgoraRtcKit",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraRTE.framework/AgoraRTE",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraSoundTouch.framework/AgoraSoundTouch",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraSpatialAudioExtension.framework/AgoraSpatialAudioExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraSuperResolutionExtension.framework/AgoraSuperResolutionExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcWrapper/AgoraVideoSegmentationExtension.framework/AgoraVideoSegmentationExtension",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtcWrapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraDav1dExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraAiNoiseSuppressionExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraAudioBeautyExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraClearVisionExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraContentInspectExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraDav1d.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Agorafdkaac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Agoraffmpeg.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraPvcExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraQualityEduVideoProcess.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRTE.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraReplayKitExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtcKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRTE.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraSoundTouch.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraSpatialAudioExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraSuperResolutionExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraVideoProcessExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraVideoSegmentationExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Agoraffmpeg.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BeQuic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,10 +380,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PV44H27855;
+				DEVELOPMENT_TEAM = 56S4B84HA8;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = ReactNativeAgoraRtcNgExample/Info.plist;
@@ -383,7 +395,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.rtc.ng.react.example;
 				PRODUCT_NAME = ReactNativeAgoraRtcNgExample;
-				PROVISIONING_PROFILE_SPECIFIER = AgoraQA2021;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeAgoraRtcNgExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -398,10 +410,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = PV44H27855;
+				DEVELOPMENT_TEAM = 56S4B84HA8;
 				INFOPLIST_FILE = ReactNativeAgoraRtcNgExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -411,7 +423,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.rtc.ng.react.example;
 				PRODUCT_NAME = ReactNativeAgoraRtcNgExample;
-				PROVISIONING_PROFILE_SPECIFIER = AgoraQA2021;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeAgoraRtcNgExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -202,28 +202,6 @@ export default class PlayEffect
       publish,
       startPos,
     } = this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: Number.parseFloat(((max - min) * value + min).toFixed(2)),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
         <TextInput
@@ -261,11 +239,11 @@ export default class PlayEffect
               : loopCount.toString()
           }
         />
-        {renderSlider('pitch', pitch, 0.5, 2.0)}
+        {this.renderSlider('pitch', pitch, 0.5, 2.0, true)}
         <Divider />
-        {renderSlider('pan', pan, -1.0, 1.0)}
+        {this.renderSlider('pan', pan, -1.0, 1.0, true)}
         <Divider />
-        {renderSlider('gain', gain, 0.0, 100.0)}
+        {this.renderSlider('gain', gain, 0.0, 100.0, true)}
         <Divider />
         <ActionItem
           title={'publish'}

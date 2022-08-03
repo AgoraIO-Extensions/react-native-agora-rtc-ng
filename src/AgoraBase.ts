@@ -3745,7 +3745,7 @@ export abstract class IAudioEncodedFrameObserver {
   /*
    * @ignore
    */
-  OnRecordAudioEncodedFrame?(
+  onRecordAudioEncodedFrame?(
     frameBuffer: Uint8Array,
     length: number,
     audioEncodedFrameInfo: EncodedAudioFrameInfo
@@ -3754,7 +3754,7 @@ export abstract class IAudioEncodedFrameObserver {
   /*
    * @ignore
    */
-  OnPlaybackAudioEncodedFrame?(
+  onPlaybackAudioEncodedFrame?(
     frameBuffer: Uint8Array,
     length: number,
     audioEncodedFrameInfo: EncodedAudioFrameInfo
@@ -3763,7 +3763,7 @@ export abstract class IAudioEncodedFrameObserver {
   /*
    * @ignore
    */
-  OnMixedAudioEncodedFrame?(
+  onMixedAudioEncodedFrame?(
     frameBuffer: Uint8Array,
     length: number,
     audioEncodedFrameInfo: EncodedAudioFrameInfo

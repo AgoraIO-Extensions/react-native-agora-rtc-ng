@@ -15,20 +15,25 @@ import {
 } from '../IAgoraRtcEngine';
 import { IMediaPlayer } from '../IAgoraMediaPlayer';
 import {
+  AudioEncodedFrameObserverConfig,
   AudioRecordingConfiguration,
   ClientRoleOptions,
   ClientRoleType,
   DataStreamConfig,
+  IAudioEncodedFrameObserver,
   SimulcastStreamConfig,
   VideoSourceType,
   WatermarkOptions,
 } from '../AgoraBase';
+import { IAudioSpectrumObserver } from '../AgoraMediaBase';
 import { RtcConnection } from '../IAgoraRtcEngineEx';
 import { IAudioDeviceManager } from '../IAudioDeviceManager';
 import { IMediaEngine } from '../IAgoraMediaEngine';
 import { IMediaRecorder } from '../IAgoraMediaRecorder';
-import { IMediaEngineImpl } from '../impl/IAgoraMediaEngineImpl';
-import { IMediaRecorderImpl } from '../impl/IAgoraMediaRecorderImpl';
+import { ILocalSpatialAudioEngine } from '../IAgoraSpatialAudio';
+import { MediaEngineInternal } from './MediaEngineInternal';
+import { MediaRecorderInternal } from './MediaRecorderInternal';
+import { LocalSpatialAudioEngineInternal } from './LocalSpatialAudioEngineInternal';
 
 export class RtcEngineInternal extends IRtcEngineExImpl {
   static _handlers: (
@@ -36,6 +41,12 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     | IDirectCdnStreamingEventHandler
     | IMetadataObserver
   )[] = [];
+  static _audio_encoded_frame_observers: IAudioEncodedFrameObserver[] = [];
+  static _audio_spectrum_observers: IAudioSpectrumObserver[] = [];
+  private _media_engine: IMediaEngine = new MediaEngineInternal();
+  private _media_recorder: IMediaRecorder = new MediaRecorderInternal();
+  private _local_spatial_audio_engine: ILocalSpatialAudioEngine =
+    new LocalSpatialAudioEngineInternal();
 
   initialize(context: RtcEngineContext): number {
     const ret = super.initialize(context);
@@ -46,8 +57,13 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   }
 
   release(sync: boolean = false) {
+    this._media_engine.release();
+    this._media_recorder.release();
+    this._local_spatial_audio_engine.release();
     RtcEngineInternal._handlers = [];
-    MediaPlayerInternal._observers.clear();
+    RtcEngineInternal._audio_encoded_frame_observers = [];
+    RtcEngineInternal._audio_spectrum_observers = [];
+    MediaPlayerInternal._source_observers.clear();
     super.release(sync);
   }
 
@@ -83,7 +99,18 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
 
   destroyMediaPlayer(mediaPlayer: IMediaPlayer): number {
     const ret = super.destroyMediaPlayer(mediaPlayer);
-    MediaPlayerInternal._observers.delete(mediaPlayer.getMediaPlayerId());
+    MediaPlayerInternal._source_observers.delete(
+      mediaPlayer.getMediaPlayerId()
+    );
+    MediaPlayerInternal._audio_frame_observers.delete(
+      mediaPlayer.getMediaPlayerId()
+    );
+    MediaPlayerInternal._video_frame_observers.delete(
+      mediaPlayer.getMediaPlayerId()
+    );
+    MediaPlayerInternal._audio_spectrum_observers.delete(
+      mediaPlayer.getMediaPlayerId()
+    );
     return ret;
   }
 
@@ -118,243 +145,101 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     return super.unregisterMediaMetadataObserver(observer, type);
   }
 
-  joinChannelWithOptions(
+  protected getApiTypeFromJoinChannelWithOptions(
     token: string,
     channelId: string,
     uid: number,
     options: ChannelMediaOptions
-  ): number {
-    const apiType = 'RtcEngine_joinChannel2';
-    const jsonParams = {
-      token,
-      channelId,
-      uid,
-      options,
-      toJSON: () => {
-        return {
-          token,
-          channelId,
-          uid,
-          options,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return 'RtcEngine_joinChannel2';
   }
 
-  leaveChannel(options?: LeaveChannelOptions): number {
-    const apiType =
-      options === undefined
-        ? 'RtcEngine_leaveChannel'
-        : 'RtcEngine_leaveChannel2';
-    const jsonParams = {
-      options,
-      toJSON: () => {
-        return { options };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  protected getApiTypeFromLeaveChannel(options?: LeaveChannelOptions): string {
+    return options === undefined
+      ? 'RtcEngine_leaveChannel'
+      : 'RtcEngine_leaveChannel2';
   }
 
-  setClientRole(role: ClientRoleType, options?: ClientRoleOptions): number {
-    const apiType =
-      options === undefined
-        ? 'RtcEngine_setClientRole'
-        : 'RtcEngine_setClientRole2';
-    const jsonParams = {
-      role,
-      options,
-      toJSON: () => {
-        return {
-          role,
-          options,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  protected getApiTypeFromSetClientRole(
+    role: ClientRoleType,
+    options?: ClientRoleOptions
+  ): string {
+    return options === undefined
+      ? 'RtcEngine_setClientRole'
+      : 'RtcEngine_setClientRole2';
   }
 
-  startEchoTest(intervalInSeconds: number = 10): number {
-    const apiType = 'RtcEngine_startEchoTest2';
-    const jsonParams = {
-      intervalInSeconds,
-      toJSON: () => {
-        return { intervalInSeconds };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  protected getApiTypeFromStartEchoTest(
+    intervalInSeconds: number = 10
+  ): string {
+    return 'RtcEngine_startEchoTest2';
   }
 
-  startPreview(
+  protected getApiTypeFromStartPreview(
     sourceType: VideoSourceType = VideoSourceType.VideoSourceCameraPrimary
-  ): number {
-    const apiType = 'RtcEngine_startPreview2';
-    const jsonParams = {
-      sourceType,
-      toJSON: () => {
-        return { sourceType };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return 'RtcEngine_startPreview2';
   }
 
-  stopPreview(
+  protected getApiTypeFromStopPreview(
     sourceType: VideoSourceType = VideoSourceType.VideoSourceCameraPrimary
-  ): number {
-    const apiType = 'RtcEngine_stopPreview2';
-    const jsonParams = {
-      sourceType,
-      toJSON: () => {
-        return { sourceType };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return 'RtcEngine_stopPreview2';
   }
 
-  startAudioRecording(config: AudioRecordingConfiguration): number {
-    const apiType = 'RtcEngine_startAudioRecording3';
-    const jsonParams = {
-      config,
-      toJSON: () => {
-        return { config };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  protected getApiTypeFromStartAudioRecording(
+    config: AudioRecordingConfiguration
+  ): string {
+    return 'RtcEngine_startAudioRecording3';
   }
 
-  startAudioMixing(
+  protected getApiTypeFromStartAudioMixing(
     filePath: string,
     loopback: boolean,
     replace: boolean,
     cycle: number,
     startPos: number = 0
-  ): number {
-    const apiType = 'RtcEngine_startAudioMixing2';
-    const jsonParams = {
-      filePath,
-      loopback,
-      replace,
-      cycle,
-      startPos,
-      toJSON: () => {
-        return {
-          filePath,
-          loopback,
-          replace,
-          cycle,
-          startPos,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return 'RtcEngine_startAudioMixing2';
   }
 
-  enableDualStreamMode(
+  protected getApiTypeFromEnableDualStreamMode(
     enabled: boolean,
     sourceType: VideoSourceType = VideoSourceType.VideoSourceCameraPrimary,
     streamConfig?: SimulcastStreamConfig
-  ): number {
-    const apiType =
-      streamConfig === undefined
-        ? 'RtcEngine_enableDualStreamMode2'
-        : 'RtcEngine_enableDualStreamMode3';
-    const jsonParams = {
-      enabled,
-      sourceType,
-      streamConfig,
-      toJSON: () => {
-        return {
-          enabled,
-          sourceType,
-          streamConfig,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return streamConfig === undefined
+      ? 'RtcEngine_enableDualStreamMode2'
+      : 'RtcEngine_enableDualStreamMode3';
   }
 
-  createDataStream(config: DataStreamConfig): number {
-    const apiType = 'RtcEngine_createDataStream2';
-    const jsonParams = {
-      config,
-      toJSON: () => {
-        return { config };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.streamId;
+  protected getApiTypeFromCreateDataStream(config: DataStreamConfig): string {
+    return 'RtcEngine_createDataStream2';
   }
 
-  addVideoWatermark(watermarkUrl: string, options: WatermarkOptions): number {
-    const apiType = 'RtcEngine_addVideoWatermark2';
-    const jsonParams = {
-      watermarkUrl,
-      options,
-      toJSON: () => {
-        return {
-          watermarkUrl,
-          options,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  protected getApiTypeFromAddVideoWatermark(
+    watermarkUrl: string,
+    options: WatermarkOptions
+  ): string {
+    return 'RtcEngine_addVideoWatermark2';
   }
 
-  joinChannelWithUserAccount(
+  protected getApiTypeFromJoinChannelWithUserAccount(
     token: string,
     channelId: string,
     userAccount: string,
     options?: ChannelMediaOptions
-  ): number {
-    const apiType =
-      options === undefined
-        ? 'RtcEngine_joinChannelWithUserAccount'
-        : 'RtcEngine_joinChannelWithUserAccount2';
-    const jsonParams = {
-      token,
-      channelId,
-      userAccount,
-      options,
-      toJSON: () => {
-        return {
-          token,
-          channelId,
-          userAccount,
-          options,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  ): string {
+    return options === undefined
+      ? 'RtcEngine_joinChannelWithUserAccount'
+      : 'RtcEngine_joinChannelWithUserAccount2';
   }
 
-  createDataStreamEx(
+  protected getApiTypeFromCreateDataStreamEx(
     config: DataStreamConfig,
     connection: RtcConnection
-  ): number {
-    const apiType = 'RtcEngineEx_createDataStreamEx2';
-    const jsonParams = {
-      config,
-      connection,
-      toJSON: () => {
-        return {
-          config,
-          connection,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.streamId;
+  ): string {
+    return 'RtcEngineEx_createDataStreamEx2';
   }
 
   getAudioDeviceManager(): IAudioDeviceManager {
@@ -366,10 +251,57 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   }
 
   getMediaEngine(): IMediaEngine {
-    return new IMediaEngineImpl();
+    return this._media_engine;
   }
 
   getMediaRecorder(): IMediaRecorder {
-    return new IMediaRecorderImpl();
+    return this._media_recorder;
+  }
+
+  getLocalSpatialAudioEngine(): ILocalSpatialAudioEngine {
+    return this._local_spatial_audio_engine;
+  }
+
+  registerAudioEncodedFrameObserver(
+    config: AudioEncodedFrameObserverConfig,
+    observer: IAudioEncodedFrameObserver
+  ): number {
+    if (
+      !RtcEngineInternal._audio_encoded_frame_observers.find(
+        (value) => value === observer
+      )
+    ) {
+      RtcEngineInternal._audio_encoded_frame_observers.push(observer);
+    }
+    return super.registerAudioEncodedFrameObserver(config, observer);
+  }
+
+  unregisterAudioEncodedFrameObserver(
+    observer: IAudioEncodedFrameObserver
+  ): number {
+    RtcEngineInternal._audio_encoded_frame_observers =
+      RtcEngineInternal._audio_encoded_frame_observers.filter(
+        (value) => value !== observer
+      );
+    return super.unregisterAudioEncodedFrameObserver(observer);
+  }
+
+  registerAudioSpectrumObserver(observer: IAudioSpectrumObserver): number {
+    if (
+      !RtcEngineInternal._audio_spectrum_observers.find(
+        (value) => value === observer
+      )
+    ) {
+      RtcEngineInternal._audio_spectrum_observers.push(observer);
+    }
+    return super.registerAudioSpectrumObserver(observer);
+  }
+
+  unregisterAudioSpectrumObserver(observer: IAudioSpectrumObserver): number {
+    RtcEngineInternal._audio_spectrum_observers =
+      RtcEngineInternal._audio_spectrum_observers.filter(
+        (value) => value !== observer
+      );
+    return super.unregisterAudioSpectrumObserver(observer);
   }
 }

@@ -102,6 +102,7 @@ export default class MediaPlayer
       this.player?.seek(0);
     } else {
       this.player?.play();
+      this.player?.setPlayerOptionInInt('xxx', 1);
     }
   };
 
@@ -280,28 +281,6 @@ export default class MediaPlayer
   protected renderBottom(): React.ReactNode {
     const { url, open, position, duration, playoutVolume, loopCount } =
       this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
         <TextInput
@@ -322,7 +301,7 @@ export default class MediaPlayer
           }}
         />
         <Divider />
-        {renderSlider('playoutVolume', playoutVolume, 0, 400)}
+        {this.renderSlider('playoutVolume', playoutVolume, 0, 400)}
         <Button
           disabled={!open}
           title={'adjust Playout Volume'}

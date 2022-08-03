@@ -97,7 +97,7 @@ export default class JoinMultipleChannel
   }
 
   /**
-   * Step 2: joinChannel
+   * Step 2-1: joinChannel
    */
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
@@ -132,7 +132,7 @@ export default class JoinMultipleChannel
   }
 
   /**
-   * Step 2: joinChannel2
+   * Step 2-2: joinChannel2
    */
   protected joinChannel2() {
     const { channelId2, token2, uid2 } = this.state;
@@ -167,7 +167,7 @@ export default class JoinMultipleChannel
   }
 
   /**
-   * Step 3: publishStreamToChannel
+   * Step 3-1: publishStreamToChannel
    */
   publishStreamToChannel = () => {
     const { channelId, channelId2, uid, uid2 } = this.state;
@@ -188,7 +188,7 @@ export default class JoinMultipleChannel
   };
 
   /**
-   * Step 3: publishStreamToChannel2
+   * Step 3-2: publishStreamToChannel2
    */
   publishStreamToChannel2 = () => {
     const { channelId, channelId2, uid, uid2 } = this.state;
@@ -209,7 +209,7 @@ export default class JoinMultipleChannel
   };
 
   /**
-   * Step 4: leaveChannel
+   * Step 4-1: leaveChannel
    */
   protected leaveChannel() {
     const { channelId, uid } = this.state;
@@ -220,7 +220,7 @@ export default class JoinMultipleChannel
   }
 
   /**
-   * Step 4: leaveChannel2
+   * Step 4-2: leaveChannel2
    */
   protected leaveChannel2() {
     const { channelId2, uid2 } = this.state;

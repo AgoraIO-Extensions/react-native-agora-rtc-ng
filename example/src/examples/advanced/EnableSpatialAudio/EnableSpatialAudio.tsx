@@ -1,6 +1,7 @@
 import React from 'react';
 import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
+  AudioScenarioType,
   ChannelProfileType,
   ClientRoleType,
   createAgoraRtcEngine,
@@ -66,6 +67,7 @@ export default class EnableSpatialAudio
       appId,
       // Should use ChannelProfileLiveBroadcasting on most of cases
       channelProfile: ChannelProfileType.ChannelProfileLiveBroadcasting,
+      audioScenario: AudioScenarioType.AudioScenarioGameStreaming,
     });
 
     if (Platform.OS === 'android') {
@@ -73,6 +75,11 @@ export default class EnableSpatialAudio
       await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
       );
+    }
+
+    // Must call after initialize and before joinChannel
+    if (Platform.OS === 'android') {
+      this.engine?.loadExtensionProvider('agora_spatial_audio_extension');
     }
 
     // Only need to enable audio on this case
@@ -170,28 +177,6 @@ export default class EnableSpatialAudio
       enable_blur,
       enable_air_absorb,
     } = this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
         <View style={styles.container}>
@@ -208,13 +193,13 @@ export default class EnableSpatialAudio
           />
         </View>
         <Divider />
-        {renderSlider('speaker_azimuth', speaker_azimuth, 0, 360)}
+        {this.renderSlider('speaker_azimuth', speaker_azimuth, 0, 360)}
         <Divider />
-        {renderSlider('speaker_elevation', speaker_elevation, -90, 90)}
+        {this.renderSlider('speaker_elevation', speaker_elevation, -90, 90)}
         <Divider />
-        {renderSlider('speaker_distance', speaker_distance, 1, 50)}
+        {this.renderSlider('speaker_distance', speaker_distance, 1, 50)}
         <Divider />
-        {renderSlider('speaker_orientation', speaker_orientation, 0, 180)}
+        {this.renderSlider('speaker_orientation', speaker_orientation, 0, 180)}
         <Divider />
         <ActionItem
           title={`enable_blur`}

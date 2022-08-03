@@ -343,28 +343,6 @@ export default class RTMPStreaming
       audioChannels,
       audioCodecProfile,
     } = this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
         <TextInput
@@ -533,7 +511,7 @@ export default class RTMPStreaming
                   : audioBitrate.toString()
               }
             />
-            {renderSlider('audioChannels', audioChannels, 1, 5)}
+            {this.renderSlider('audioChannels', audioChannels, 1, 5)}
             <Divider />
             <View style={styles.container}>
               <PickerView

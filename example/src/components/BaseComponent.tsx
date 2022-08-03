@@ -29,6 +29,7 @@ import * as RNEUI from '@rneui/base';
 import { StackScreenProps } from '@react-navigation/stack/src/types';
 
 import { LogSink } from './LogSink';
+import { ActionItem } from './ActionItem';
 
 export const Divider = () => {
   return <RNEUI.Divider width={1} color={'grey'} />;
@@ -246,6 +247,30 @@ export abstract class BaseComponent<
 
   protected renderFloat(): ReactNode {
     return undefined;
+  }
+
+  protected renderSlider(
+    key: string,
+    value: number,
+    min: number,
+    max: number,
+    useFloat: boolean = true
+  ): ReactNode {
+    return (
+      <ActionItem
+        title={`${key} ${value}`}
+        isShowSlider={true}
+        sliderValue={(value - min) / (max - min)}
+        onSliderValueChange={(v) => {
+          // @ts-ignore
+          this.setState({
+            [key]: useFloat
+              ? Number.parseFloat(((max - min) * v + min).toFixed(2))
+              : +((max - min) * v + min).toFixed(0),
+          });
+        }}
+      />
+    );
   }
 
   private _logSink(

@@ -13,6 +13,7 @@ target 'ReactNativeAgoraRtcNgExample' do
   )
 
   pod 'react-native-agora-rtc-ng', :path => '../..'
+  pod 'AgoraRtcWrapper', :path => '../../ios'
 
   # Enables Flipper.
   #

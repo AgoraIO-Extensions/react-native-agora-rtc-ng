@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm}"
 
   s.dependency "React-Core"
-  s.dependency 'AgoraRtcEngine_Special_iOS', '3.8.201.2'
-  s.dependency 'AgoraIrisRTC_iOS', '3.8.201'
+  s.dependency "AgoraRtcWrapper"
+#   s.dependency 'AgoraRtcEngine_Special_iOS', '3.8.201.2'
+#   s.dependency 'AgoraIrisRTC_iOS', '3.8.201'
   s.libraries = 'stdc++'
 end

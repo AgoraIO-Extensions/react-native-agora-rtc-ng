@@ -1,40 +1,38 @@
 import React from 'react';
-import {
-  Image,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, TextInput } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
   createAgoraRtcEngine,
-  ErrorCodeType,
+  ExternalVideoSourceType,
   IRtcEngineEventHandler,
-  RtcConnection,
+  IRtcEngineEx,
+  VideoBufferType,
+  VideoPixelFormat,
 } from 'react-native-agora-rtc-ng';
-import RNFS from 'react-native-fs';
+import { Buffer } from 'buffer';
+// @ts-ignore
+import ImageTools from 'react-native-image-tool';
 
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
+  STYLES,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
+import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
-  targetUid: number;
   filePath: string;
-  takeSnapshot: boolean;
 }
 
-export default class TakeSnapshot
+export default class PushVideoFrame
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
+  // @ts-ignore
+  protected engine?: IRtcEngineEx;
+
   protected createState(): State {
     return {
       appId: Config.appId,
@@ -45,13 +43,7 @@ export default class TakeSnapshot
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      targetUid: 0,
-      filePath: `${
-        Platform.OS === 'android'
-          ? RNFS.ExternalCachesDirectoryPath
-          : RNFS.DocumentDirectoryPath
-      }`,
-      takeSnapshot: false,
+      filePath: this.getAssetPath('agora-logo.png'),
     };
   }
 
@@ -64,7 +56,7 @@ export default class TakeSnapshot
       console.error(`appId is invalid`);
     }
 
-    this.engine = createAgoraRtcEngine();
+    this.engine = createAgoraRtcEngine() as IRtcEngineEx;
     this.engine.registerEventHandler(this);
     this.engine.initialize({
       appId,
@@ -80,9 +72,16 @@ export default class TakeSnapshot
       ]);
     }
 
+    // Must call after initialize and before joinChannel
+    if (Platform.OS === 'android') {
+      this.engine?.loadExtensionProvider('agora_screen_capture_extension');
+    }
+
     // Need to enable video on this case
     // If you only call `enableAudio`, only relay the audio stream to the target channel
     this.engine.enableVideo();
+
+    this.setExternalVideoSource();
   }
 
   /**
@@ -105,23 +104,46 @@ export default class TakeSnapshot
     // 2. If app certificate is turned on at dashboard, token is needed
     // when joining channel. The channel name and uid used to calculate
     // the token has to match the ones used for channel join
+    // this.engine?.joinChannel(token, channelId, '', uid);
     this.engine?.joinChannelWithOptions(token, channelId, uid, {
       // Make myself as the broadcaster to send stream to remote
       clientRoleType: ClientRoleType.ClientRoleBroadcaster,
+      publishCameraTrack: false,
+      publishEncodedVideoTrack: true,
     });
   }
 
   /**
-   * Step 3: takeSnapshot
+   * Step 3-1: setExternalVideoSource
    */
-  takeSnapshot = () => {
-    const { targetUid, filePath } = this.state;
+  setExternalVideoSource = () => {
+    this.engine
+      ?.getMediaEngine()
+      .setExternalVideoSource(true, false, ExternalVideoSourceType.VideoFrame);
+  };
+
+  /**
+   * Step 3-2: pushVideoFrame
+   */
+  pushVideoFrame = () => {
+    const { filePath } = this.state;
     if (!filePath) {
       console.error('filePath is invalid');
       return;
     }
 
-    this.engine?.takeSnapshot(targetUid, `${filePath}/${targetUid}.jpg`);
+    this.getAbsolutePath(filePath).then((path) => {
+      ImageTools.GetImageRGBAs(path).then((value: any) => {
+        console.log(value);
+        this.engine?.getMediaEngine().pushVideoFrame({
+          type: VideoBufferType.VideoBufferRawData,
+          format: VideoPixelFormat.VideoPixelRgba,
+          buffer: value.rgba,
+          stride: value.width,
+          height: value.height,
+        });
+      });
+    });
   };
 
   /**
@@ -135,71 +157,23 @@ export default class TakeSnapshot
    * Step 5: releaseRtcEngine
    */
   protected releaseRtcEngine() {
+    this.engine?.unregisterEventHandler(this);
     this.engine?.release();
   }
 
-  onSnapshotTaken(
-    connection: RtcConnection,
-    uid: number,
-    filePath: string,
-    width: number,
-    height: number,
-    errCode: number
-  ) {
-    this.info(
-      'onSnapshotTaken',
-      'connection',
-      connection,
-      'uid',
-      uid,
-      'filePath',
-      filePath,
-      'width',
-      width,
-      'height',
-      height,
-      'errCode',
-      errCode
-    );
-    const { targetUid, filePath: path } = this.state;
-    if (filePath === `${path}/${targetUid}.jpg`) {
-      this.setState({ takeSnapshot: errCode === ErrorCodeType.ErrOk });
-    }
-  }
-
   protected renderBottom(): React.ReactNode {
-    const { remoteUsers, targetUid, filePath, takeSnapshot } = this.state;
+    const { filePath } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'targetUid'}
-            type={[
-              '0',
-              0,
-              ...remoteUsers.map((value) => value.toString()),
-              ...remoteUsers,
-            ]}
-            selectedValue={targetUid}
-            onValueChange={(value) => {
-              this.setState({ targetUid: value });
-            }}
-          />
-        </View>
-        {takeSnapshot ? (
-          <>
-            <Divider />
-            <Image
-              style={styles.image}
-              source={{
-                uri: `${
-                  Platform.OS === 'android' ? 'file://' : ''
-                }${filePath}/${targetUid}.jpg`,
-              }}
-            />
-          </>
-        ) : undefined}
-        <Divider />
+        <TextInput
+          style={STYLES.input}
+          onChangeText={(text) => {
+            this.setState({ filePath: text });
+          }}
+          placeholder={`filePath`}
+          placeholderTextColor={'gray'}
+          value={filePath}
+        />
       </>
     );
   }
@@ -210,22 +184,10 @@ export default class TakeSnapshot
       <>
         <ActionItem
           disabled={!joinChannelSuccess}
-          title={`take Snapshot`}
-          onPress={this.takeSnapshot}
+          title={`push Video Frame`}
+          onPress={this.pushVideoFrame}
         />
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  image: {
-    width: 120,
-    height: 120,
-  },
-});

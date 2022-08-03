@@ -121,48 +121,72 @@ export default class JoinChannelAudio
   }
 
   /**
-   * Step 3-1: startAudioMixing
+   * Step 3-1-1 (Optional): enableLocalAudio
    */
   enableLocalAudio = () => {
     this.engine?.enableLocalAudio(true);
     this.setState({ enableLocalAudio: true });
   };
 
+  /**
+   * Step 3-1-2 (Optional): disableLocalAudio
+   */
   disableLocalAudio = () => {
     this.engine?.enableLocalAudio(false);
     this.setState({ enableLocalAudio: false });
   };
 
+  /**
+   * Step 3-2-1 (Optional): muteLocalAudioStream
+   */
   muteLocalAudioStream = () => {
     this.engine?.muteLocalAudioStream(true);
     this.setState({ muteLocalAudioStream: true });
   };
 
+  /**
+   * Step 3-2-2 (Optional): unmuteLocalAudioStream
+   */
   unmuteLocalAudioStream = () => {
     this.engine?.muteLocalAudioStream(false);
     this.setState({ muteLocalAudioStream: false });
   };
 
+  /**
+   * Step 3-3-1 (Optional): enableSpeakerphone
+   */
   enableSpeakerphone = () => {
     this.engine?.setEnableSpeakerphone(true);
     this.setState({ enableSpeakerphone: true });
   };
 
+  /**
+   * Step 3-3-2 (Optional): disableSpeakerphone
+   */
   disableSpeakerphone = () => {
     this.engine?.setEnableSpeakerphone(false);
     this.setState({ enableSpeakerphone: false });
   };
 
+  /**
+   * Step 3-4 (Optional): adjustRecordingSignalVolume
+   */
   adjustRecordingSignalVolume = () => {
     const { recordingSignalVolume } = this.state;
     this.engine?.adjustRecordingSignalVolume(recordingSignalVolume);
   };
 
+  /**
+   * Step 3-5 (Optional): adjustPlaybackSignalVolume
+   */
   adjustPlaybackSignalVolume = () => {
     const { playbackSignalVolume } = this.state;
     this.engine?.adjustPlaybackSignalVolume(playbackSignalVolume);
   };
 
+  /**
+   * Step 3-6-1 (Optional): enableInEarMonitoring
+   */
   enableInEarMonitoring = () => {
     const { includeAudioFilters } = this.state;
     if (
@@ -173,11 +197,17 @@ export default class JoinChannelAudio
     }
   };
 
+  /**
+   * Step 3-6-2 (Optional): setInEarMonitoringVolume
+   */
   setInEarMonitoringVolume = () => {
     const { inEarMonitoringVolume } = this.state;
     this.engine?.setInEarMonitoringVolume(inEarMonitoringVolume);
   };
 
+  /**
+   * Step 3-6-3 (Optional): disableInEarMonitoring
+   */
   disableInEarMonitoring = () => {
     const { includeAudioFilters } = this.state;
     if (
@@ -290,37 +320,25 @@ export default class JoinChannelAudio
       enableInEarMonitoring,
       inEarMonitoringVolume,
     } = this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
-        {renderSlider('recordingSignalVolume', recordingSignalVolume, 0, 400)}
+        {this.renderSlider(
+          'recordingSignalVolume',
+          recordingSignalVolume,
+          0,
+          400
+        )}
         <Button
           title={'adjust Recording Signal Volume'}
           onPress={this.adjustRecordingSignalVolume}
         />
         <Divider />
-        {renderSlider('playbackSignalVolume', playbackSignalVolume, 0, 400)}
+        {this.renderSlider(
+          'playbackSignalVolume',
+          playbackSignalVolume,
+          0,
+          400
+        )}
         <Button
           title={'adjust Playback Signal Volume'}
           onPress={this.adjustPlaybackSignalVolume}
@@ -337,7 +355,12 @@ export default class JoinChannelAudio
           />
         </View>
         <Divider />
-        {renderSlider('inEarMonitoringVolume', inEarMonitoringVolume, 0, 100)}
+        {this.renderSlider(
+          'inEarMonitoringVolume',
+          inEarMonitoringVolume,
+          0,
+          100
+        )}
         <Button
           disabled={!enableInEarMonitoring}
           title={`set In Ear Monitoring Volume`}

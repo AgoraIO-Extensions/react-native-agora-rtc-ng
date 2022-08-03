@@ -5,11 +5,14 @@ export * from './AgoraBase';
 export * from './AgoraMediaBase';
 export * from './AgoraMediaPlayerTypes';
 export * from './IAgoraLog';
+export * from './IAgoraMediaEngine';
 export * from './IAgoraMediaPlayer';
 export * from './IAgoraMediaPlayerSource';
+export * from './IAgoraMediaRecorder';
 export * from './IAgoraRhythmPlayer';
 export * from './IAgoraRtcEngine';
 export * from './IAgoraRtcEngineEx';
+export * from './IAgoraSpatialAudio';
 export * from './IAudioDeviceManager';
 export * from './AgoraRtcRenderView';
 

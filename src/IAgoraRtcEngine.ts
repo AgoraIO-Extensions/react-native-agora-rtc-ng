@@ -1520,9 +1520,9 @@ export abstract class IRtcEngineEventHandler {
    * @param errorCode The detailed error information. See LocalVideoStreamError .
    */
   onLocalVideoStateChanged?(
-    connection: RtcConnection,
+    source: VideoSourceType,
     state: LocalVideoStreamState,
-    errorCode: LocalVideoStreamError
+    error: LocalVideoStreamError
   ): void;
 
   /*

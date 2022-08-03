@@ -84,8 +84,8 @@ export function processIVideoEncodedFrameObserver(
 ) {
   switch (event) {
     case 'OnEncodedVideoFrameReceived':
-      if (handler.OnEncodedVideoFrameReceived !== undefined) {
-        handler.OnEncodedVideoFrameReceived(
+      if (handler.onEncodedVideoFrameReceived !== undefined) {
+        handler.onEncodedVideoFrameReceived(
           jsonParams.uid,
           jsonParams.imageBuffer,
           jsonParams.length,

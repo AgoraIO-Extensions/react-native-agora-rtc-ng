@@ -186,28 +186,6 @@ export default class StartRhythmPlayer
 
   protected renderBottom(): React.ReactNode {
     const { sound1, sound2, beatsPerMeasure, beatsPerMinute } = this.state;
-
-    const renderSlider = (
-      key: string,
-      value: number,
-      min: number,
-      max: number
-    ) => {
-      return (
-        <ActionItem
-          title={`${key} ${value}`}
-          isShowSlider={true}
-          sliderValue={(value - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            // @ts-ignore
-            this.setState({
-              [key]: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
-      );
-    };
-
     return (
       <>
         <TextInput
@@ -228,9 +206,9 @@ export default class StartRhythmPlayer
           placeholderTextColor={'gray'}
           value={sound2}
         />
-        {renderSlider('beatsPerMeasure', beatsPerMeasure, 1, 9)}
+        {this.renderSlider('beatsPerMeasure', beatsPerMeasure, 1, 9)}
         <Divider />
-        {renderSlider('beatsPerMinute', beatsPerMinute, 60, 360)}
+        {this.renderSlider('beatsPerMinute', beatsPerMinute, 60, 360)}
         <Divider />
       </>
     );
