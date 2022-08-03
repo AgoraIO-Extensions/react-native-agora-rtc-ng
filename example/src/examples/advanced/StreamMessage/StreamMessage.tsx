@@ -166,7 +166,7 @@ export default class StreamMessage
       'streamId',
       streamId,
       'data',
-      data.toString(),
+      data,
       'length',
       length,
       'sentTs',

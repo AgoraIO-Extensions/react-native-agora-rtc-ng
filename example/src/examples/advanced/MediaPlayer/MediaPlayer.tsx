@@ -102,7 +102,6 @@ export default class MediaPlayer
       this.player?.seek(0);
     } else {
       this.player?.play();
-      this.player?.setPlayerOptionInInt('xxx', 1);
     }
   };
 
