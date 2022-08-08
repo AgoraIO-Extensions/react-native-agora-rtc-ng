@@ -260,7 +260,7 @@ export abstract class BaseComponent<
       <ActionItem
         title={`${key} ${value}`}
         isShowSlider={true}
-        sliderValue={(value - min) / (max - min)}
+        sliderValue={max - min !== 0 ? (value - min) / (max - min) : 0}
         onSliderValueChange={(v) => {
           // @ts-ignore
           this.setState({

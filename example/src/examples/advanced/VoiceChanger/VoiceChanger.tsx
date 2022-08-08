@@ -253,36 +253,12 @@ export default class VoiceChanger
           title={'set Voice Beautifier Preset'}
           onPress={this.setVoiceBeautifierPreset}
         />
-        {limit1 !== undefined ? (
-          <ActionItem
-            title={`param1 ${param1}`}
-            isShowSlider={true}
-            sliderValue={(param1 - limit1.min) / (limit1.max - limit1.min)}
-            onSliderValueChange={(value) => {
-              this.setState({
-                param1: +(
-                  (limit1.max - limit1.min) * value +
-                  limit1.min
-                ).toFixed(0),
-              });
-            }}
-          />
-        ) : undefined}
-        {limit2 !== undefined ? (
-          <ActionItem
-            title={`param2 ${param2}`}
-            isShowSlider={true}
-            sliderValue={(param2 - limit2.min) / (limit2.max - limit2.min)}
-            onSliderValueChange={(value) => {
-              this.setState({
-                param2: +(
-                  (limit2.max - limit2.min) * value +
-                  limit2.min
-                ).toFixed(0),
-              });
-            }}
-          />
-        ) : undefined}
+        {limit1 !== undefined
+          ? this.renderSlider('param1', param1, limit1.min, limit1.max, false)
+          : undefined}
+        {limit2 !== undefined
+          ? this.renderSlider('param2', param2, limit2.min, limit2.max, false)
+          : undefined}
         {limit1 !== undefined && limit2 !== undefined ? (
           <Button
             title={'set Voice Beautifier Parameters'}
@@ -313,36 +289,12 @@ export default class VoiceChanger
           title={'set Audio Effect Preset'}
           onPress={this.setAudioEffectPreset}
         />
-        {limit1 !== undefined ? (
-          <ActionItem
-            title={`param1 ${param1}`}
-            isShowSlider={true}
-            sliderValue={(param1 - limit1.min) / (limit1.max - limit1.min)}
-            onSliderValueChange={(value) => {
-              this.setState({
-                param1: +(
-                  (limit1.max - limit1.min) * value +
-                  limit1.min
-                ).toFixed(0),
-              });
-            }}
-          />
-        ) : undefined}
-        {limit2 !== undefined ? (
-          <ActionItem
-            title={`param2 ${param2}`}
-            isShowSlider={true}
-            sliderValue={(param2 - limit2.min) / (limit2.max - limit2.min)}
-            onSliderValueChange={(value) => {
-              this.setState({
-                param2: +(
-                  (limit2.max - limit2.min) * value +
-                  limit2.min
-                ).toFixed(0),
-              });
-            }}
-          />
-        ) : undefined}
+        {limit1 !== undefined
+          ? this.renderSlider('param1', param1, limit1.min, limit1.max, false)
+          : undefined}
+        {limit2 !== undefined
+          ? this.renderSlider('param2', param2, limit2.min, limit2.max, false)
+          : undefined}
         {limit1 !== undefined && limit2 !== undefined ? (
           <Button
             title={'set Audio Effect Parameters'}
@@ -368,20 +320,9 @@ export default class VoiceChanger
             }}
           />
         </View>
-        {limit !== undefined ? (
-          <ActionItem
-            title={`value ${value}`}
-            isShowSlider={true}
-            sliderValue={(value - limit.min) / (limit.max - limit.min)}
-            onSliderValueChange={(value) => {
-              this.setState({
-                value: +((limit.max - limit.min) * value + limit.min).toFixed(
-                  0
-                ),
-              });
-            }}
-          />
-        ) : undefined}
+        {limit !== undefined
+          ? this.renderSlider('value', value, limit.min, limit.max, false)
+          : undefined}
         {limit !== undefined ? (
           <Button
             title={'set Local Voice Reverb'}
@@ -408,16 +349,7 @@ export default class VoiceChanger
             }}
           />
         </View>
-        <ActionItem
-          title={`bandGain ${bandGain}`}
-          isShowSlider={true}
-          sliderValue={(bandGain - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            this.setState({
-              bandGain: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
+        {this.renderSlider('bandGain', bandGain, min, max, false)}
         <Button
           title={'set Local Voice Equalization'}
           onPress={this.setLocalVoiceEqualization}
@@ -432,16 +364,7 @@ export default class VoiceChanger
     const max = 2.0;
     return (
       <>
-        <ActionItem
-          title={`pitch ${pitch}`}
-          isShowSlider={true}
-          sliderValue={(pitch - min) / (max - min)}
-          onSliderValueChange={(value) => {
-            this.setState({
-              pitch: +((max - min) * value + min).toFixed(0),
-            });
-          }}
-        />
+        {this.renderSlider('pitch', pitch, min, max, false)}
         <Button
           title={'set Local Voice Pitch'}
           onPress={this.setLocalVoicePitch}
