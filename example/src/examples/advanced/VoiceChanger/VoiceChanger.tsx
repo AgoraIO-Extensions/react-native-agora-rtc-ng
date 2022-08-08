@@ -97,6 +97,11 @@ export default class VoiceChanger
       );
     }
 
+    // Must call after initialize and before joinChannel
+    if (Platform.OS === 'android') {
+      this.engine?.loadExtensionProvider('agora_audio_beauty_extension');
+    }
+
     // Only need to enable audio on this case
     this.engine.enableAudio();
   }
