@@ -15,11 +15,11 @@ export class IMediaRecorderImpl implements IMediaRecorder {
       callback
     );
     const jsonParams = {
-      connection,
-      callback,
+      connection: connection,
+      callback: callback,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };
@@ -40,12 +40,12 @@ export class IMediaRecorderImpl implements IMediaRecorder {
   ): number {
     const apiType = this.getApiTypeFromStartRecording(connection, config);
     const jsonParams = {
-      connection,
-      config,
+      connection: connection,
+      config: config,
       toJSON: () => {
         return {
-          connection,
-          config,
+          connection: connection,
+          config: config,
         };
       },
     };
@@ -63,10 +63,10 @@ export class IMediaRecorderImpl implements IMediaRecorder {
   stopRecording(connection: RtcConnection): number {
     const apiType = this.getApiTypeFromStopRecording(connection);
     const jsonParams = {
-      connection,
+      connection: connection,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };

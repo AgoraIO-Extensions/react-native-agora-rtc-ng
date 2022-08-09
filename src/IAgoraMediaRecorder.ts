@@ -4,11 +4,11 @@ import {
   MediaRecorderConfiguration,
 } from './AgoraMediaBase';
 
-/*
+/**
  * @ignore
  */
 export abstract class IMediaRecorder {
-  /*
+  /**
    * @ignore
    */
   abstract setMediaRecorderObserver(
@@ -16,7 +16,7 @@ export abstract class IMediaRecorder {
     callback: IMediaRecorderObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract startRecording(
@@ -24,12 +24,12 @@ export abstract class IMediaRecorder {
     config: MediaRecorderConfiguration
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract stopRecording(connection: RtcConnection): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract release(): void;

@@ -925,10 +925,10 @@ export class IVideoDeviceManagerImpl implements IVideoDeviceManager {
   setDevice(deviceIdUTF8: string): number {
     const apiType = this.getApiTypeFromSetDevice(deviceIdUTF8);
     const jsonParams = {
-      deviceIdUTF8,
+      deviceIdUTF8: deviceIdUTF8,
       toJSON: () => {
         return {
-          deviceIdUTF8,
+          deviceIdUTF8: deviceIdUTF8,
         };
       },
     };
@@ -955,10 +955,10 @@ export class IVideoDeviceManagerImpl implements IVideoDeviceManager {
   numberOfCapabilities(deviceIdUTF8: string): number {
     const apiType = this.getApiTypeFromNumberOfCapabilities(deviceIdUTF8);
     const jsonParams = {
-      deviceIdUTF8,
+      deviceIdUTF8: deviceIdUTF8,
       toJSON: () => {
         return {
-          deviceIdUTF8,
+          deviceIdUTF8: deviceIdUTF8,
         };
       },
     };
@@ -979,11 +979,11 @@ export class IVideoDeviceManagerImpl implements IVideoDeviceManager {
       deviceCapabilityNumber
     );
     const jsonParams = {
-      deviceIdUTF8,
-      deviceCapabilityNumber,
+      deviceIdUTF8: deviceIdUTF8,
+      deviceCapabilityNumber: deviceCapabilityNumber,
       toJSON: () => {
         return {
-          deviceIdUTF8,
+          deviceIdUTF8: deviceIdUTF8,
         };
       },
     };
@@ -1002,10 +1002,10 @@ export class IVideoDeviceManagerImpl implements IVideoDeviceManager {
   startDeviceTest(hwnd: any): number {
     const apiType = this.getApiTypeFromStartDeviceTest(hwnd);
     const jsonParams = {
-      hwnd,
+      hwnd: hwnd,
       toJSON: () => {
         return {
-          hwnd,
+          hwnd: hwnd,
         };
       },
     };
@@ -1081,10 +1081,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   release(sync = false): void {
     const apiType = this.getApiTypeFromRelease(sync);
     const jsonParams = {
-      sync,
+      sync: sync,
       toJSON: () => {
         return {
-          sync,
+          sync: sync,
         };
       },
     };
@@ -1098,10 +1098,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   initialize(context: RtcEngineContext): number {
     const apiType = this.getApiTypeFromInitialize(context);
     const jsonParams = {
-      context,
+      context: context,
       toJSON: () => {
         return {
-          context,
+          context: context,
         };
       },
     };
@@ -1127,10 +1127,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getErrorDescription(code: number): string {
     const apiType = this.getApiTypeFromGetErrorDescription(code);
     const jsonParams = {
-      code,
+      code: code,
       toJSON: () => {
         return {
-          code,
+          code: code,
         };
       },
     };
@@ -1145,10 +1145,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   updateChannelMediaOptions(options: ChannelMediaOptions): number {
     const apiType = this.getApiTypeFromUpdateChannelMediaOptions(options);
     const jsonParams = {
-      options,
+      options: options,
       toJSON: () => {
         return {
-          options,
+          options: options,
         };
       },
     };
@@ -1165,10 +1165,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   renewToken(token: string): number {
     const apiType = this.getApiTypeFromRenewToken(token);
     const jsonParams = {
-      token,
+      token: token,
       toJSON: () => {
         return {
-          token,
+          token: token,
         };
       },
     };
@@ -1183,10 +1183,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setChannelProfile(profile: ChannelProfileType): number {
     const apiType = this.getApiTypeFromSetChannelProfile(profile);
     const jsonParams = {
-      profile,
+      profile: profile,
       toJSON: () => {
         return {
-          profile,
+          profile: profile,
         };
       },
     };
@@ -1236,10 +1236,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startLastmileProbeTest(config: LastmileProbeConfig): number {
     const apiType = this.getApiTypeFromStartLastmileProbeTest(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -1267,10 +1267,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setVideoEncoderConfiguration(config: VideoEncoderConfiguration): number {
     const apiType = this.getApiTypeFromSetVideoEncoderConfiguration(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -1295,14 +1295,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      enabled,
-      options,
-      type,
+      enabled: enabled,
+      options: options,
+      type: type,
       toJSON: () => {
         return {
-          enabled,
-          options,
-          type,
+          enabled: enabled,
+          options: options,
+          type: type,
         };
       },
     };
@@ -1329,14 +1329,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      enabled,
-      options,
-      type,
+      enabled: enabled,
+      options: options,
+      type: type,
       toJSON: () => {
         return {
-          enabled,
-          options,
-          type,
+          enabled: enabled,
+          options: options,
+          type: type,
         };
       },
     };
@@ -1363,14 +1363,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      enabled,
-      options,
-      type,
+      enabled: enabled,
+      options: options,
+      type: type,
       toJSON: () => {
         return {
-          enabled,
-          options,
-          type,
+          enabled: enabled,
+          options: options,
+          type: type,
         };
       },
     };
@@ -1397,14 +1397,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      enabled,
-      options,
-      type,
+      enabled: enabled,
+      options: options,
+      type: type,
       toJSON: () => {
         return {
-          enabled,
-          options,
-          type,
+          enabled: enabled,
+          options: options,
+          type: type,
         };
       },
     };
@@ -1433,16 +1433,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      enabled,
-      backgroundSource,
-      segproperty,
-      type,
+      enabled: enabled,
+      backgroundSource: backgroundSource,
+      segproperty: segproperty,
+      type: type,
       toJSON: () => {
         return {
-          enabled,
-          backgroundSource,
-          segproperty,
-          type,
+          enabled: enabled,
+          backgroundSource: backgroundSource,
+          segproperty: segproperty,
+          type: type,
         };
       },
     };
@@ -1465,12 +1465,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       enable
     );
     const jsonParams = {
-      userId,
-      enable,
+      userId: userId,
+      enable: enable,
       toJSON: () => {
         return {
-          userId,
-          enable,
+          userId: userId,
+          enable: enable,
         };
       },
     };
@@ -1488,10 +1488,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setupRemoteVideo(canvas: VideoCanvas): number {
     const apiType = this.getApiTypeFromSetupRemoteVideo(canvas);
     const jsonParams = {
-      canvas,
+      canvas: canvas,
       toJSON: () => {
         return {
-          canvas,
+          canvas: canvas,
         };
       },
     };
@@ -1506,10 +1506,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setupLocalVideo(canvas: VideoCanvas): number {
     const apiType = this.getApiTypeFromSetupLocalVideo(canvas);
     const jsonParams = {
-      canvas,
+      canvas: canvas,
       toJSON: () => {
         return {
-          canvas,
+          canvas: canvas,
         };
       },
     };
@@ -1546,10 +1546,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAudioScenario(scenario: AudioScenarioType): number {
     const apiType = this.getApiTypeFromSetAudioScenario(scenario);
     const jsonParams = {
-      scenario,
+      scenario: scenario,
       toJSON: () => {
         return {
-          scenario,
+          scenario: scenario,
         };
       },
     };
@@ -1566,10 +1566,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableLocalAudio(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableLocalAudio(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -1584,10 +1584,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteLocalAudioStream(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteLocalAudioStream(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1602,10 +1602,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteAllRemoteAudioStreams(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteAllRemoteAudioStreams(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1621,10 +1621,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetDefaultMuteAllRemoteAudioStreams(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1641,12 +1641,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteRemoteAudioStream(uid: number, mute: boolean): number {
     const apiType = this.getApiTypeFromMuteRemoteAudioStream(uid, mute);
     const jsonParams = {
-      uid,
-      mute,
+      uid: uid,
+      mute: mute,
       toJSON: () => {
         return {
-          uid,
-          mute,
+          uid: uid,
+          mute: mute,
         };
       },
     };
@@ -1664,10 +1664,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteLocalVideoStream(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteLocalVideoStream(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1682,10 +1682,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableLocalVideo(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableLocalVideo(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -1700,10 +1700,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteAllRemoteVideoStreams(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteAllRemoteVideoStreams(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1719,10 +1719,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetDefaultMuteAllRemoteVideoStreams(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -1739,12 +1739,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteRemoteVideoStream(uid: number, mute: boolean): number {
     const apiType = this.getApiTypeFromMuteRemoteVideoStream(uid, mute);
     const jsonParams = {
-      uid,
-      mute,
+      uid: uid,
+      mute: mute,
       toJSON: () => {
         return {
-          uid,
-          mute,
+          uid: uid,
+          mute: mute,
         };
       },
     };
@@ -1765,12 +1765,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       streamType
     );
     const jsonParams = {
-      uid,
-      streamType,
+      uid: uid,
+      streamType: streamType,
       toJSON: () => {
         return {
-          uid,
-          streamType,
+          uid: uid,
+          streamType: streamType,
         };
       },
     };
@@ -1794,12 +1794,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       options
     );
     const jsonParams = {
-      uid,
-      options,
+      uid: uid,
+      options: options,
       toJSON: () => {
         return {
-          uid,
-          options,
+          uid: uid,
+          options: options,
         };
       },
     };
@@ -1818,10 +1818,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetRemoteDefaultVideoStreamType(streamType);
     const jsonParams = {
-      streamType,
+      streamType: streamType,
       toJSON: () => {
         return {
-          streamType,
+          streamType: streamType,
         };
       },
     };
@@ -1841,12 +1841,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       uidNumber
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
+      uidList: uidList,
+      uidNumber: uidNumber,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         };
       },
     };
@@ -1867,12 +1867,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       uidNumber
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
+      uidList: uidList,
+      uidNumber: uidNumber,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         };
       },
     };
@@ -1893,12 +1893,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       uidNumber
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
+      uidList: uidList,
+      uidNumber: uidNumber,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         };
       },
     };
@@ -1919,12 +1919,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       uidNumber
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
+      uidList: uidList,
+      uidNumber: uidNumber,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         };
       },
     };
@@ -1950,14 +1950,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       reportVad
     );
     const jsonParams = {
-      interval,
-      smooth,
-      reportVad,
+      interval: interval,
+      smooth: smooth,
+      reportVad: reportVad,
       toJSON: () => {
         return {
-          interval,
-          smooth,
-          reportVad,
+          interval: interval,
+          smooth: smooth,
+          reportVad: reportVad,
         };
       },
     };
@@ -1982,11 +1982,11 @@ export class IRtcEngineImpl implements IRtcEngine {
       observer
     );
     const jsonParams = {
-      config,
-      observer,
+      config: config,
+      observer: observer,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -2077,10 +2077,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   selectAudioTrack(index: number): number {
     const apiType = this.getApiTypeFromSelectAudioTrack(index);
     const jsonParams = {
-      index,
+      index: index,
       toJSON: () => {
         return {
-          index,
+          index: index,
         };
       },
     };
@@ -2106,10 +2106,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustAudioMixingVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustAudioMixingVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -2124,10 +2124,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustAudioMixingPublishVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustAudioMixingPublishVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -2155,10 +2155,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustAudioMixingPlayoutVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustAudioMixingPlayoutVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -2208,10 +2208,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAudioMixingPosition(pos: number): number {
     const apiType = this.getApiTypeFromSetAudioMixingPosition(pos);
     const jsonParams = {
-      pos,
+      pos: pos,
       toJSON: () => {
         return {
-          pos,
+          pos: pos,
         };
       },
     };
@@ -2226,10 +2226,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAudioMixingDualMonoMode(mode: AudioMixingDualMonoMode): number {
     const apiType = this.getApiTypeFromSetAudioMixingDualMonoMode(mode);
     const jsonParams = {
-      mode,
+      mode: mode,
       toJSON: () => {
         return {
-          mode,
+          mode: mode,
         };
       },
     };
@@ -2246,10 +2246,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAudioMixingPitch(pitch: number): number {
     const apiType = this.getApiTypeFromSetAudioMixingPitch(pitch);
     const jsonParams = {
-      pitch,
+      pitch: pitch,
       toJSON: () => {
         return {
-          pitch,
+          pitch: pitch,
         };
       },
     };
@@ -2275,10 +2275,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setEffectsVolume(volume: number): number {
     const apiType = this.getApiTypeFromSetEffectsVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -2297,14 +2297,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       startPos
     );
     const jsonParams = {
-      soundId,
-      filePath,
-      startPos,
+      soundId: soundId,
+      filePath: filePath,
+      startPos: startPos,
       toJSON: () => {
         return {
-          soundId,
-          filePath,
-          startPos,
+          soundId: soundId,
+          filePath: filePath,
+          startPos: startPos,
         };
       },
     };
@@ -2341,24 +2341,24 @@ export class IRtcEngineImpl implements IRtcEngine {
       startPos
     );
     const jsonParams = {
-      soundId,
-      filePath,
-      loopCount,
-      pitch,
-      pan,
-      gain,
-      publish,
-      startPos,
+      soundId: soundId,
+      filePath: filePath,
+      loopCount: loopCount,
+      pitch: pitch,
+      pan: pan,
+      gain: gain,
+      publish: publish,
+      startPos: startPos,
       toJSON: () => {
         return {
-          soundId,
-          filePath,
-          loopCount,
-          pitch,
-          pan,
-          gain,
-          publish,
-          startPos,
+          soundId: soundId,
+          filePath: filePath,
+          loopCount: loopCount,
+          pitch: pitch,
+          pan: pan,
+          gain: gain,
+          publish: publish,
+          startPos: startPos,
         };
       },
     };
@@ -2394,18 +2394,18 @@ export class IRtcEngineImpl implements IRtcEngine {
       publish
     );
     const jsonParams = {
-      loopCount,
-      pitch,
-      pan,
-      gain,
-      publish,
+      loopCount: loopCount,
+      pitch: pitch,
+      pan: pan,
+      gain: gain,
+      publish: publish,
       toJSON: () => {
         return {
-          loopCount,
-          pitch,
-          pan,
-          gain,
-          publish,
+          loopCount: loopCount,
+          pitch: pitch,
+          pan: pan,
+          gain: gain,
+          publish: publish,
         };
       },
     };
@@ -2426,10 +2426,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getVolumeOfEffect(soundId: number): number {
     const apiType = this.getApiTypeFromGetVolumeOfEffect(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2444,12 +2444,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setVolumeOfEffect(soundId: number, volume: number): number {
     const apiType = this.getApiTypeFromSetVolumeOfEffect(soundId, volume);
     const jsonParams = {
-      soundId,
-      volume,
+      soundId: soundId,
+      volume: volume,
       toJSON: () => {
         return {
-          soundId,
-          volume,
+          soundId: soundId,
+          volume: volume,
         };
       },
     };
@@ -2467,10 +2467,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   pauseEffect(soundId: number): number {
     const apiType = this.getApiTypeFromPauseEffect(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2496,10 +2496,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   resumeEffect(soundId: number): number {
     const apiType = this.getApiTypeFromResumeEffect(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2525,10 +2525,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   stopEffect(soundId: number): number {
     const apiType = this.getApiTypeFromStopEffect(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2554,10 +2554,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   unloadEffect(soundId: number): number {
     const apiType = this.getApiTypeFromUnloadEffect(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2583,10 +2583,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getEffectDuration(filePath: string): number {
     const apiType = this.getApiTypeFromGetEffectDuration(filePath);
     const jsonParams = {
-      filePath,
+      filePath: filePath,
       toJSON: () => {
         return {
-          filePath,
+          filePath: filePath,
         };
       },
     };
@@ -2601,12 +2601,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setEffectPosition(soundId: number, pos: number): number {
     const apiType = this.getApiTypeFromSetEffectPosition(soundId, pos);
     const jsonParams = {
-      soundId,
-      pos,
+      soundId: soundId,
+      pos: pos,
       toJSON: () => {
         return {
-          soundId,
-          pos,
+          soundId: soundId,
+          pos: pos,
         };
       },
     };
@@ -2624,10 +2624,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getEffectCurrentPosition(soundId: number): number {
     const apiType = this.getApiTypeFromGetEffectCurrentPosition(soundId);
     const jsonParams = {
-      soundId,
+      soundId: soundId,
       toJSON: () => {
         return {
-          soundId,
+          soundId: soundId,
         };
       },
     };
@@ -2642,10 +2642,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableSoundPositionIndication(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableSoundPositionIndication(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -2662,14 +2662,14 @@ export class IRtcEngineImpl implements IRtcEngine {
   setRemoteVoicePosition(uid: number, pan: number, gain: number): number {
     const apiType = this.getApiTypeFromSetRemoteVoicePosition(uid, pan, gain);
     const jsonParams = {
-      uid,
-      pan,
-      gain,
+      uid: uid,
+      pan: pan,
+      gain: gain,
       toJSON: () => {
         return {
-          uid,
-          pan,
-          gain,
+          uid: uid,
+          pan: pan,
+          gain: gain,
         };
       },
     };
@@ -2688,10 +2688,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableSpatialAudio(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableSpatialAudio(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -2712,12 +2712,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       params
     );
     const jsonParams = {
-      uid,
-      params,
+      uid: uid,
+      params: params,
       toJSON: () => {
         return {
-          uid,
-          params,
+          uid: uid,
+          params: params,
         };
       },
     };
@@ -2735,10 +2735,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setVoiceBeautifierPreset(preset: VoiceBeautifierPreset): number {
     const apiType = this.getApiTypeFromSetVoiceBeautifierPreset(preset);
     const jsonParams = {
-      preset,
+      preset: preset,
       toJSON: () => {
         return {
-          preset,
+          preset: preset,
         };
       },
     };
@@ -2755,10 +2755,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAudioEffectPreset(preset: AudioEffectPreset): number {
     const apiType = this.getApiTypeFromSetAudioEffectPreset(preset);
     const jsonParams = {
-      preset,
+      preset: preset,
       toJSON: () => {
         return {
-          preset,
+          preset: preset,
         };
       },
     };
@@ -2775,10 +2775,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setVoiceConversionPreset(preset: VoiceConversionPreset): number {
     const apiType = this.getApiTypeFromSetVoiceConversionPreset(preset);
     const jsonParams = {
-      preset,
+      preset: preset,
       toJSON: () => {
         return {
-          preset,
+          preset: preset,
         };
       },
     };
@@ -2803,14 +2803,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       param2
     );
     const jsonParams = {
-      preset,
-      param1,
-      param2,
+      preset: preset,
+      param1: param1,
+      param2: param2,
       toJSON: () => {
         return {
-          preset,
-          param1,
-          param2,
+          preset: preset,
+          param1: param1,
+          param2: param2,
         };
       },
     };
@@ -2837,14 +2837,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       param2
     );
     const jsonParams = {
-      preset,
-      param1,
-      param2,
+      preset: preset,
+      param1: param1,
+      param2: param2,
       toJSON: () => {
         return {
-          preset,
-          param1,
-          param2,
+          preset: preset,
+          param1: param1,
+          param2: param2,
         };
       },
     };
@@ -2871,14 +2871,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       param2
     );
     const jsonParams = {
-      preset,
-      param1,
-      param2,
+      preset: preset,
+      param1: param1,
+      param2: param2,
       toJSON: () => {
         return {
-          preset,
-          param1,
-          param2,
+          preset: preset,
+          param1: param1,
+          param2: param2,
         };
       },
     };
@@ -2897,10 +2897,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLocalVoicePitch(pitch: number): number {
     const apiType = this.getApiTypeFromSetLocalVoicePitch(pitch);
     const jsonParams = {
-      pitch,
+      pitch: pitch,
       toJSON: () => {
         return {
-          pitch,
+          pitch: pitch,
         };
       },
     };
@@ -2921,12 +2921,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       bandGain
     );
     const jsonParams = {
-      bandFrequency,
-      bandGain,
+      bandFrequency: bandFrequency,
+      bandGain: bandGain,
       toJSON: () => {
         return {
-          bandFrequency,
-          bandGain,
+          bandFrequency: bandFrequency,
+          bandGain: bandGain,
         };
       },
     };
@@ -2944,12 +2944,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLocalVoiceReverb(reverbKey: AudioReverbType, value: number): number {
     const apiType = this.getApiTypeFromSetLocalVoiceReverb(reverbKey, value);
     const jsonParams = {
-      reverbKey,
-      value,
+      reverbKey: reverbKey,
+      value: value,
       toJSON: () => {
         return {
-          reverbKey,
-          value,
+          reverbKey: reverbKey,
+          value: value,
         };
       },
     };
@@ -2967,10 +2967,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLogFile(filePath: string): number {
     const apiType = this.getApiTypeFromSetLogFile(filePath);
     const jsonParams = {
-      filePath,
+      filePath: filePath,
       toJSON: () => {
         return {
-          filePath,
+          filePath: filePath,
         };
       },
     };
@@ -2985,10 +2985,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLogFilter(filter: LogFilterType): number {
     const apiType = this.getApiTypeFromSetLogFilter(filter);
     const jsonParams = {
-      filter,
+      filter: filter,
       toJSON: () => {
         return {
-          filter,
+          filter: filter,
         };
       },
     };
@@ -3003,10 +3003,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLogLevel(level: LogLevel): number {
     const apiType = this.getApiTypeFromSetLogLevel(level);
     const jsonParams = {
-      level,
+      level: level,
       toJSON: () => {
         return {
-          level,
+          level: level,
         };
       },
     };
@@ -3021,10 +3021,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLogFileSize(fileSizeInKBytes: number): number {
     const apiType = this.getApiTypeFromSetLogFileSize(fileSizeInKBytes);
     const jsonParams = {
-      fileSizeInKBytes,
+      fileSizeInKBytes: fileSizeInKBytes,
       toJSON: () => {
         return {
-          fileSizeInKBytes,
+          fileSizeInKBytes: fileSizeInKBytes,
         };
       },
     };
@@ -3039,10 +3039,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   uploadLogFile(requestId: string): number {
     const apiType = this.getApiTypeFromUploadLogFile(requestId);
     const jsonParams = {
-      requestId,
+      requestId: requestId,
       toJSON: () => {
         return {
-          requestId,
+          requestId: requestId,
         };
       },
     };
@@ -3065,14 +3065,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       mirrorMode
     );
     const jsonParams = {
-      uid,
-      renderMode,
-      mirrorMode,
+      uid: uid,
+      renderMode: renderMode,
+      mirrorMode: mirrorMode,
       toJSON: () => {
         return {
-          uid,
-          renderMode,
-          mirrorMode,
+          uid: uid,
+          renderMode: renderMode,
+          mirrorMode: mirrorMode,
         };
       },
     };
@@ -3091,10 +3091,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLocalVideoMirrorMode(mirrorMode: VideoMirrorModeType): number {
     const apiType = this.getApiTypeFromSetLocalVideoMirrorMode(mirrorMode);
     const jsonParams = {
-      mirrorMode,
+      mirrorMode: mirrorMode,
       toJSON: () => {
         return {
-          mirrorMode,
+          mirrorMode: mirrorMode,
         };
       },
     };
@@ -3117,12 +3117,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       audioSourceDelay
     );
     const jsonParams = {
-      enabled,
-      audioSourceDelay,
+      enabled: enabled,
+      audioSourceDelay: audioSourceDelay,
       toJSON: () => {
         return {
-          enabled,
-          audioSourceDelay,
+          enabled: enabled,
+          audioSourceDelay: audioSourceDelay,
         };
       },
     };
@@ -3143,12 +3143,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       enabled
     );
     const jsonParams = {
-      sourceId,
-      enabled,
+      sourceId: sourceId,
+      enabled: enabled,
       toJSON: () => {
         return {
-          sourceId,
-          enabled,
+          sourceId: sourceId,
+          enabled: enabled,
         };
       },
     };
@@ -3166,10 +3166,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startPrimaryCustomAudioTrack(config: AudioTrackConfig): number {
     const apiType = this.getApiTypeFromStartPrimaryCustomAudioTrack(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -3197,10 +3197,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startSecondaryCustomAudioTrack(config: AudioTrackConfig): number {
     const apiType = this.getApiTypeFromStartSecondaryCustomAudioTrack(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -3238,16 +3238,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       samplesPerCall
     );
     const jsonParams = {
-      sampleRate,
-      channel,
-      mode,
-      samplesPerCall,
+      sampleRate: sampleRate,
+      channel: channel,
+      mode: mode,
+      samplesPerCall: samplesPerCall,
       toJSON: () => {
         return {
-          sampleRate,
-          channel,
-          mode,
-          samplesPerCall,
+          sampleRate: sampleRate,
+          channel: channel,
+          mode: mode,
+          samplesPerCall: samplesPerCall,
         };
       },
     };
@@ -3277,16 +3277,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       samplesPerCall
     );
     const jsonParams = {
-      sampleRate,
-      channel,
-      mode,
-      samplesPerCall,
+      sampleRate: sampleRate,
+      channel: channel,
+      mode: mode,
+      samplesPerCall: samplesPerCall,
       toJSON: () => {
         return {
-          sampleRate,
-          channel,
-          mode,
-          samplesPerCall,
+          sampleRate: sampleRate,
+          channel: channel,
+          mode: mode,
+          samplesPerCall: samplesPerCall,
         };
       },
     };
@@ -3314,14 +3314,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       samplesPerCall
     );
     const jsonParams = {
-      sampleRate,
-      channel,
-      samplesPerCall,
+      sampleRate: sampleRate,
+      channel: channel,
+      samplesPerCall: samplesPerCall,
       toJSON: () => {
         return {
-          sampleRate,
-          channel,
-          samplesPerCall,
+          sampleRate: sampleRate,
+          channel: channel,
+          samplesPerCall: samplesPerCall,
         };
       },
     };
@@ -3347,12 +3347,12 @@ export class IRtcEngineImpl implements IRtcEngine {
         channel
       );
     const jsonParams = {
-      sampleRate,
-      channel,
+      sampleRate: sampleRate,
+      channel: channel,
       toJSON: () => {
         return {
-          sampleRate,
-          channel,
+          sampleRate: sampleRate,
+          channel: channel,
         };
       },
     };
@@ -3370,10 +3370,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableAudioSpectrumMonitor(intervalInMS = 100): number {
     const apiType = this.getApiTypeFromEnableAudioSpectrumMonitor(intervalInMS);
     const jsonParams = {
-      intervalInMS,
+      intervalInMS: intervalInMS,
       toJSON: () => {
         return {
-          intervalInMS,
+          intervalInMS: intervalInMS,
         };
       },
     };
@@ -3401,7 +3401,7 @@ export class IRtcEngineImpl implements IRtcEngine {
   registerAudioSpectrumObserver(observer: IAudioSpectrumObserver): number {
     const apiType = this.getApiTypeFromRegisterAudioSpectrumObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -3420,7 +3420,7 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromUnregisterAudioSpectrumObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -3438,10 +3438,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustRecordingSignalVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustRecordingSignalVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -3456,10 +3456,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   muteRecordingSignal(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteRecordingSignal(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -3474,10 +3474,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustPlaybackSignalVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustPlaybackSignalVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -3495,12 +3495,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       volume
     );
     const jsonParams = {
-      uid,
-      volume,
+      uid: uid,
+      volume: volume,
       toJSON: () => {
         return {
-          uid,
-          volume,
+          uid: uid,
+          volume: volume,
         };
       },
     };
@@ -3518,10 +3518,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLocalPublishFallbackOption(option: StreamFallbackOptions): number {
     const apiType = this.getApiTypeFromSetLocalPublishFallbackOption(option);
     const jsonParams = {
-      option,
+      option: option,
       toJSON: () => {
         return {
-          option,
+          option: option,
         };
       },
     };
@@ -3538,10 +3538,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setRemoteSubscribeFallbackOption(option: StreamFallbackOptions): number {
     const apiType = this.getApiTypeFromSetRemoteSubscribeFallbackOption(option);
     const jsonParams = {
-      option,
+      option: option,
       toJSON: () => {
         return {
-          option,
+          option: option,
         };
       },
     };
@@ -3561,12 +3561,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       deviceName
     );
     const jsonParams = {
-      enabled,
-      deviceName,
+      enabled: enabled,
+      deviceName: deviceName,
       toJSON: () => {
         return {
-          enabled,
-          deviceName,
+          enabled: enabled,
+          deviceName: deviceName,
         };
       },
     };
@@ -3584,10 +3584,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   adjustLoopbackSignalVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustLoopbackSignalVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -3619,12 +3619,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       includeAudioFilters
     );
     const jsonParams = {
-      enabled,
-      includeAudioFilters,
+      enabled: enabled,
+      includeAudioFilters: includeAudioFilters,
       toJSON: () => {
         return {
-          enabled,
-          includeAudioFilters,
+          enabled: enabled,
+          includeAudioFilters: includeAudioFilters,
         };
       },
     };
@@ -3642,10 +3642,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setInEarMonitoringVolume(volume: number): number {
     const apiType = this.getApiTypeFromSetInEarMonitoringVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -3663,11 +3663,11 @@ export class IRtcEngineImpl implements IRtcEngine {
       unloadAfterUse
     );
     const jsonParams = {
-      path,
+      path: path,
       unload_after_use: unloadAfterUse,
       toJSON: () => {
         return {
-          path,
+          path: path,
           unload_after_use: unloadAfterUse,
         };
       },
@@ -3694,14 +3694,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       value
     );
     const jsonParams = {
-      provider,
-      key,
-      value,
+      provider: provider,
+      key: key,
+      value: value,
       toJSON: () => {
         return {
-          provider,
-          key,
-          value,
+          provider: provider,
+          key: key,
+          value: value,
         };
       },
     };
@@ -3730,16 +3730,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      provider,
-      extension,
-      enable,
-      type,
+      provider: provider,
+      extension: extension,
+      enable: enable,
+      type: type,
       toJSON: () => {
         return {
-          provider,
-          extension,
-          enable,
-          type,
+          provider: provider,
+          extension: extension,
+          enable: enable,
+          type: type,
         };
       },
     };
@@ -3771,18 +3771,18 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      provider,
-      extension,
-      key,
-      value,
-      type,
+      provider: provider,
+      extension: extension,
+      key: key,
+      value: value,
+      type: type,
       toJSON: () => {
         return {
-          provider,
-          extension,
-          key,
-          value,
-          type,
+          provider: provider,
+          extension: extension,
+          key: key,
+          value: value,
+          type: type,
         };
       },
     };
@@ -3815,18 +3815,18 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      provider,
-      extension,
-      key,
+      provider: provider,
+      extension: extension,
+      key: key,
       buf_len: bufLen,
-      type,
+      type: type,
       toJSON: () => {
         return {
-          provider,
-          extension,
-          key,
+          provider: provider,
+          extension: extension,
+          key: key,
           buf_len: bufLen,
-          type,
+          type: type,
         };
       },
     };
@@ -3848,10 +3848,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setCameraCapturerConfiguration(config: CameraCapturerConfiguration): number {
     const apiType = this.getApiTypeFromSetCameraCapturerConfiguration(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4007,10 +4007,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setCameraZoomFactor(factor: number): number {
     const apiType = this.getApiTypeFromSetCameraZoomFactor(factor);
     const jsonParams = {
-      factor,
+      factor: factor,
       toJSON: () => {
         return {
-          factor,
+          factor: factor,
         };
       },
     };
@@ -4025,10 +4025,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableFaceDetection(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableFaceDetection(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -4060,12 +4060,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       positionY
     );
     const jsonParams = {
-      positionX,
-      positionY,
+      positionX: positionX,
+      positionY: positionY,
       toJSON: () => {
         return {
-          positionX,
-          positionY,
+          positionX: positionX,
+          positionY: positionY,
         };
       },
     };
@@ -4083,10 +4083,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setCameraTorchOn(isOn: boolean): number {
     const apiType = this.getApiTypeFromSetCameraTorchOn(isOn);
     const jsonParams = {
-      isOn,
+      isOn: isOn,
       toJSON: () => {
         return {
-          isOn,
+          isOn: isOn,
         };
       },
     };
@@ -4102,10 +4102,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetCameraAutoFocusFaceModeEnabled(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -4139,12 +4139,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       positionYinView
     );
     const jsonParams = {
-      positionXinView,
-      positionYinView,
+      positionXinView: positionXinView,
+      positionYinView: positionYinView,
       toJSON: () => {
         return {
-          positionXinView,
-          positionYinView,
+          positionXinView: positionXinView,
+          positionYinView: positionYinView,
         };
       },
     };
@@ -4174,10 +4174,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetCameraAutoExposureFaceModeEnabled(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -4195,10 +4195,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
     const jsonParams = {
-      defaultToSpeaker,
+      defaultToSpeaker: defaultToSpeaker,
       toJSON: () => {
         return {
-          defaultToSpeaker,
+          defaultToSpeaker: defaultToSpeaker,
         };
       },
     };
@@ -4215,10 +4215,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setEnableSpeakerphone(speakerOn: boolean): number {
     const apiType = this.getApiTypeFromSetEnableSpeakerphone(speakerOn);
     const jsonParams = {
-      speakerOn,
+      speakerOn: speakerOn,
       toJSON: () => {
         return {
-          speakerOn,
+          speakerOn: speakerOn,
         };
       },
     };
@@ -4252,14 +4252,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       includeScreen
     );
     const jsonParams = {
-      thumbSize,
-      iconSize,
-      includeScreen,
+      thumbSize: thumbSize,
+      iconSize: iconSize,
+      includeScreen: includeScreen,
       toJSON: () => {
         return {
-          thumbSize,
-          iconSize,
-          includeScreen,
+          thumbSize: thumbSize,
+          iconSize: iconSize,
+          includeScreen: includeScreen,
         };
       },
     };
@@ -4281,10 +4281,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetAudioSessionOperationRestriction(restriction);
     const jsonParams = {
-      restriction,
+      restriction: restriction,
       toJSON: () => {
         return {
-          restriction,
+          restriction: restriction,
         };
       },
     };
@@ -4309,14 +4309,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       captureParams
     );
     const jsonParams = {
-      displayId,
-      regionRect,
-      captureParams,
+      displayId: displayId,
+      regionRect: regionRect,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          displayId,
-          regionRect,
-          captureParams,
+          displayId: displayId,
+          regionRect: regionRect,
+          captureParams: captureParams,
         };
       },
     };
@@ -4343,14 +4343,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       captureParams
     );
     const jsonParams = {
-      screenRect,
-      regionRect,
-      captureParams,
+      screenRect: screenRect,
+      regionRect: regionRect,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          screenRect,
-          regionRect,
-          captureParams,
+          screenRect: screenRect,
+          regionRect: regionRect,
+          captureParams: captureParams,
         };
       },
     };
@@ -4389,14 +4389,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       captureParams
     );
     const jsonParams = {
-      windowId,
-      regionRect,
-      captureParams,
+      windowId: windowId,
+      regionRect: regionRect,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          windowId,
-          regionRect,
-          captureParams,
+          windowId: windowId,
+          regionRect: regionRect,
+          captureParams: captureParams,
         };
       },
     };
@@ -4415,10 +4415,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setScreenCaptureContentHint(contentHint: VideoContentHint): number {
     const apiType = this.getApiTypeFromSetScreenCaptureContentHint(contentHint);
     const jsonParams = {
-      contentHint,
+      contentHint: contentHint,
       toJSON: () => {
         return {
-          contentHint,
+          contentHint: contentHint,
         };
       },
     };
@@ -4435,10 +4435,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setScreenCaptureScenario(screenScenario: ScreenScenarioType): number {
     const apiType = this.getApiTypeFromSetScreenCaptureScenario(screenScenario);
     const jsonParams = {
-      screenScenario,
+      screenScenario: screenScenario,
       toJSON: () => {
         return {
-          screenScenario,
+          screenScenario: screenScenario,
         };
       },
     };
@@ -4455,10 +4455,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   updateScreenCaptureRegion(regionRect: Rectangle): number {
     const apiType = this.getApiTypeFromUpdateScreenCaptureRegion(regionRect);
     const jsonParams = {
-      regionRect,
+      regionRect: regionRect,
       toJSON: () => {
         return {
-          regionRect,
+          regionRect: regionRect,
         };
       },
     };
@@ -4478,10 +4478,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromUpdateScreenCaptureParameters(captureParams);
     const jsonParams = {
-      captureParams,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          captureParams,
+          captureParams: captureParams,
         };
       },
     };
@@ -4498,10 +4498,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startScreenCapture(captureParams: ScreenCaptureParameters2): number {
     const apiType = this.getApiTypeFromStartScreenCapture(captureParams);
     const jsonParams = {
-      captureParams,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          captureParams,
+          captureParams: captureParams,
         };
       },
     };
@@ -4518,10 +4518,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   updateScreenCapture(captureParams: ScreenCaptureParameters2): number {
     const apiType = this.getApiTypeFromUpdateScreenCapture(captureParams);
     const jsonParams = {
-      captureParams,
+      captureParams: captureParams,
       toJSON: () => {
         return {
-          captureParams,
+          captureParams: captureParams,
         };
       },
     };
@@ -4561,14 +4561,14 @@ export class IRtcEngineImpl implements IRtcEngine {
   rate(callId: string, rating: number, description: string): number {
     const apiType = this.getApiTypeFromRate(callId, rating, description);
     const jsonParams = {
-      callId,
-      rating,
-      description,
+      callId: callId,
+      rating: rating,
+      description: description,
       toJSON: () => {
         return {
-          callId,
-          rating,
-          description,
+          callId: callId,
+          rating: rating,
+          description: description,
         };
       },
     };
@@ -4587,12 +4587,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   complain(callId: string, description: string): number {
     const apiType = this.getApiTypeFromComplain(callId, description);
     const jsonParams = {
-      callId,
-      description,
+      callId: callId,
+      description: description,
       toJSON: () => {
         return {
-          callId,
-          description,
+          callId: callId,
+          description: description,
         };
       },
     };
@@ -4610,10 +4610,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startRtmpStreamWithoutTranscoding(url: string): number {
     const apiType = this.getApiTypeFromStartRtmpStreamWithoutTranscoding(url);
     const jsonParams = {
-      url,
+      url: url,
       toJSON: () => {
         return {
-          url,
+          url: url,
         };
       },
     };
@@ -4636,12 +4636,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       transcoding
     );
     const jsonParams = {
-      url,
-      transcoding,
+      url: url,
+      transcoding: transcoding,
       toJSON: () => {
         return {
-          url,
-          transcoding,
+          url: url,
+          transcoding: transcoding,
         };
       },
     };
@@ -4659,10 +4659,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   updateRtmpTranscoding(transcoding: LiveTranscoding): number {
     const apiType = this.getApiTypeFromUpdateRtmpTranscoding(transcoding);
     const jsonParams = {
-      transcoding,
+      transcoding: transcoding,
       toJSON: () => {
         return {
-          transcoding,
+          transcoding: transcoding,
         };
       },
     };
@@ -4679,10 +4679,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   stopRtmpStream(url: string): number {
     const apiType = this.getApiTypeFromStopRtmpStream(url);
     const jsonParams = {
-      url,
+      url: url,
       toJSON: () => {
         return {
-          url,
+          url: url,
         };
       },
     };
@@ -4697,10 +4697,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startLocalVideoTranscoder(config: LocalTranscoderConfiguration): number {
     const apiType = this.getApiTypeFromStartLocalVideoTranscoder(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4720,10 +4720,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromUpdateLocalTranscoderConfiguration(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4751,10 +4751,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startPrimaryCameraCapture(config: CameraCapturerConfiguration): number {
     const apiType = this.getApiTypeFromStartPrimaryCameraCapture(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4771,10 +4771,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startSecondaryCameraCapture(config: CameraCapturerConfiguration): number {
     const apiType = this.getApiTypeFromStartSecondaryCameraCapture(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4819,12 +4819,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       orientation
     );
     const jsonParams = {
-      type,
-      orientation,
+      type: type,
+      orientation: orientation,
       toJSON: () => {
         return {
-          type,
-          orientation,
+          type: type,
+          orientation: orientation,
         };
       },
     };
@@ -4848,12 +4848,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       orientation
     );
     const jsonParams = {
-      type,
-      orientation,
+      type: type,
+      orientation: orientation,
       toJSON: () => {
         return {
-          type,
-          orientation,
+          type: type,
+          orientation: orientation,
         };
       },
     };
@@ -4871,10 +4871,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startPrimaryScreenCapture(config: ScreenCaptureConfiguration): number {
     const apiType = this.getApiTypeFromStartPrimaryScreenCapture(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4891,10 +4891,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startSecondaryScreenCapture(config: ScreenCaptureConfiguration): number {
     const apiType = this.getApiTypeFromStartSecondaryScreenCapture(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -4944,7 +4944,7 @@ export class IRtcEngineImpl implements IRtcEngine {
   registerEventHandler(eventHandler: IRtcEngineEventHandler): boolean {
     const apiType = this.getApiTypeFromRegisterEventHandler(eventHandler);
     const jsonParams = {
-      eventHandler,
+      eventHandler: eventHandler,
       toJSON: () => {
         return {};
       },
@@ -4962,7 +4962,7 @@ export class IRtcEngineImpl implements IRtcEngine {
   unregisterEventHandler(eventHandler: IRtcEngineEventHandler): boolean {
     const apiType = this.getApiTypeFromUnregisterEventHandler(eventHandler);
     const jsonParams = {
-      eventHandler,
+      eventHandler: eventHandler,
       toJSON: () => {
         return {};
       },
@@ -4980,12 +4980,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setRemoteUserPriority(uid: number, userPriority: PriorityType): number {
     const apiType = this.getApiTypeFromSetRemoteUserPriority(uid, userPriority);
     const jsonParams = {
-      uid,
-      userPriority,
+      uid: uid,
+      userPriority: userPriority,
       toJSON: () => {
         return {
-          uid,
-          userPriority,
+          uid: uid,
+          userPriority: userPriority,
         };
       },
     };
@@ -5003,10 +5003,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setEncryptionMode(encryptionMode: string): number {
     const apiType = this.getApiTypeFromSetEncryptionMode(encryptionMode);
     const jsonParams = {
-      encryptionMode,
+      encryptionMode: encryptionMode,
       toJSON: () => {
         return {
-          encryptionMode,
+          encryptionMode: encryptionMode,
         };
       },
     };
@@ -5021,10 +5021,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setEncryptionSecret(secret: string): number {
     const apiType = this.getApiTypeFromSetEncryptionSecret(secret);
     const jsonParams = {
-      secret,
+      secret: secret,
       toJSON: () => {
         return {
-          secret,
+          secret: secret,
         };
       },
     };
@@ -5039,12 +5039,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableEncryption(enabled: boolean, config: EncryptionConfig): number {
     const apiType = this.getApiTypeFromEnableEncryption(enabled, config);
     const jsonParams = {
-      enabled,
-      config,
+      enabled: enabled,
+      config: config,
       toJSON: () => {
         return {
-          enabled,
-          config,
+          enabled: enabled,
+          config: config,
         };
       },
     };
@@ -5070,13 +5070,13 @@ export class IRtcEngineImpl implements IRtcEngine {
       length
     );
     const jsonParams = {
-      streamId,
-      data,
-      length,
+      streamId: streamId,
+      data: data,
+      length: length,
       toJSON: () => {
         return {
-          streamId,
-          length,
+          streamId: streamId,
+          length: length,
         };
       },
     };
@@ -5117,12 +5117,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   addInjectStreamUrl(url: string, config: InjectStreamConfig): number {
     const apiType = this.getApiTypeFromAddInjectStreamUrl(url, config);
     const jsonParams = {
-      url,
-      config,
+      url: url,
+      config: config,
       toJSON: () => {
         return {
-          url,
-          config,
+          url: url,
+          config: config,
         };
       },
     };
@@ -5140,10 +5140,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   removeInjectStreamUrl(url: string): number {
     const apiType = this.getApiTypeFromRemoveInjectStreamUrl(url);
     const jsonParams = {
-      url,
+      url: url,
       toJSON: () => {
         return {
-          url,
+          url: url,
         };
       },
     };
@@ -5180,10 +5180,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableWebSdkInteroperability(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableWebSdkInteroperability(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -5212,18 +5212,18 @@ export class IRtcEngineImpl implements IRtcEngine {
       value
     );
     const jsonParams = {
-      id,
-      category,
-      event,
-      label,
-      value,
+      id: id,
+      category: category,
+      event: event,
+      label: label,
+      value: value,
       toJSON: () => {
         return {
-          id,
-          category,
-          event,
-          label,
-          value,
+          id: id,
+          category: category,
+          event: event,
+          label: label,
+          value: value,
         };
       },
     };
@@ -5250,11 +5250,11 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      observer,
-      type,
+      observer: observer,
+      type: type,
       toJSON: () => {
         return {
-          type,
+          type: type,
         };
       },
     };
@@ -5278,11 +5278,11 @@ export class IRtcEngineImpl implements IRtcEngine {
       type
     );
     const jsonParams = {
-      observer,
-      type,
+      observer: observer,
+      type: type,
       toJSON: () => {
         return {
-          type,
+          type: type,
         };
       },
     };
@@ -5318,18 +5318,18 @@ export class IRtcEngineImpl implements IRtcEngine {
     const jsonParams = {
       channel_id: channelId,
       user_id: userId,
-      location,
-      uuid,
-      passwd,
+      location: location,
+      uuid: uuid,
+      passwd: passwd,
       duration_ms: durationMs,
       auto_upload: autoUpload,
       toJSON: () => {
         return {
           channel_id: channelId,
           user_id: userId,
-          location,
-          uuid,
-          passwd,
+          location: location,
+          uuid: uuid,
+          passwd: passwd,
           duration_ms: durationMs,
           auto_upload: autoUpload,
         };
@@ -5364,12 +5364,12 @@ export class IRtcEngineImpl implements IRtcEngine {
     const jsonParams = {
       channel_id: channelId,
       user_id: userId,
-      location,
+      location: location,
       toJSON: () => {
         return {
           channel_id: channelId,
           user_id: userId,
-          location,
+          location: location,
         };
       },
     };
@@ -5391,12 +5391,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       userAccount
     );
     const jsonParams = {
-      appId,
-      userAccount,
+      appId: appId,
+      userAccount: userAccount,
       toJSON: () => {
         return {
-          appId,
-          userAccount,
+          appId: appId,
+          userAccount: userAccount,
         };
       },
     };
@@ -5424,16 +5424,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       options
     );
     const jsonParams = {
-      token,
-      channelId,
-      userAccount,
-      options,
+      token: token,
+      channelId: channelId,
+      userAccount: userAccount,
+      options: options,
       toJSON: () => {
         return {
-          token,
-          channelId,
-          userAccount,
-          options,
+          token: token,
+          channelId: channelId,
+          userAccount: userAccount,
+          options: options,
         };
       },
     };
@@ -5453,10 +5453,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getUserInfoByUserAccount(userAccount: string): UserInfo {
     const apiType = this.getApiTypeFromGetUserInfoByUserAccount(userAccount);
     const jsonParams = {
-      userAccount,
+      userAccount: userAccount,
       toJSON: () => {
         return {
-          userAccount,
+          userAccount: userAccount,
         };
       },
     };
@@ -5474,10 +5474,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   getUserInfoByUid(uid: number): UserInfo {
     const apiType = this.getApiTypeFromGetUserInfoByUid(uid);
     const jsonParams = {
-      uid,
+      uid: uid,
       toJSON: () => {
         return {
-          uid,
+          uid: uid,
         };
       },
     };
@@ -5495,10 +5495,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromStartChannelMediaRelay(configuration);
     const jsonParams = {
-      configuration,
+      configuration: configuration,
       toJSON: () => {
         return {
-          configuration,
+          configuration: configuration,
         };
       },
     };
@@ -5517,10 +5517,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromUpdateChannelMediaRelay(configuration);
     const jsonParams = {
-      configuration,
+      configuration: configuration,
       toJSON: () => {
         return {
-          configuration,
+          configuration: configuration,
         };
       },
     };
@@ -5571,10 +5571,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetDirectCdnStreamingAudioConfiguration(profile);
     const jsonParams = {
-      profile,
+      profile: profile,
       toJSON: () => {
         return {
-          profile,
+          profile: profile,
         };
       },
     };
@@ -5594,10 +5594,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromSetDirectCdnStreamingVideoConfiguration(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -5622,13 +5622,13 @@ export class IRtcEngineImpl implements IRtcEngine {
       options
     );
     const jsonParams = {
-      eventHandler,
-      publishUrl,
-      options,
+      eventHandler: eventHandler,
+      publishUrl: publishUrl,
+      options: options,
       toJSON: () => {
         return {
-          publishUrl,
-          options,
+          publishUrl: publishUrl,
+          options: options,
         };
       },
     };
@@ -5661,10 +5661,10 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromUpdateDirectCdnStreamingMediaOptions(options);
     const jsonParams = {
-      options,
+      options: options,
       toJSON: () => {
         return {
-          options,
+          options: options,
         };
       },
     };
@@ -5689,14 +5689,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       config
     );
     const jsonParams = {
-      sound1,
-      sound2,
-      config,
+      sound1: sound1,
+      sound2: sound2,
+      config: config,
       toJSON: () => {
         return {
-          sound1,
-          sound2,
-          config,
+          sound1: sound1,
+          sound2: sound2,
+          config: config,
         };
       },
     };
@@ -5726,10 +5726,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   configRhythmPlayer(config: AgoraRhythmPlayerConfig): number {
     const apiType = this.getApiTypeFromConfigRhythmPlayer(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -5746,12 +5746,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   takeSnapshot(uid: number, filePath: string): number {
     const apiType = this.getApiTypeFromTakeSnapshot(uid, filePath);
     const jsonParams = {
-      uid,
-      filePath,
+      uid: uid,
+      filePath: filePath,
       toJSON: () => {
         return {
-          uid,
-          filePath,
+          uid: uid,
+          filePath: filePath,
         };
       },
     };
@@ -5766,12 +5766,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableContentInspect(enabled: boolean, config: ContentInspectConfig): number {
     const apiType = this.getApiTypeFromEnableContentInspect(enabled, config);
     const jsonParams = {
-      enabled,
-      config,
+      enabled: enabled,
+      config: config,
       toJSON: () => {
         return {
-          enabled,
-          config,
+          enabled: enabled,
+          config: config,
         };
       },
     };
@@ -5792,12 +5792,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       volume
     );
     const jsonParams = {
-      sourceId,
-      volume,
+      sourceId: sourceId,
+      volume: volume,
       toJSON: () => {
         return {
-          sourceId,
-          volume,
+          sourceId: sourceId,
+          volume: volume,
         };
       },
     };
@@ -5818,12 +5818,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       volume
     );
     const jsonParams = {
-      sourceId,
-      volume,
+      sourceId: sourceId,
+      volume: volume,
       toJSON: () => {
         return {
-          sourceId,
-          volume,
+          sourceId: sourceId,
+          volume: volume,
         };
       },
     };
@@ -5841,10 +5841,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setCloudProxy(proxyType: CloudProxyType): number {
     const apiType = this.getApiTypeFromSetCloudProxy(proxyType);
     const jsonParams = {
-      proxyType,
+      proxyType: proxyType,
       toJSON: () => {
         return {
-          proxyType,
+          proxyType: proxyType,
         };
       },
     };
@@ -5859,10 +5859,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setLocalAccessPoint(config: LocalAccessPointConfiguration): number {
     const apiType = this.getApiTypeFromSetLocalAccessPoint(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -5879,10 +5879,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAdvancedAudioOptions(options: AdvancedAudioOptions): number {
     const apiType = this.getApiTypeFromSetAdvancedAudioOptions(options);
     const jsonParams = {
-      options,
+      options: options,
       toJSON: () => {
         return {
-          options,
+          options: options,
         };
       },
     };
@@ -5899,12 +5899,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setAVSyncSource(channelId: string, uid: number): number {
     const apiType = this.getApiTypeFromSetAVSyncSource(channelId, uid);
     const jsonParams = {
-      channelId,
-      uid,
+      channelId: channelId,
+      uid: uid,
       toJSON: () => {
         return {
-          channelId,
-          uid,
+          channelId: channelId,
+          uid: uid,
         };
       },
     };
@@ -5922,12 +5922,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableVideoImageSource(enable: boolean, options: ImageTrackOptions): number {
     const apiType = this.getApiTypeFromEnableVideoImageSource(enable, options);
     const jsonParams = {
-      enable,
-      options,
+      enable: enable,
+      options: options,
       toJSON: () => {
         return {
-          enable,
-          options,
+          enable: enable,
+          options: options,
         };
       },
     };
@@ -5945,10 +5945,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   enableWirelessAccelerate(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableWirelessAccelerate(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -5968,16 +5968,16 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromJoinChannel(token, channelId, info, uid);
     const jsonParams = {
-      token,
-      channelId,
-      info,
-      uid,
+      token: token,
+      channelId: channelId,
+      info: info,
+      uid: uid,
       toJSON: () => {
         return {
-          token,
-          channelId,
-          info,
-          uid,
+          token: token,
+          channelId: channelId,
+          info: info,
+          uid: uid,
         };
       },
     };
@@ -6007,16 +6007,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       options
     );
     const jsonParams = {
-      token,
-      channelId,
-      uid,
-      options,
+      token: token,
+      channelId: channelId,
+      uid: uid,
+      options: options,
       toJSON: () => {
         return {
-          token,
-          channelId,
-          uid,
-          options,
+          token: token,
+          channelId: channelId,
+          uid: uid,
+          options: options,
         };
       },
     };
@@ -6036,10 +6036,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   leaveChannel(options?: LeaveChannelOptions): number {
     const apiType = this.getApiTypeFromLeaveChannel(options);
     const jsonParams = {
-      options,
+      options: options,
       toJSON: () => {
         return {
-          options,
+          options: options,
         };
       },
     };
@@ -6054,12 +6054,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   setClientRole(role: ClientRoleType, options?: ClientRoleOptions): number {
     const apiType = this.getApiTypeFromSetClientRole(role, options);
     const jsonParams = {
-      role,
-      options,
+      role: role,
+      options: options,
       toJSON: () => {
         return {
-          role,
-          options,
+          role: role,
+          options: options,
         };
       },
     };
@@ -6077,10 +6077,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startEchoTest(intervalInSeconds = 10): number {
     const apiType = this.getApiTypeFromStartEchoTest(intervalInSeconds);
     const jsonParams = {
-      intervalInSeconds,
+      intervalInSeconds: intervalInSeconds,
       toJSON: () => {
         return {
-          intervalInSeconds,
+          intervalInSeconds: intervalInSeconds,
         };
       },
     };
@@ -6097,10 +6097,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromStartPreview(sourceType);
     const jsonParams = {
-      sourceType,
+      sourceType: sourceType,
       toJSON: () => {
         return {
-          sourceType,
+          sourceType: sourceType,
         };
       },
     };
@@ -6119,10 +6119,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromStopPreview(sourceType);
     const jsonParams = {
-      sourceType,
+      sourceType: sourceType,
       toJSON: () => {
         return {
-          sourceType,
+          sourceType: sourceType,
         };
       },
     };
@@ -6142,12 +6142,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   ): number {
     const apiType = this.getApiTypeFromSetAudioProfile(profile, scenario);
     const jsonParams = {
-      profile,
-      scenario,
+      profile: profile,
+      scenario: scenario,
       toJSON: () => {
         return {
-          profile,
-          scenario,
+          profile: profile,
+          scenario: scenario,
         };
       },
     };
@@ -6165,10 +6165,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   startAudioRecording(config: AudioRecordingConfiguration): number {
     const apiType = this.getApiTypeFromStartAudioRecording(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -6197,18 +6197,18 @@ export class IRtcEngineImpl implements IRtcEngine {
       startPos
     );
     const jsonParams = {
-      filePath,
-      loopback,
-      replace,
-      cycle,
-      startPos,
+      filePath: filePath,
+      loopback: loopback,
+      replace: replace,
+      cycle: cycle,
+      startPos: startPos,
       toJSON: () => {
         return {
-          filePath,
-          loopback,
-          replace,
-          cycle,
-          startPos,
+          filePath: filePath,
+          loopback: loopback,
+          replace: replace,
+          cycle: cycle,
+          startPos: startPos,
         };
       },
     };
@@ -6235,12 +6235,12 @@ export class IRtcEngineImpl implements IRtcEngine {
       mirrorMode
     );
     const jsonParams = {
-      renderMode,
-      mirrorMode,
+      renderMode: renderMode,
+      mirrorMode: mirrorMode,
       toJSON: () => {
         return {
-          renderMode,
-          mirrorMode,
+          renderMode: renderMode,
+          mirrorMode: mirrorMode,
         };
       },
     };
@@ -6266,14 +6266,14 @@ export class IRtcEngineImpl implements IRtcEngine {
       streamConfig
     );
     const jsonParams = {
-      enabled,
-      sourceType,
-      streamConfig,
+      enabled: enabled,
+      sourceType: sourceType,
+      streamConfig: streamConfig,
       toJSON: () => {
         return {
-          enabled,
-          sourceType,
-          streamConfig,
+          enabled: enabled,
+          sourceType: sourceType,
+          streamConfig: streamConfig,
         };
       },
     };
@@ -6292,10 +6292,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   createDataStream(config: DataStreamConfig): number {
     const apiType = this.getApiTypeFromCreateDataStream(config);
     const jsonParams = {
-      config,
+      config: config,
       toJSON: () => {
         return {
-          config,
+          config: config,
         };
       },
     };
@@ -6311,12 +6311,12 @@ export class IRtcEngineImpl implements IRtcEngine {
   addVideoWatermark(watermarkUrl: string, options: WatermarkOptions): number {
     const apiType = this.getApiTypeFromAddVideoWatermark(watermarkUrl, options);
     const jsonParams = {
-      watermarkUrl,
-      options,
+      watermarkUrl: watermarkUrl,
+      options: options,
       toJSON: () => {
         return {
-          watermarkUrl,
-          options,
+          watermarkUrl: watermarkUrl,
+          options: options,
         };
       },
     };
@@ -6344,16 +6344,16 @@ export class IRtcEngineImpl implements IRtcEngine {
       options
     );
     const jsonParams = {
-      token,
-      channelId,
-      userAccount,
-      options,
+      token: token,
+      channelId: channelId,
+      userAccount: userAccount,
+      options: options,
       toJSON: () => {
         return {
-          token,
-          channelId,
-          userAccount,
-          options,
+          token: token,
+          channelId: channelId,
+          userAccount: userAccount,
+          options: options,
         };
       },
     };
@@ -6428,11 +6428,11 @@ export class IRtcEngineImpl implements IRtcEngine {
   sendMetaData(metadata: Metadata, sourceType: VideoSourceType): number {
     const apiType = this.getApiTypeFromSendMetaData(metadata, sourceType);
     const jsonParams = {
-      metadata,
+      metadata: metadata,
       source_type: sourceType,
       toJSON: () => {
         return {
-          metadata,
+          metadata: metadata,
           source_type: sourceType,
         };
       },
@@ -6451,10 +6451,10 @@ export class IRtcEngineImpl implements IRtcEngine {
   setMaxMetadataSize(size: number): number {
     const apiType = this.getApiTypeFromSetMaxMetadataSize(size);
     const jsonParams = {
-      size,
+      size: size,
       toJSON: () => {
         return {
-          size,
+          size: size,
         };
       },
     };
@@ -6472,7 +6472,7 @@ export class IRtcEngineImpl implements IRtcEngine {
     const apiType =
       this.getApiTypeFromUnregisterAudioEncodedFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },

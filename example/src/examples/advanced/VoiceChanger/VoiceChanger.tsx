@@ -18,7 +18,6 @@ import {
   VoiceConversionPreset,
 } from 'react-native-agora-rtc-ng';
 
-import { ActionItem } from '../../../components/ActionItem';
 import {
   BaseAudioComponentState,
   BaseComponent,

@@ -1,44 +1,44 @@
 import { RtcConnection } from './IAgoraRtcEngineEx';
 
-/*
+/**
  * @ignore
  */
 export class RemoteVoicePositionInfo {
-  /*
+  /**
    * @ignore
    */
   position?: number[];
-  /*
+  /**
    * @ignore
    */
   forward?: number[];
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class IBaseSpatialAudioEngine {
-  /*
+  /**
    * @ignore
    */
   abstract release(): void;
 
-  /*
+  /**
    * @ignore
    */
   abstract setMaxAudioRecvCount(maxCount: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setAudioRecvRange(range: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setDistanceUnit(unit: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract updateSelfPosition(
@@ -48,7 +48,7 @@ export abstract class IBaseSpatialAudioEngine {
     axisUp: number[]
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract updateSelfPositionEx(
@@ -59,7 +59,7 @@ export abstract class IBaseSpatialAudioEngine {
     connection: RtcConnection
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract updatePlayerPositionInfo(
@@ -67,32 +67,32 @@ export abstract class IBaseSpatialAudioEngine {
     positionInfo: RemoteVoicePositionInfo
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setParameters(params: string): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract muteLocalAudioStream(mute: boolean): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract muteAllRemoteAudioStreams(mute: boolean): number;
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class ILocalSpatialAudioEngine extends IBaseSpatialAudioEngine {
-  /*
+  /**
    * @ignore
    */
   abstract initialize(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract updateRemotePosition(
@@ -100,7 +100,7 @@ export abstract class ILocalSpatialAudioEngine extends IBaseSpatialAudioEngine {
     posInfo: RemoteVoicePositionInfo
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract updateRemotePositionEx(
@@ -109,12 +109,12 @@ export abstract class ILocalSpatialAudioEngine extends IBaseSpatialAudioEngine {
     connection: RtcConnection
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract removeRemotePosition(uid: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract removeRemotePositionEx(
@@ -122,12 +122,12 @@ export abstract class ILocalSpatialAudioEngine extends IBaseSpatialAudioEngine {
     connection: RtcConnection
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract clearRemotePositions(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract clearRemotePositionsEx(connection: RtcConnection): number;

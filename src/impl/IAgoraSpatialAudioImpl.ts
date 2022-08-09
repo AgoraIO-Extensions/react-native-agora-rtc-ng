@@ -19,10 +19,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   setMaxAudioRecvCount(maxCount: number): number {
     const apiType = this.getApiTypeFromSetMaxAudioRecvCount(maxCount);
     const jsonParams = {
-      maxCount,
+      maxCount: maxCount,
       toJSON: () => {
         return {
-          maxCount,
+          maxCount: maxCount,
         };
       },
     };
@@ -37,10 +37,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   setAudioRecvRange(range: number): number {
     const apiType = this.getApiTypeFromSetAudioRecvRange(range);
     const jsonParams = {
-      range,
+      range: range,
       toJSON: () => {
         return {
-          range,
+          range: range,
         };
       },
     };
@@ -55,10 +55,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   setDistanceUnit(unit: number): number {
     const apiType = this.getApiTypeFromSetDistanceUnit(unit);
     const jsonParams = {
-      unit,
+      unit: unit,
       toJSON: () => {
         return {
-          unit,
+          unit: unit,
         };
       },
     };
@@ -83,16 +83,16 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
       axisUp
     );
     const jsonParams = {
-      position,
-      axisForward,
-      axisRight,
-      axisUp,
+      position: position,
+      axisForward: axisForward,
+      axisRight: axisRight,
+      axisUp: axisUp,
       toJSON: () => {
         return {
-          position,
-          axisForward,
-          axisRight,
-          axisUp,
+          position: position,
+          axisForward: axisForward,
+          axisRight: axisRight,
+          axisUp: axisUp,
         };
       },
     };
@@ -124,18 +124,18 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
       connection
     );
     const jsonParams = {
-      position,
-      axisForward,
-      axisRight,
-      axisUp,
-      connection,
+      position: position,
+      axisForward: axisForward,
+      axisRight: axisRight,
+      axisUp: axisUp,
+      connection: connection,
       toJSON: () => {
         return {
-          position,
-          axisForward,
-          axisRight,
-          axisUp,
-          connection,
+          position: position,
+          axisForward: axisForward,
+          axisRight: axisRight,
+          axisUp: axisUp,
+          connection: connection,
         };
       },
     };
@@ -162,12 +162,12 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
       positionInfo
     );
     const jsonParams = {
-      playerId,
-      positionInfo,
+      playerId: playerId,
+      positionInfo: positionInfo,
       toJSON: () => {
         return {
-          playerId,
-          positionInfo,
+          playerId: playerId,
+          positionInfo: positionInfo,
         };
       },
     };
@@ -185,10 +185,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   setParameters(params: string): number {
     const apiType = this.getApiTypeFromSetParameters(params);
     const jsonParams = {
-      params,
+      params: params,
       toJSON: () => {
         return {
-          params,
+          params: params,
         };
       },
     };
@@ -203,10 +203,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   muteLocalAudioStream(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteLocalAudioStream(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -221,10 +221,10 @@ export class IBaseSpatialAudioEngineImpl implements IBaseSpatialAudioEngine {
   muteAllRemoteAudioStreams(mute: boolean): number {
     const apiType = this.getApiTypeFromMuteAllRemoteAudioStreams(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -255,12 +255,12 @@ export class ILocalSpatialAudioEngineImpl
   updateRemotePosition(uid: number, posInfo: RemoteVoicePositionInfo): number {
     const apiType = this.getApiTypeFromUpdateRemotePosition(uid, posInfo);
     const jsonParams = {
-      uid,
-      posInfo,
+      uid: uid,
+      posInfo: posInfo,
       toJSON: () => {
         return {
-          uid,
-          posInfo,
+          uid: uid,
+          posInfo: posInfo,
         };
       },
     };
@@ -286,14 +286,14 @@ export class ILocalSpatialAudioEngineImpl
       connection
     );
     const jsonParams = {
-      uid,
-      posInfo,
-      connection,
+      uid: uid,
+      posInfo: posInfo,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          posInfo,
-          connection,
+          uid: uid,
+          posInfo: posInfo,
+          connection: connection,
         };
       },
     };
@@ -312,10 +312,10 @@ export class ILocalSpatialAudioEngineImpl
   removeRemotePosition(uid: number): number {
     const apiType = this.getApiTypeFromRemoveRemotePosition(uid);
     const jsonParams = {
-      uid,
+      uid: uid,
       toJSON: () => {
         return {
-          uid,
+          uid: uid,
         };
       },
     };
@@ -330,12 +330,12 @@ export class ILocalSpatialAudioEngineImpl
   removeRemotePositionEx(uid: number, connection: RtcConnection): number {
     const apiType = this.getApiTypeFromRemoveRemotePositionEx(uid, connection);
     const jsonParams = {
-      uid,
-      connection,
+      uid: uid,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          connection,
+          uid: uid,
+          connection: connection,
         };
       },
     };
@@ -364,10 +364,10 @@ export class ILocalSpatialAudioEngineImpl
   clearRemotePositionsEx(connection: RtcConnection): number {
     const apiType = this.getApiTypeFromClearRemotePositionsEx(connection);
     const jsonParams = {
-      connection,
+      connection: connection,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };

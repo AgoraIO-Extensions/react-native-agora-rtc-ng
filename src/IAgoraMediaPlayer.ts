@@ -13,11 +13,11 @@ import {
 import { IMediaPlayerSourceObserver } from './IAgoraMediaPlayerSource';
 import { SpatialAudioParams } from './AgoraBase';
 
-/*
+/**
  * This class provides media player functions and supports multiple instances.
  */
 export abstract class IMediaPlayer {
-  /*
+  /**
    * Gets the ID of the media player.
    *
    * @returns
@@ -26,7 +26,7 @@ export abstract class IMediaPlayer {
    */
   abstract getMediaPlayerId(): number;
 
-  /*
+  /**
    * Opens the media resource.
    *
    * @param url The path of the media file. Both local path and online path are supported.On the Android platform, the URI format is not supported.
@@ -35,12 +35,12 @@ export abstract class IMediaPlayer {
    */
   abstract open(url: string, startPos: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract openWithMediaSource(source: MediaSource): number;
 
-  /*
+  /**
    * Plays the media file.
    * After calling open or seek, you can call this method to play the media file.
    *
@@ -50,7 +50,7 @@ export abstract class IMediaPlayer {
    */
   abstract play(): number;
 
-  /*
+  /**
    * Pauses the playback.
    *
    * @returns
@@ -59,7 +59,7 @@ export abstract class IMediaPlayer {
    */
   abstract pause(): number;
 
-  /*
+  /**
    * Stops playing the media track.
    *
    * @returns
@@ -68,7 +68,7 @@ export abstract class IMediaPlayer {
    */
   abstract stop(): number;
 
-  /*
+  /**
    * Resumes playing the media file.
    *
    * @returns
@@ -77,7 +77,7 @@ export abstract class IMediaPlayer {
    */
   abstract resume(): number;
 
-  /*
+  /**
    * Seeks to a new playback position.
    * After successfully calling this method, you will receive the onPlayerEvent callback, reporting the result of the seek operation to the new playback position.
    * To play the media file from a specific position, do the following:
@@ -92,7 +92,7 @@ export abstract class IMediaPlayer {
    */
   abstract seek(newPos: number): number;
 
-  /*
+  /**
    * Sets the pitch of the current media resource.
    * Call this method after calling open .
    *
@@ -104,7 +104,7 @@ export abstract class IMediaPlayer {
    */
   abstract setAudioPitch(pitch: number): number;
 
-  /*
+  /**
    * Gets the duration of the media resource.
    *
    * @returns
@@ -112,7 +112,7 @@ export abstract class IMediaPlayer {
    */
   abstract getDuration(): number;
 
-  /*
+  /**
    * Gets current local playback progress.
    *
    * @returns
@@ -121,7 +121,7 @@ export abstract class IMediaPlayer {
    */
   abstract getPlayPosition(): number;
 
-  /*
+  /**
    * Gets the number of the media streams in the media resource.
    * Call this method after calling open .
    *
@@ -131,7 +131,7 @@ export abstract class IMediaPlayer {
    */
   abstract getStreamCount(): number;
 
-  /*
+  /**
    * Gets the detailed information of the media stream.
    * Call this method after calling getStreamCount .
    *
@@ -143,7 +143,7 @@ export abstract class IMediaPlayer {
    */
   abstract getStreamInfo(index: number): PlayerStreamInfo;
 
-  /*
+  /**
    * Sets the loop playback.
    * If you want to loop, call this method and set the number of the loops.
    * When the loop finishes, the SDK triggers onPlayerSourceStateChanged and reports the playback state as PlayerStatePlaybackAllLoopsCompleted.
@@ -156,32 +156,32 @@ export abstract class IMediaPlayer {
    */
   abstract setLoopCount(loopCount: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setPlaybackSpeed(speed: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract selectAudioTrack(index: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract takeScreenshot(filename: string): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract selectInternalSubtitle(index: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setExternalSubtitle(url: string): number;
 
-  /*
+  /**
    * Gets current playback state.
    *
    * @returns
@@ -189,7 +189,7 @@ export abstract class IMediaPlayer {
    */
   abstract getState(): MediaPlayerState;
 
-  /*
+  /**
    * Sets whether to mute the media file.
    *
    * @param mute Whether to mute the media file:
@@ -202,7 +202,7 @@ export abstract class IMediaPlayer {
    */
   abstract mute(muted: boolean): number;
 
-  /*
+  /**
    * Reports whether the media resource is muted.
    *
    * @returns
@@ -211,7 +211,7 @@ export abstract class IMediaPlayer {
    */
   abstract getMute(): boolean;
 
-  /*
+  /**
    * Adjusts the local playback volume.
    *
    * @param volume The local playback volume, which ranges from 0 to 100:
@@ -224,7 +224,7 @@ export abstract class IMediaPlayer {
    */
   abstract adjustPlayoutVolume(volume: number): number;
 
-  /*
+  /**
    * Gets the local playback volume.
    *
    * @returns
@@ -234,7 +234,7 @@ export abstract class IMediaPlayer {
    */
   abstract getPlayoutVolume(): number;
 
-  /*
+  /**
    * Adjusts the volume of the media file for publishing.
    * After connected to the Agora server, you can call this method to adjust the volume of the media file heard by the remote user.
    *
@@ -249,7 +249,7 @@ export abstract class IMediaPlayer {
    */
   abstract adjustPublishSignalVolume(volume: number): number;
 
-  /*
+  /**
    * Gets the volume of the media file for publishing.
    *
    * @returns
@@ -258,7 +258,7 @@ export abstract class IMediaPlayer {
    */
   abstract getPublishSignalVolume(): number;
 
-  /*
+  /**
    * Sets the view.
    *
    * @returns
@@ -267,7 +267,7 @@ export abstract class IMediaPlayer {
    */
   abstract setView(view: any): number;
 
-  /*
+  /**
    * Sets the render mode of the media player.
    *
    * @param renderMode Sets the render mode of the view. See RenderModeType .
@@ -278,7 +278,7 @@ export abstract class IMediaPlayer {
    */
   abstract setRenderMode(renderMode: RenderModeType): number;
 
-  /*
+  /**
    * Registers a media player observer.
    *
    * @param observer The player observer, listening for events during the playback. See IMediaPlayerSourceObserver .
@@ -291,7 +291,7 @@ export abstract class IMediaPlayer {
     observer: IMediaPlayerSourceObserver
   ): number;
 
-  /*
+  /**
    * Releases a media player observer.
    *
    * @param observer The player observer, listening for events during the playback. See IMediaPlayerSourceObserver .
@@ -304,7 +304,7 @@ export abstract class IMediaPlayer {
     observer: IMediaPlayerSourceObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract registerMediaPlayerAudioSpectrumObserver(
@@ -312,14 +312,14 @@ export abstract class IMediaPlayer {
     intervalInMS: number
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterMediaPlayerAudioSpectrumObserver(
     observer: IAudioSpectrumObserver
   ): number;
 
-  /*
+  /**
    * Sets the channel mode of the current audio file.
    * In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode. Call this method after calling open .
    * This method only applies to stereo audio files.
@@ -332,17 +332,17 @@ export abstract class IMediaPlayer {
    */
   abstract setAudioDualMonoMode(mode: AudioDualMonoMode): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract getPlayerSdkVersion(): string;
 
-  /*
+  /**
    * @ignore
    */
   abstract getPlaySrc(): string;
 
-  /*
+  /**
    * Opens the media resource, and requests all the CDN routes of the media resources through the self-developed scheduling center.
    * After you call this method, Agora opens the media resources and tries to obtain all the CDN routes for playing the media resource. By default, Agora uses the first CDN route for playing, and you can call the switchAgoraCDNLineByIndex method to switch routes.
    * If you want to improve the security of the connection and the privacy of media files, contact to determine the sign and the ts fields for authentication. Once the fields are determined, use them as the query parameter of the URL to update the URL of the media resource. For example:
@@ -357,7 +357,7 @@ export abstract class IMediaPlayer {
    */
   abstract openWithAgoraCDNSrc(src: string, startPos: number): number;
 
-  /*
+  /**
    * Gets the number of CDN routes for the media resource.
    *
    * @returns
@@ -366,7 +366,7 @@ export abstract class IMediaPlayer {
    */
   abstract getAgoraCDNLineCount(): number;
 
-  /*
+  /**
    * Changes the CDN route for playing the media resource.
    * After calling openWithAgoraCDNSrc to open the media resource, you can call this method if you want to change the CDN routes for playing the media resource. Call this method after calling openWithAgoraCDNSrc .
    * You can call this method either before or after play . If you call this method before play, the switch does not take effect immediately. The SDK waits for the playback to complete before switching the CDN line of the media resource.
@@ -379,7 +379,7 @@ export abstract class IMediaPlayer {
    */
   abstract switchAgoraCDNLineByIndex(index: number): number;
 
-  /*
+  /**
    * Gets the CDN routes index of the current media resource.
    *
    * @returns
@@ -388,7 +388,7 @@ export abstract class IMediaPlayer {
    */
   abstract getCurrentAgoraCDNIndex(): number;
 
-  /*
+  /**
    * Enables/Disables the automatic switch of the CDN routes for playing the media resource.
    * You can call this method if you want the SDK to automatically switch the CDN routes according to your network conditions. Call this method before openWithAgoraCDNSrc .
    *
@@ -402,7 +402,7 @@ export abstract class IMediaPlayer {
    */
   abstract enableAutoSwitchAgoraCDN(enable: boolean): number;
 
-  /*
+  /**
    * Renew the authentication information for the URL of the media resource to be played.
    * When the authentication information expires (exceeds the ts field), you can call the openWithAgoraCDNSrc method to reopen the media resource or the switchAgoraCDNSrc method to switch the media resource, and then pass in the authenticated URL (with the ts field updated) of the media resource.
    * If your authentication information expires when you call the ( switchAgoraCDNLineByIndex ) to switch the CDN route for playing the media resource, you need to call this method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call switchAgoraCDNLineByIndex to complete the route switching. To avoid frequent expiration of authentication information, ensure that you set the ts field appropriately or according to the scenario requirements.
@@ -413,13 +413,13 @@ export abstract class IMediaPlayer {
    */
   abstract renewAgoraCDNSrcToken(token: string, ts: number): number;
 
-  /*
+  /**
    * Switches the media resource being played.
    * If you want to improve the security of the connection and the privacy of media files, contact to determine the sign and the ts fields for authentication. Once the fields are determined, use them as the query parameter of the URL to update the URL of the media resource. For example:
    * The URL of the media file to be opened :rtmp://$domain/$appName/$streamName.
    * The URL updated by the authentication of the media file to be opened: rtmp://$domain/$appName/$streamName?ts=$ts&sign=$sign Authentication information:
    * sign: An encrypted string calculated according to the MD5 algorithm based on authKey, appName, streamName and ts. You need to for your authKey.
-   * ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s. If you want to customize the CDN routes for playing the media resource, call this method to switch media resources. Agora changes the CDN route through the self-developed scheduling center to improve the viewing experience. If you do not need to customize CDN routes for playing the media resource, call the switchSrc method to switch media resources.
+   * ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s. If you want to customize the CDN routes for playing the media resource, call this method to switch media resources. Agora changes the CDN route through the self-developed scheduling center to improve the viewing experience. If you do not need to customize CDN routes for playing the media resource, call the switchSrc method to switch media resources. 
    * Call this method after calling openWithAgoraCDNSrc .
    * You can call this method either before or after play . If you call this method before play, the SDK waits for you to call play before completing the route switch.
    *
@@ -431,7 +431,7 @@ export abstract class IMediaPlayer {
    */
   abstract switchAgoraCDNSrc(src: string, syncPts?: boolean): number;
 
-  /*
+  /**
    * Switches the media resource being played.
    * You can call this method to switch the media resource to be played according to the current network status. For example:
    * When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.
@@ -450,7 +450,7 @@ export abstract class IMediaPlayer {
    */
   abstract switchSrc(src: string, syncPts?: boolean): number;
 
-  /*
+  /**
    * Preloads a media resource.
    * You can call this method to preload a media resource into the playlist. If you need to preload multiple media resources, you can call this method multiple times.
    * After calling this method, if you receive the PlayerPreloadEventComplete event in the onPreloadEvent callback, the preload is successful; If you receive the PlayerPreloadEventError event in the onPreloadEvent callback, the preload fails.
@@ -462,7 +462,7 @@ export abstract class IMediaPlayer {
    */
   abstract preloadSrc(src: string, startPos: number): number;
 
-  /*
+  /**
    * Plays preloaded media resources.
    * After calling the preloadSrc method to preload the media resource into the playlist, you can call this method to play the preloaded media resource. After calling this method, if you receive the onPlayerSourceStateChanged callback which reports the PlayerStatePlaying state, the playback is successful.
    * If you want to change the preloaded media resource to be played, you can call this method again and specify the URL of the new media resource that you want to preload. If you want to replay the media resource, you need to call preloadSrc to preload the media resource to the playlist again before playing. If you want to clear the playlist, call the stop method. If you call this method when playback is paused, this method does not take effect until playback is resumed.
@@ -475,7 +475,7 @@ export abstract class IMediaPlayer {
    */
   abstract playPreloadedSrc(src: string): number;
 
-  /*
+  /**
    * Unloads media resources that are preloaded.
    * This method cannot release the media resource being played.
    *
@@ -487,130 +487,130 @@ export abstract class IMediaPlayer {
    */
   abstract unloadSrc(src: string): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setSpatialAudioParams(params: SpatialAudioParams): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setSoundPositionParams(pan: number, gain: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract registerAudioFrameObserver(
     observer: IMediaPlayerAudioFrameObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterAudioFrameObserver(
     observer: IMediaPlayerAudioFrameObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract registerVideoFrameObserver(
     observer: IMediaPlayerVideoFrameObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterVideoFrameObserver(
     observer: IMediaPlayerVideoFrameObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setPlayerOptionInInt(key: string, value: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setPlayerOptionInString(key: string, value: string): number;
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class IMediaPlayerCacheManager {
-  /*
+  /**
    * @ignore
    */
   abstract removeAllCaches(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract removeOldCache(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract removeCacheByUri(uri: string): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setCacheDir(path: string): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setMaxCacheFileCount(count: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setMaxCacheFileSize(cacheSize: number): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract enableAutoRemoveCache(enable: boolean): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract getCacheDir(length: number): string;
 
-  /*
+  /**
    * @ignore
    */
   abstract getMaxCacheFileCount(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract getMaxCacheFileSize(): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract getCacheFileCount(): number;
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class IMediaPlayerAudioFrameObserver {
-  /*
+  /**
    * @ignore
    */
   onFrame?(frame: AudioPcmFrame): void;
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class IMediaPlayerVideoFrameObserver {
-  /*
+  /**
    * @ignore
    */
   onFrame?(frame: VideoFrame): void;

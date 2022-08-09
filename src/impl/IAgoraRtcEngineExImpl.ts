@@ -31,14 +31,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       options
     );
     const jsonParams = {
-      token,
-      connection,
-      options,
+      token: token,
+      connection: connection,
+      options: options,
       toJSON: () => {
         return {
-          token,
-          connection,
-          options,
+          token: token,
+          connection: connection,
+          options: options,
         };
       },
     };
@@ -57,10 +57,10 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   leaveChannelEx(connection: RtcConnection): number {
     const apiType = this.getApiTypeFromLeaveChannelEx(connection);
     const jsonParams = {
-      connection,
+      connection: connection,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };
@@ -81,12 +81,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      options,
-      connection,
+      options: options,
+      connection: connection,
       toJSON: () => {
         return {
-          options,
-          connection,
+          options: options,
+          connection: connection,
         };
       },
     };
@@ -110,12 +110,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      config,
-      connection,
+      config: config,
+      connection: connection,
       toJSON: () => {
         return {
-          config,
-          connection,
+          config: config,
+          connection: connection,
         };
       },
     };
@@ -133,12 +133,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   setupRemoteVideoEx(canvas: VideoCanvas, connection: RtcConnection): number {
     const apiType = this.getApiTypeFromSetupRemoteVideoEx(canvas, connection);
     const jsonParams = {
-      canvas,
-      connection,
+      canvas: canvas,
+      connection: connection,
       toJSON: () => {
         return {
-          canvas,
-          connection,
+          canvas: canvas,
+          connection: connection,
         };
       },
     };
@@ -164,14 +164,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      mute,
-      connection,
+      uid: uid,
+      mute: mute,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          mute,
-          connection,
+          uid: uid,
+          mute: mute,
+          connection: connection,
         };
       },
     };
@@ -198,14 +198,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      mute,
-      connection,
+      uid: uid,
+      mute: mute,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          mute,
-          connection,
+          uid: uid,
+          mute: mute,
+          connection: connection,
         };
       },
     };
@@ -232,14 +232,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      streamType,
-      connection,
+      uid: uid,
+      streamType: streamType,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          streamType,
-          connection,
+          uid: uid,
+          streamType: streamType,
+          connection: connection,
         };
       },
     };
@@ -266,14 +266,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
-      connection,
+      uidList: uidList,
+      uidNumber: uidNumber,
+      connection: connection,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
-          connection,
+          uidList: uidList,
+          uidNumber: uidNumber,
+          connection: connection,
         };
       },
     };
@@ -300,14 +300,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
-      connection,
+      uidList: uidList,
+      uidNumber: uidNumber,
+      connection: connection,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
-          connection,
+          uidList: uidList,
+          uidNumber: uidNumber,
+          connection: connection,
         };
       },
     };
@@ -334,14 +334,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
-      connection,
+      uidList: uidList,
+      uidNumber: uidNumber,
+      connection: connection,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
-          connection,
+          uidList: uidList,
+          uidNumber: uidNumber,
+          connection: connection,
         };
       },
     };
@@ -368,14 +368,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uidList,
-      uidNumber,
-      connection,
+      uidList: uidList,
+      uidNumber: uidNumber,
+      connection: connection,
       toJSON: () => {
         return {
-          uidList,
-          uidNumber,
-          connection,
+          uidList: uidList,
+          uidNumber: uidNumber,
+          connection: connection,
         };
       },
     };
@@ -402,14 +402,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      options,
-      connection,
+      uid: uid,
+      options: options,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          options,
-          connection,
+          uid: uid,
+          options: options,
+          connection: connection,
         };
       },
     };
@@ -438,16 +438,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      pan,
-      gain,
-      connection,
+      uid: uid,
+      pan: pan,
+      gain: gain,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          pan,
-          gain,
-          connection,
+          uid: uid,
+          pan: pan,
+          gain: gain,
+          connection: connection,
         };
       },
     };
@@ -475,14 +475,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      params,
-      connection,
+      uid: uid,
+      params: params,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          params,
-          connection,
+          uid: uid,
+          params: params,
+          connection: connection,
         };
       },
     };
@@ -511,16 +511,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      uid,
-      renderMode,
-      mirrorMode,
-      connection,
+      uid: uid,
+      renderMode: renderMode,
+      mirrorMode: mirrorMode,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          renderMode,
-          mirrorMode,
-          connection,
+          uid: uid,
+          renderMode: renderMode,
+          mirrorMode: mirrorMode,
+          connection: connection,
         };
       },
     };
@@ -548,14 +548,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       deviceName
     );
     const jsonParams = {
-      connection,
-      enabled,
-      deviceName,
+      connection: connection,
+      enabled: enabled,
+      deviceName: deviceName,
       toJSON: () => {
         return {
-          connection,
-          enabled,
-          deviceName,
+          connection: connection,
+          enabled: enabled,
+          deviceName: deviceName,
         };
       },
     };
@@ -574,10 +574,10 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   getConnectionStateEx(connection: RtcConnection): ConnectionStateType {
     const apiType = this.getApiTypeFromGetConnectionStateEx(connection);
     const jsonParams = {
-      connection,
+      connection: connection,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };
@@ -602,14 +602,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       config
     );
     const jsonParams = {
-      connection,
-      enabled,
-      config,
+      connection: connection,
+      enabled: enabled,
+      config: config,
       toJSON: () => {
         return {
-          connection,
-          enabled,
-          config,
+          connection: connection,
+          enabled: enabled,
+          config: config,
         };
       },
     };
@@ -638,15 +638,15 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      streamId,
-      data,
-      length,
-      connection,
+      streamId: streamId,
+      data: data,
+      length: length,
+      connection: connection,
       toJSON: () => {
         return {
-          streamId,
-          length,
-          connection,
+          streamId: streamId,
+          length: length,
+          connection: connection,
         };
       },
     };
@@ -674,14 +674,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      watermarkUrl,
-      options,
-      connection,
+      watermarkUrl: watermarkUrl,
+      options: options,
+      connection: connection,
       toJSON: () => {
         return {
-          watermarkUrl,
-          options,
-          connection,
+          watermarkUrl: watermarkUrl,
+          options: options,
+          connection: connection,
         };
       },
     };
@@ -700,10 +700,10 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   clearVideoWatermarkEx(connection: RtcConnection): number {
     const apiType = this.getApiTypeFromClearVideoWatermarkEx(connection);
     const jsonParams = {
-      connection,
+      connection: connection,
       toJSON: () => {
         return {
-          connection,
+          connection: connection,
         };
       },
     };
@@ -734,20 +734,20 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      id,
-      category,
-      event,
-      label,
-      value,
-      connection,
+      id: id,
+      category: category,
+      event: event,
+      label: label,
+      value: value,
+      connection: connection,
       toJSON: () => {
         return {
-          id,
-          category,
-          event,
-          label,
-          value,
-          connection,
+          id: id,
+          category: category,
+          event: event,
+          label: label,
+          value: value,
+          connection: connection,
         };
       },
     };
@@ -779,16 +779,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      interval,
-      smooth,
-      reportVad,
-      connection,
+      interval: interval,
+      smooth: smooth,
+      reportVad: reportVad,
+      connection: connection,
       toJSON: () => {
         return {
-          interval,
-          smooth,
-          reportVad,
-          connection,
+          interval: interval,
+          smooth: smooth,
+          reportVad: reportVad,
+          connection: connection,
         };
       },
     };
@@ -814,12 +814,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      userAccount,
-      connection,
+      userAccount: userAccount,
+      connection: connection,
       toJSON: () => {
         return {
-          userAccount,
-          connection,
+          userAccount: userAccount,
+          connection: connection,
         };
       },
     };
@@ -838,12 +838,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   getUserInfoByUidEx(uid: number, connection: RtcConnection): UserInfo {
     const apiType = this.getApiTypeFromGetUserInfoByUidEx(uid, connection);
     const jsonParams = {
-      uid,
-      connection,
+      uid: uid,
+      connection: connection,
       toJSON: () => {
         return {
-          uid,
-          connection,
+          uid: uid,
+          connection: connection,
         };
       },
     };
@@ -872,16 +872,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       bitrate
     );
     const jsonParams = {
-      width,
-      height,
-      frameRate,
-      bitrate,
+      width: width,
+      height: height,
+      frameRate: frameRate,
+      bitrate: bitrate,
       toJSON: () => {
         return {
-          width,
-          height,
-          frameRate,
-          bitrate,
+          width: width,
+          height: height,
+          frameRate: frameRate,
+          bitrate: bitrate,
         };
       },
     };
@@ -911,16 +911,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      sourceType,
-      enabled,
-      streamConfig,
-      connection,
+      sourceType: sourceType,
+      enabled: enabled,
+      streamConfig: streamConfig,
+      connection: connection,
       toJSON: () => {
         return {
-          sourceType,
-          enabled,
-          streamConfig,
-          connection,
+          sourceType: sourceType,
+          enabled: enabled,
+          streamConfig: streamConfig,
+          connection: connection,
         };
       },
     };
@@ -950,16 +950,16 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       connection
     );
     const jsonParams = {
-      sourceType,
-      mode,
-      streamConfig,
-      connection,
+      sourceType: sourceType,
+      mode: mode,
+      streamConfig: streamConfig,
+      connection: connection,
       toJSON: () => {
         return {
-          sourceType,
-          mode,
-          streamConfig,
-          connection,
+          sourceType: sourceType,
+          mode: mode,
+          streamConfig: streamConfig,
+          connection: connection,
         };
       },
     };
@@ -979,10 +979,10 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   enableWirelessAccelerate(enabled: boolean): number {
     const apiType = this.getApiTypeFromEnableWirelessAccelerate(enabled);
     const jsonParams = {
-      enabled,
+      enabled: enabled,
       toJSON: () => {
         return {
-          enabled,
+          enabled: enabled,
         };
       },
     };
@@ -1005,14 +1005,14 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
       filePath
     );
     const jsonParams = {
-      connection,
-      uid,
-      filePath,
+      connection: connection,
+      uid: uid,
+      filePath: filePath,
       toJSON: () => {
         return {
-          connection,
-          uid,
-          filePath,
+          connection: connection,
+          uid: uid,
+          filePath: filePath,
         };
       },
     };
@@ -1034,12 +1034,12 @@ export class IRtcEngineExImpl extends IRtcEngineImpl implements IRtcEngineEx {
   ): number {
     const apiType = this.getApiTypeFromCreateDataStreamEx(config, connection);
     const jsonParams = {
-      config,
-      connection,
+      config: config,
+      connection: connection,
       toJSON: () => {
         return {
-          config,
-          connection,
+          config: config,
+          connection: connection,
         };
       },
     };

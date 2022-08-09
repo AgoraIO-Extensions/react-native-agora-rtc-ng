@@ -27,10 +27,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setPlaybackDevice(deviceId: string): number {
     const apiType = this.getApiTypeFromSetPlaybackDevice(deviceId);
     const jsonParams = {
-      deviceId,
+      deviceId: deviceId,
       toJSON: () => {
         return {
-          deviceId,
+          deviceId: deviceId,
         };
       },
     };
@@ -68,10 +68,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setPlaybackDeviceVolume(volume: number): number {
     const apiType = this.getApiTypeFromSetPlaybackDeviceVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -98,10 +98,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setRecordingDevice(deviceId: string): number {
     const apiType = this.getApiTypeFromSetRecordingDevice(deviceId);
     const jsonParams = {
-      deviceId,
+      deviceId: deviceId,
       toJSON: () => {
         return {
-          deviceId,
+          deviceId: deviceId,
         };
       },
     };
@@ -139,10 +139,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setRecordingDeviceVolume(volume: number): number {
     const apiType = this.getApiTypeFromSetRecordingDeviceVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -169,10 +169,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setPlaybackDeviceMute(mute: boolean): number {
     const apiType = this.getApiTypeFromSetPlaybackDeviceMute(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -199,10 +199,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   setRecordingDeviceMute(mute: boolean): number {
     const apiType = this.getApiTypeFromSetRecordingDeviceMute(mute);
     const jsonParams = {
-      mute,
+      mute: mute,
       toJSON: () => {
         return {
-          mute,
+          mute: mute,
         };
       },
     };
@@ -230,10 +230,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
     const apiType =
       this.getApiTypeFromStartPlaybackDeviceTest(testAudioFilePath);
     const jsonParams = {
-      testAudioFilePath,
+      testAudioFilePath: testAudioFilePath,
       toJSON: () => {
         return {
-          testAudioFilePath,
+          testAudioFilePath: testAudioFilePath,
         };
       },
     };
@@ -262,10 +262,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
     const apiType =
       this.getApiTypeFromStartRecordingDeviceTest(indicationInterval);
     const jsonParams = {
-      indicationInterval,
+      indicationInterval: indicationInterval,
       toJSON: () => {
         return {
-          indicationInterval,
+          indicationInterval: indicationInterval,
         };
       },
     };
@@ -294,10 +294,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
     const apiType =
       this.getApiTypeFromStartAudioDeviceLoopbackTest(indicationInterval);
     const jsonParams = {
-      indicationInterval,
+      indicationInterval: indicationInterval,
       toJSON: () => {
         return {
-          indicationInterval,
+          indicationInterval: indicationInterval,
         };
       },
     };
@@ -325,10 +325,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   followSystemPlaybackDevice(enable: boolean): number {
     const apiType = this.getApiTypeFromFollowSystemPlaybackDevice(enable);
     const jsonParams = {
-      enable,
+      enable: enable,
       toJSON: () => {
         return {
-          enable,
+          enable: enable,
         };
       },
     };
@@ -343,10 +343,10 @@ export class IAudioDeviceManagerImpl implements IAudioDeviceManager {
   followSystemRecordingDevice(enable: boolean): number {
     const apiType = this.getApiTypeFromFollowSystemRecordingDevice(enable);
     const jsonParams = {
-      enable,
+      enable: enable,
       toJSON: () => {
         return {
-          enable,
+          enable: enable,
         };
       },
     };

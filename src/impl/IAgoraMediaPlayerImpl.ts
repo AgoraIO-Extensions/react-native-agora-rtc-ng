@@ -32,12 +32,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   open(url: string, startPos: number): number {
     const apiType = this.getApiTypeFromOpen(url, startPos);
     const jsonParams = {
-      url,
-      startPos,
+      url: url,
+      startPos: startPos,
       toJSON: () => {
         return {
-          url,
-          startPos,
+          url: url,
+          startPos: startPos,
         };
       },
     };
@@ -52,10 +52,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   openWithMediaSource(source: MediaSource): number {
     const apiType = this.getApiTypeFromOpenWithMediaSource(source);
     const jsonParams = {
-      source,
+      source: source,
       toJSON: () => {
         return {
-          source,
+          source: source,
         };
       },
     };
@@ -114,10 +114,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   seek(newPos: number): number {
     const apiType = this.getApiTypeFromSeek(newPos);
     const jsonParams = {
-      newPos,
+      newPos: newPos,
       toJSON: () => {
         return {
-          newPos,
+          newPos: newPos,
         };
       },
     };
@@ -132,10 +132,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setAudioPitch(pitch: number): number {
     const apiType = this.getApiTypeFromSetAudioPitch(pitch);
     const jsonParams = {
-      pitch,
+      pitch: pitch,
       toJSON: () => {
         return {
-          pitch,
+          pitch: pitch,
         };
       },
     };
@@ -186,10 +186,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   getStreamInfo(index: number): PlayerStreamInfo {
     const apiType = this.getApiTypeFromGetStreamInfo(index);
     const jsonParams = {
-      index,
+      index: index,
       toJSON: () => {
         return {
-          index,
+          index: index,
         };
       },
     };
@@ -205,10 +205,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setLoopCount(loopCount: number): number {
     const apiType = this.getApiTypeFromSetLoopCount(loopCount);
     const jsonParams = {
-      loopCount,
+      loopCount: loopCount,
       toJSON: () => {
         return {
-          loopCount,
+          loopCount: loopCount,
         };
       },
     };
@@ -223,10 +223,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setPlaybackSpeed(speed: number): number {
     const apiType = this.getApiTypeFromSetPlaybackSpeed(speed);
     const jsonParams = {
-      speed,
+      speed: speed,
       toJSON: () => {
         return {
-          speed,
+          speed: speed,
         };
       },
     };
@@ -241,10 +241,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   selectAudioTrack(index: number): number {
     const apiType = this.getApiTypeFromSelectAudioTrack(index);
     const jsonParams = {
-      index,
+      index: index,
       toJSON: () => {
         return {
-          index,
+          index: index,
         };
       },
     };
@@ -259,10 +259,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   takeScreenshot(filename: string): number {
     const apiType = this.getApiTypeFromTakeScreenshot(filename);
     const jsonParams = {
-      filename,
+      filename: filename,
       toJSON: () => {
         return {
-          filename,
+          filename: filename,
         };
       },
     };
@@ -277,10 +277,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   selectInternalSubtitle(index: number): number {
     const apiType = this.getApiTypeFromSelectInternalSubtitle(index);
     const jsonParams = {
-      index,
+      index: index,
       toJSON: () => {
         return {
-          index,
+          index: index,
         };
       },
     };
@@ -295,10 +295,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setExternalSubtitle(url: string): number {
     const apiType = this.getApiTypeFromSetExternalSubtitle(url);
     const jsonParams = {
-      url,
+      url: url,
       toJSON: () => {
         return {
-          url,
+          url: url,
         };
       },
     };
@@ -324,10 +324,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   mute(muted: boolean): number {
     const apiType = this.getApiTypeFromMute(muted);
     const jsonParams = {
-      muted,
+      muted: muted,
       toJSON: () => {
         return {
-          muted,
+          muted: muted,
         };
       },
     };
@@ -354,10 +354,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   adjustPlayoutVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustPlayoutVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -384,10 +384,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   adjustPublishSignalVolume(volume: number): number {
     const apiType = this.getApiTypeFromAdjustPublishSignalVolume(volume);
     const jsonParams = {
-      volume,
+      volume: volume,
       toJSON: () => {
         return {
-          volume,
+          volume: volume,
         };
       },
     };
@@ -414,10 +414,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setView(view: any): number {
     const apiType = this.getApiTypeFromSetView(view);
     const jsonParams = {
-      view,
+      view: view,
       toJSON: () => {
         return {
-          view,
+          view: view,
         };
       },
     };
@@ -432,10 +432,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setRenderMode(renderMode: RenderModeType): number {
     const apiType = this.getApiTypeFromSetRenderMode(renderMode);
     const jsonParams = {
-      renderMode,
+      renderMode: renderMode,
       toJSON: () => {
         return {
-          renderMode,
+          renderMode: renderMode,
         };
       },
     };
@@ -450,7 +450,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   registerPlayerSourceObserver(observer: IMediaPlayerSourceObserver): number {
     const apiType = this.getApiTypeFromRegisterPlayerSourceObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -468,7 +468,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   unregisterPlayerSourceObserver(observer: IMediaPlayerSourceObserver): number {
     const apiType = this.getApiTypeFromUnregisterPlayerSourceObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -492,11 +492,11 @@ export class IMediaPlayerImpl implements IMediaPlayer {
       intervalInMS
     );
     const jsonParams = {
-      observer,
-      intervalInMS,
+      observer: observer,
+      intervalInMS: intervalInMS,
       toJSON: () => {
         return {
-          intervalInMS,
+          intervalInMS: intervalInMS,
         };
       },
     };
@@ -517,7 +517,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
     const apiType =
       this.getApiTypeFromUnregisterMediaPlayerAudioSpectrumObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -535,10 +535,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setAudioDualMonoMode(mode: AudioDualMonoMode): number {
     const apiType = this.getApiTypeFromSetAudioDualMonoMode(mode);
     const jsonParams = {
-      mode,
+      mode: mode,
       toJSON: () => {
         return {
-          mode,
+          mode: mode,
         };
       },
     };
@@ -577,12 +577,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   openWithAgoraCDNSrc(src: string, startPos: number): number {
     const apiType = this.getApiTypeFromOpenWithAgoraCDNSrc(src, startPos);
     const jsonParams = {
-      src,
-      startPos,
+      src: src,
+      startPos: startPos,
       toJSON: () => {
         return {
-          src,
-          startPos,
+          src: src,
+          startPos: startPos,
         };
       },
     };
@@ -611,10 +611,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   switchAgoraCDNLineByIndex(index: number): number {
     const apiType = this.getApiTypeFromSwitchAgoraCDNLineByIndex(index);
     const jsonParams = {
-      index,
+      index: index,
       toJSON: () => {
         return {
-          index,
+          index: index,
         };
       },
     };
@@ -640,10 +640,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   enableAutoSwitchAgoraCDN(enable: boolean): number {
     const apiType = this.getApiTypeFromEnableAutoSwitchAgoraCDN(enable);
     const jsonParams = {
-      enable,
+      enable: enable,
       toJSON: () => {
         return {
-          enable,
+          enable: enable,
         };
       },
     };
@@ -658,12 +658,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   renewAgoraCDNSrcToken(token: string, ts: number): number {
     const apiType = this.getApiTypeFromRenewAgoraCDNSrcToken(token, ts);
     const jsonParams = {
-      token,
-      ts,
+      token: token,
+      ts: ts,
       toJSON: () => {
         return {
-          token,
-          ts,
+          token: token,
+          ts: ts,
         };
       },
     };
@@ -681,12 +681,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   switchAgoraCDNSrc(src: string, syncPts = false): number {
     const apiType = this.getApiTypeFromSwitchAgoraCDNSrc(src, syncPts);
     const jsonParams = {
-      src,
-      syncPts,
+      src: src,
+      syncPts: syncPts,
       toJSON: () => {
         return {
-          src,
-          syncPts,
+          src: src,
+          syncPts: syncPts,
         };
       },
     };
@@ -704,12 +704,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   switchSrc(src: string, syncPts = true): number {
     const apiType = this.getApiTypeFromSwitchSrc(src, syncPts);
     const jsonParams = {
-      src,
-      syncPts,
+      src: src,
+      syncPts: syncPts,
       toJSON: () => {
         return {
-          src,
-          syncPts,
+          src: src,
+          syncPts: syncPts,
         };
       },
     };
@@ -724,12 +724,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   preloadSrc(src: string, startPos: number): number {
     const apiType = this.getApiTypeFromPreloadSrc(src, startPos);
     const jsonParams = {
-      src,
-      startPos,
+      src: src,
+      startPos: startPos,
       toJSON: () => {
         return {
-          src,
-          startPos,
+          src: src,
+          startPos: startPos,
         };
       },
     };
@@ -744,10 +744,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   playPreloadedSrc(src: string): number {
     const apiType = this.getApiTypeFromPlayPreloadedSrc(src);
     const jsonParams = {
-      src,
+      src: src,
       toJSON: () => {
         return {
-          src,
+          src: src,
         };
       },
     };
@@ -762,10 +762,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   unloadSrc(src: string): number {
     const apiType = this.getApiTypeFromUnloadSrc(src);
     const jsonParams = {
-      src,
+      src: src,
       toJSON: () => {
         return {
-          src,
+          src: src,
         };
       },
     };
@@ -780,10 +780,10 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setSpatialAudioParams(params: SpatialAudioParams): number {
     const apiType = this.getApiTypeFromSetSpatialAudioParams(params);
     const jsonParams = {
-      params,
+      params: params,
       toJSON: () => {
         return {
-          params,
+          params: params,
         };
       },
     };
@@ -800,12 +800,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setSoundPositionParams(pan: number, gain: number): number {
     const apiType = this.getApiTypeFromSetSoundPositionParams(pan, gain);
     const jsonParams = {
-      pan,
-      gain,
+      pan: pan,
+      gain: gain,
       toJSON: () => {
         return {
-          pan,
-          gain,
+          pan: pan,
+          gain: gain,
         };
       },
     };
@@ -823,7 +823,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   registerAudioFrameObserver(observer: IMediaPlayerAudioFrameObserver): number {
     const apiType = this.getApiTypeFromRegisterAudioFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -843,7 +843,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   ): number {
     const apiType = this.getApiTypeFromUnregisterAudioFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -861,7 +861,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   registerVideoFrameObserver(observer: IMediaPlayerVideoFrameObserver): number {
     const apiType = this.getApiTypeFromRegisterVideoFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -881,7 +881,7 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   ): number {
     const apiType = this.getApiTypeFromUnregisterVideoFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -899,12 +899,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setPlayerOptionInInt(key: string, value: number): number {
     const apiType = this.getApiTypeFromSetPlayerOptionInInt(key, value);
     const jsonParams = {
-      key,
-      value,
+      key: key,
+      value: value,
       toJSON: () => {
         return {
-          key,
-          value,
+          key: key,
+          value: value,
         };
       },
     };
@@ -922,12 +922,12 @@ export class IMediaPlayerImpl implements IMediaPlayer {
   setPlayerOptionInString(key: string, value: string): number {
     const apiType = this.getApiTypeFromSetPlayerOptionInString(key, value);
     const jsonParams = {
-      key,
-      value,
+      key: key,
+      value: value,
       toJSON: () => {
         return {
-          key,
-          value,
+          key: key,
+          value: value,
         };
       },
     };
@@ -969,10 +969,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   removeCacheByUri(uri: string): number {
     const apiType = this.getApiTypeFromRemoveCacheByUri(uri);
     const jsonParams = {
-      uri,
+      uri: uri,
       toJSON: () => {
         return {
-          uri,
+          uri: uri,
         };
       },
     };
@@ -987,10 +987,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   setCacheDir(path: string): number {
     const apiType = this.getApiTypeFromSetCacheDir(path);
     const jsonParams = {
-      path,
+      path: path,
       toJSON: () => {
         return {
-          path,
+          path: path,
         };
       },
     };
@@ -1005,10 +1005,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   setMaxCacheFileCount(count: number): number {
     const apiType = this.getApiTypeFromSetMaxCacheFileCount(count);
     const jsonParams = {
-      count,
+      count: count,
       toJSON: () => {
         return {
-          count,
+          count: count,
         };
       },
     };
@@ -1023,10 +1023,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   setMaxCacheFileSize(cacheSize: number): number {
     const apiType = this.getApiTypeFromSetMaxCacheFileSize(cacheSize);
     const jsonParams = {
-      cacheSize,
+      cacheSize: cacheSize,
       toJSON: () => {
         return {
-          cacheSize,
+          cacheSize: cacheSize,
         };
       },
     };
@@ -1041,10 +1041,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   enableAutoRemoveCache(enable: boolean): number {
     const apiType = this.getApiTypeFromEnableAutoRemoveCache(enable);
     const jsonParams = {
-      enable,
+      enable: enable,
       toJSON: () => {
         return {
-          enable,
+          enable: enable,
         };
       },
     };
@@ -1059,10 +1059,10 @@ export class IMediaPlayerCacheManagerImpl implements IMediaPlayerCacheManager {
   getCacheDir(length: number): string {
     const apiType = this.getApiTypeFromGetCacheDir(length);
     const jsonParams = {
-      length,
+      length: length,
       toJSON: () => {
         return {
-          length,
+          length: length,
         };
       },
     };

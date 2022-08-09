@@ -9,50 +9,50 @@ import {
 } from './AgoraMediaBase';
 import { SenderOptions, EncodedVideoFrameInfo } from './AgoraBase';
 
-/*
+/**
  * @ignore
  */
 export enum AudioMixingDualMonoMode {
-  /*
+  /**
    * @ignore
    */
   AudioMixingDualMonoAuto = 0,
-  /*
+  /**
    * @ignore
    */
   AudioMixingDualMonoL = 1,
-  /*
+  /**
    * @ignore
    */
   AudioMixingDualMonoR = 2,
-  /*
+  /**
    * @ignore
    */
   AudioMixingDualMonoMix = 3,
 }
 
-/*
+/**
  * @ignore
  */
 export abstract class IMediaEngine {
-  /*
+  /**
    * @ignore
    */
   abstract registerAudioFrameObserver(observer: IAudioFrameObserver): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract registerVideoFrameObserver(observer: IVideoFrameObserver): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract registerVideoEncodedFrameObserver(
     observer: IVideoEncodedFrameObserver
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushAudioFrame(
@@ -62,27 +62,27 @@ export abstract class IMediaEngine {
     sourceId?: number
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushCaptureAudioFrame(frame: AudioFrame): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushReverseAudioFrame(frame: AudioFrame): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushDirectAudioFrame(frame: AudioFrame): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pullAudioFrame(): AudioFrame;
 
-  /*
+  /**
    * @ignore
    */
   abstract setExternalVideoSource(
@@ -92,7 +92,7 @@ export abstract class IMediaEngine {
     encodedVideoOption?: SenderOptions
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setExternalAudioSource(
@@ -104,7 +104,7 @@ export abstract class IMediaEngine {
     publish?: boolean
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setExternalAudioSink(
@@ -113,7 +113,7 @@ export abstract class IMediaEngine {
     channels: number
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract enableCustomAudioLocalPlayback(
@@ -121,7 +121,7 @@ export abstract class IMediaEngine {
     enabled: boolean
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract setDirectExternalAudioSource(
@@ -129,7 +129,7 @@ export abstract class IMediaEngine {
     localPlayback?: boolean
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushVideoFrame(
@@ -137,7 +137,7 @@ export abstract class IMediaEngine {
     videoTrackId?: number
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract pushEncodedVideoImage(
@@ -147,22 +147,22 @@ export abstract class IMediaEngine {
     videoTrackId?: number
   ): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract release(): void;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterAudioFrameObserver(observer: IAudioFrameObserver): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterVideoFrameObserver(observer: IVideoFrameObserver): number;
 
-  /*
+  /**
    * @ignore
    */
   abstract unregisterVideoEncodedFrameObserver(

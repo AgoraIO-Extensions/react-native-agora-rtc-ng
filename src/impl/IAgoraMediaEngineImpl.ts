@@ -14,7 +14,7 @@ export class IMediaEngineImpl implements IMediaEngine {
   registerAudioFrameObserver(observer: IAudioFrameObserver): number {
     const apiType = this.getApiTypeFromRegisterAudioFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -32,7 +32,7 @@ export class IMediaEngineImpl implements IMediaEngine {
   registerVideoFrameObserver(observer: IVideoFrameObserver): number {
     const apiType = this.getApiTypeFromRegisterVideoFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -53,7 +53,7 @@ export class IMediaEngineImpl implements IMediaEngine {
     const apiType =
       this.getApiTypeFromRegisterVideoEncodedFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -81,16 +81,16 @@ export class IMediaEngineImpl implements IMediaEngine {
       sourceId
     );
     const jsonParams = {
-      type,
-      frame,
-      wrap,
-      sourceId,
+      type: type,
+      frame: frame,
+      wrap: wrap,
+      sourceId: sourceId,
       toJSON: () => {
         return {
-          type,
-          frame,
-          wrap,
-          sourceId,
+          type: type,
+          frame: frame,
+          wrap: wrap,
+          sourceId: sourceId,
         };
       },
     };
@@ -110,10 +110,10 @@ export class IMediaEngineImpl implements IMediaEngine {
   pushCaptureAudioFrame(frame: AudioFrame): number {
     const apiType = this.getApiTypeFromPushCaptureAudioFrame(frame);
     const jsonParams = {
-      frame,
+      frame: frame,
       toJSON: () => {
         return {
-          frame,
+          frame: frame,
         };
       },
     };
@@ -128,10 +128,10 @@ export class IMediaEngineImpl implements IMediaEngine {
   pushReverseAudioFrame(frame: AudioFrame): number {
     const apiType = this.getApiTypeFromPushReverseAudioFrame(frame);
     const jsonParams = {
-      frame,
+      frame: frame,
       toJSON: () => {
         return {
-          frame,
+          frame: frame,
         };
       },
     };
@@ -146,10 +146,10 @@ export class IMediaEngineImpl implements IMediaEngine {
   pushDirectAudioFrame(frame: AudioFrame): number {
     const apiType = this.getApiTypeFromPushDirectAudioFrame(frame);
     const jsonParams = {
-      frame,
+      frame: frame,
       toJSON: () => {
         return {
-          frame,
+          frame: frame,
         };
       },
     };
@@ -186,16 +186,16 @@ export class IMediaEngineImpl implements IMediaEngine {
       encodedVideoOption
     );
     const jsonParams = {
-      enabled,
-      useTexture,
-      sourceType,
-      encodedVideoOption,
+      enabled: enabled,
+      useTexture: useTexture,
+      sourceType: sourceType,
+      encodedVideoOption: encodedVideoOption,
       toJSON: () => {
         return {
-          enabled,
-          useTexture,
-          sourceType,
-          encodedVideoOption,
+          enabled: enabled,
+          useTexture: useTexture,
+          sourceType: sourceType,
+          encodedVideoOption: encodedVideoOption,
         };
       },
     };
@@ -229,20 +229,20 @@ export class IMediaEngineImpl implements IMediaEngine {
       publish
     );
     const jsonParams = {
-      enabled,
-      sampleRate,
-      channels,
-      sourceNumber,
-      localPlayback,
-      publish,
+      enabled: enabled,
+      sampleRate: sampleRate,
+      channels: channels,
+      sourceNumber: sourceNumber,
+      localPlayback: localPlayback,
+      publish: publish,
       toJSON: () => {
         return {
-          enabled,
-          sampleRate,
-          channels,
-          sourceNumber,
-          localPlayback,
-          publish,
+          enabled: enabled,
+          sampleRate: sampleRate,
+          channels: channels,
+          sourceNumber: sourceNumber,
+          localPlayback: localPlayback,
+          publish: publish,
         };
       },
     };
@@ -272,14 +272,14 @@ export class IMediaEngineImpl implements IMediaEngine {
       channels
     );
     const jsonParams = {
-      enabled,
-      sampleRate,
-      channels,
+      enabled: enabled,
+      sampleRate: sampleRate,
+      channels: channels,
       toJSON: () => {
         return {
-          enabled,
-          sampleRate,
-          channels,
+          enabled: enabled,
+          sampleRate: sampleRate,
+          channels: channels,
         };
       },
     };
@@ -301,12 +301,12 @@ export class IMediaEngineImpl implements IMediaEngine {
       enabled
     );
     const jsonParams = {
-      sourceId,
-      enabled,
+      sourceId: sourceId,
+      enabled: enabled,
       toJSON: () => {
         return {
-          sourceId,
-          enabled,
+          sourceId: sourceId,
+          enabled: enabled,
         };
       },
     };
@@ -327,12 +327,12 @@ export class IMediaEngineImpl implements IMediaEngine {
       localPlayback
     );
     const jsonParams = {
-      enable,
-      localPlayback,
+      enable: enable,
+      localPlayback: localPlayback,
       toJSON: () => {
         return {
-          enable,
-          localPlayback,
+          enable: enable,
+          localPlayback: localPlayback,
         };
       },
     };
@@ -350,12 +350,12 @@ export class IMediaEngineImpl implements IMediaEngine {
   pushVideoFrame(frame: ExternalVideoFrame, videoTrackId = 0): number {
     const apiType = this.getApiTypeFromPushVideoFrame(frame, videoTrackId);
     const jsonParams = {
-      frame,
-      videoTrackId,
+      frame: frame,
+      videoTrackId: videoTrackId,
       toJSON: () => {
         return {
-          frame,
-          videoTrackId,
+          frame: frame,
+          videoTrackId: videoTrackId,
         };
       },
     };
@@ -383,15 +383,15 @@ export class IMediaEngineImpl implements IMediaEngine {
       videoTrackId
     );
     const jsonParams = {
-      imageBuffer,
-      length,
-      videoEncodedFrameInfo,
-      videoTrackId,
+      imageBuffer: imageBuffer,
+      length: length,
+      videoEncodedFrameInfo: videoEncodedFrameInfo,
+      videoTrackId: videoTrackId,
       toJSON: () => {
         return {
-          length,
-          videoEncodedFrameInfo,
-          videoTrackId,
+          length: length,
+          videoEncodedFrameInfo: videoEncodedFrameInfo,
+          videoTrackId: videoTrackId,
         };
       },
     };
@@ -421,7 +421,7 @@ export class IMediaEngineImpl implements IMediaEngine {
   unregisterAudioFrameObserver(observer: IAudioFrameObserver): number {
     const apiType = this.getApiTypeFromUnregisterAudioFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -439,7 +439,7 @@ export class IMediaEngineImpl implements IMediaEngine {
   unregisterVideoFrameObserver(observer: IVideoFrameObserver): number {
     const apiType = this.getApiTypeFromUnregisterVideoFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
@@ -460,7 +460,7 @@ export class IMediaEngineImpl implements IMediaEngine {
     const apiType =
       this.getApiTypeFromUnregisterVideoEncodedFrameObserver(observer);
     const jsonParams = {
-      observer,
+      observer: observer,
       toJSON: () => {
         return {};
       },
