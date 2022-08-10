@@ -21,7 +21,6 @@ import Config from '../../../config/agora.config.json';
 interface State extends BaseAudioComponentState {
   filePath: string;
   loopback: boolean;
-  replace: boolean;
   cycle: number;
   startPos: number;
   startAudioMixing: boolean;
@@ -43,7 +42,6 @@ export default class AudioMixing
       remoteUsers: [],
       filePath: this.getAssetPath('Sound_Horizon.mp3'),
       loopback: false,
-      replace: false,
       cycle: -1,
       startPos: 0,
       startAudioMixing: false,
@@ -109,7 +107,7 @@ export default class AudioMixing
    * Step 3-1: startAudioMixing
    */
   startAudioMixing = () => {
-    const { filePath, loopback, replace, cycle, startPos } = this.state;
+    const { filePath, loopback, cycle, startPos } = this.state;
     if (!filePath) {
       console.error('filePath is invalid');
       return;
@@ -123,7 +121,7 @@ export default class AudioMixing
       return;
     }
 
-    this.engine?.startAudioMixing(filePath, loopback, replace, cycle, startPos);
+    this.engine?.startAudioMixing(filePath, loopback, cycle, startPos);
   };
 
   /**
@@ -200,7 +198,7 @@ export default class AudioMixing
   }
 
   protected renderBottom(): React.ReactNode {
-    const { filePath, loopback, replace, cycle, startPos } = this.state;
+    const { filePath, loopback, cycle, startPos } = this.state;
     return (
       <>
         <TextInput
@@ -218,15 +216,6 @@ export default class AudioMixing
           switchValue={loopback}
           onSwitchValueChange={(value) => {
             this.setState({ loopback: value });
-          }}
-        />
-        <Divider />
-        <ActionItem
-          title={'replace'}
-          isShowSwitch={true}
-          switchValue={replace}
-          onSwitchValueChange={(value) => {
-            this.setState({ replace: value });
           }}
         />
         <Divider />
