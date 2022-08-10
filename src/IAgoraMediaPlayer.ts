@@ -419,7 +419,7 @@ export abstract class IMediaPlayer {
    * The URL of the media file to be opened :rtmp://$domain/$appName/$streamName.
    * The URL updated by the authentication of the media file to be opened: rtmp://$domain/$appName/$streamName?ts=$ts&sign=$sign Authentication information:
    * sign: An encrypted string calculated according to the MD5 algorithm based on authKey, appName, streamName and ts. You need to for your authKey.
-   * ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s. If you want to customize the CDN routes for playing the media resource, call this method to switch media resources. Agora changes the CDN route through the self-developed scheduling center to improve the viewing experience. If you do not need to customize CDN routes for playing the media resource, call the switchSrc method to switch media resources. 
+   * ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s. If you want to customize the CDN routes for playing the media resource, call this method to switch media resources. Agora changes the CDN route through the self-developed scheduling center to improve the viewing experience. If you do not need to customize CDN routes for playing the media resource, call the switchSrc method to switch media resources.
    * Call this method after calling openWithAgoraCDNSrc .
    * You can call this method either before or after play . If you call this method before play, the SDK waits for you to call play before completing the route switch.
    *

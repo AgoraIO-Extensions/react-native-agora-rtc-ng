@@ -716,7 +716,7 @@ export enum DegradationPreference {
    */
   MaintainFramerate = 1,
   /**
-   * 
+   *
    */
   MaintainBalanced = 2,
   /**
@@ -1117,13 +1117,13 @@ export class VideoEncoderConfiguration {
    */
   frameRate?: number;
   /**
-   * The encoding bitrate (Kbps) of the video. 
+   * The encoding bitrate (Kbps) of the video.
    */
   bitrate?: number;
   /**
    * The minimum encoding bitrate (Kbps) of the video.
    * The SDK automatically adjusts the encoding bitrate to adapt to the network conditions. Using a value greater than the default value forces the video encoder to output high-quality images but may cause more packet loss and sacrifice the smoothness of the video transmission. Unless you have special requirements for image quality, Agora does not recommend changing this value.
-   * This parameter only applies to the interactive streaming profile. 
+   * This parameter only applies to the interactive streaming profile.
    */
   minBitrate?: number;
   /**
@@ -1131,12 +1131,12 @@ export class VideoEncoderConfiguration {
    */
   orientationMode?: OrientationMode;
   /**
-   * Video degradation preference under limited bandwidth. 
+   * Video degradation preference under limited bandwidth.
    */
   degradationPreference?: DegradationPreference;
   /**
    * Whether to enable mirroring mode when sending encoded video, only affects the video images seen by remote users. See VideoMirrorModeType .
-   * By default, the video is not mirrored. 
+   * By default, the video is not mirrored.
    */
   mirrorMode?: VideoMirrorModeType;
 }
@@ -1185,7 +1185,7 @@ export enum SimulcastStreamMode {
  */
 export class SimulcastStreamConfig {
   /**
-   * The video dimension.  The default value is 160 × 120. VideoDimensions 
+   * The video dimension.  The default value is 160 × 120. VideoDimensions
    */
   dimensions?: VideoDimensions;
   /**
@@ -1348,17 +1348,17 @@ export class RtcStats {
   gatewayRtt?: number;
   /**
    * The memory ratio occupied by the app (%).
-   * This value is for reference only. Due to system limitations, you may not get this value. 
+   * This value is for reference only. Due to system limitations, you may not get this value.
    */
   memoryAppUsageRatio?: number;
   /**
    * The memory occupied by the system (%).
-   * This value is for reference only. Due to system limitations, you may not get this value. 
+   * This value is for reference only. Due to system limitations, you may not get this value.
    */
   memoryTotalUsageRatio?: number;
   /**
    * The memory size occupied by the app (KB).
-   * This value is for reference only. Due to system limitations, you may not get this value. 
+   * This value is for reference only. Due to system limitations, you may not get this value.
    */
   memoryAppUsageInKbytes?: number;
   /**
@@ -1578,7 +1578,7 @@ export class RemoteAudioStats {
    */
   uid?: number;
   /**
-   * The quality of the audio stream sent by the user.  QualityType 
+   * The quality of the audio stream sent by the user.  QualityType
    */
   quality?: number;
   /**
@@ -1622,7 +1622,7 @@ export class RemoteAudioStats {
    * Fair. The audio freezes occasionally and requires attentive listening. From 2.5 to 3
    * Poor. The audio sounds choppy and requires considerable effort to understand. From 2 to 2.5
    * Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty. Less than 2
-   * Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible. 
+   * Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
    */
   mosValue?: number;
   /**
@@ -1651,7 +1651,7 @@ export enum AudioProfileType {
   /**
    * 0: The default audio profile.
    * For the interactive streaming profile: A sample rate of 48 kHz, music encoding, mono, and a bitrate of up to 64 Kbps.
-   * For the communication profile: A sample rate of 32 kHz, audio encoding, mono, and a bitrate of up to 18 Kbps. 
+   * For the communication profile: A sample rate of 32 kHz, audio encoding, mono, and a bitrate of up to 18 Kbps.
    */
   AudioProfileDefault = 0,
   /**
@@ -1675,7 +1675,7 @@ export enum AudioProfileType {
    */
   AudioProfileMusicHighQualityStereo = 5,
   /**
-   * 
+   *
    */
   AudioProfileIot = 6,
   /**
@@ -1875,7 +1875,7 @@ export enum LocalVideoStreamState {
    */
   LocalVideoStreamStateStopped = 0,
   /**
-   * 1: The local video capturing device starts successfully. 
+   * 1: The local video capturing device starts successfully.
    */
   LocalVideoStreamStateCapturing = 1,
   /**
@@ -2202,16 +2202,16 @@ export enum RemoteVideoDownscaleLevel {
 export class AudioVolumeInfo {
   /**
    * The user ID. In the local user's callback, uid = 0.
-   * In the remote users' callback, uid is the user ID of a remote user whose instantaneous volume is one of the three highest. 
+   * In the remote users' callback, uid is the user ID of a remote user whose instantaneous volume is one of the three highest.
    */
   uid?: number;
   /**
-   * The volume of the user. The value ranges between 0 (the lowest volume) and 255 (the highest volume). 
+   * The volume of the user. The value ranges between 0 (the lowest volume) and 255 (the highest volume).
    */
   volume?: number;
   /**
    * Voice activity status of the local user. 0: The local user is not speaking.
-   * 1: The local user is speaking. 
+   * 1: The local user is speaking.
    * The vad parameter does not report the voice activity status of remote users. In a remote user's callback, the value of vad is always 1.
    * To use this parameter, you must set reportVad to true when calling enableAudioVolumeIndication .
    */
@@ -2441,7 +2441,7 @@ export enum RtmpStreamPublishErrorType {
    */
   RtmpStreamPublishErrorNetDown = 14,
   /**
-   * 15: Your App ID does not have permission to use the CDN live streaming function. 
+   * 15: Your App ID does not have permission to use the CDN live streaming function.
    */
   RtmpStreamPublishErrorInvalidAppid = 15,
   /**
@@ -2538,30 +2538,30 @@ export enum ConnectionStateType {
   /**
    * 1: The SDK is disconnected from the Agora edge server. The state indicates the SDK is in one of the following phases:
    * Theinitial state before calling the joinChannelWithOptions method.
-   * The app calls the leaveChannel method. 
+   * The app calls the leaveChannel method.
    */
   ConnectionStateDisconnected = 1,
   /**
    * 2: The SDK is connecting to the Agora edge server. This state indicates that the SDK is establishing a connection with the specified channel after the app calls joinChannelWithOptions.
    * If the SDK successfully joins the channel, it triggers the onConnectionStateChanged callback and the connection state switches to ConnectionStateConnected.
-   * After the connection is established, the SDK also initializes the media and triggers onJoinChannelSuccess when everything is ready. 
+   * After the connection is established, the SDK also initializes the media and triggers onJoinChannelSuccess when everything is ready.
    */
   ConnectionStateConnecting = 2,
   /**
-   * 3: The SDK is connected to the Agora edge server. This state also indicates that the user has joined a channel and can now publish or subscribe to a media stream in the channel. If the connection to the channel is lost because, for example, if the network is down or switched, the SDK automatically tries to reconnect and triggers: 
+   * 3: The SDK is connected to the Agora edge server. This state also indicates that the user has joined a channel and can now publish or subscribe to a media stream in the channel. If the connection to the channel is lost because, for example, if the network is down or switched, the SDK automatically tries to reconnect and triggers:
    * onConnectionStateChanged callback, notifying that the current network state becomes ConnectionStateReconnecting.
    */
   ConnectionStateConnected = 3,
   /**
    * 4: The SDK keeps reconnecting to the Agora edge server. The SDK keeps rejoining the channel after being disconnected from a joined channel because of network issues.
    * If the SDK cannot rejoin the channel within 10 seconds, it triggers onConnectionLost , stays in the ConnectionStateReconnecting state, and keeps rejoining the channel.
-   * If the SDK fails to rejoin the channel 20 minutes after being disconnected from the Agora edge server, the SDK triggers the onConnectionStateChanged callback, switches to the ConnectionStateFailed state, and stops rejoining the channel. 
+   * If the SDK fails to rejoin the channel 20 minutes after being disconnected from the Agora edge server, the SDK triggers the onConnectionStateChanged callback, switches to the ConnectionStateFailed state, and stops rejoining the channel.
    */
   ConnectionStateReconnecting = 4,
   /**
    * 5: The SDK fails to connect to the Agora edge server or join the channel. This state indicates that the SDK stops trying to rejoin the channel. You must call leaveChannel to leave the channel.
    * You can call joinChannelWithOptions to rejoin the channel.
-   * If the SDK is banned from joining the channel by the Agora edge server through the RESTful API, the SDK triggers the onConnectionStateChanged callback. 
+   * If the SDK is banned from joining the channel by the Agora edge server through the RESTful API, the SDK triggers the onConnectionStateChanged callback.
    */
   ConnectionStateFailed = 5,
 }
@@ -2593,7 +2593,7 @@ export class TranscodingUser {
   /**
    * The number of the layer to which the video for the video mixing on the local client belongs. The value range is [0,100].
    * 0: (Default) The layer is at the bottom.
-   * 100: The layer is at the top. 
+   * 100: The layer is at the top.
    * If the value is less than 0 or greater than 100, the error ERR_INVALID_ARGUMENT is returned.
    * Starting from v2.3, setting zOrder to 0 is supported.
    */
@@ -2601,7 +2601,7 @@ export class TranscodingUser {
   /**
    * The transparency of the video for the video mixing on the local client. The value range is [0.0,1.0].
    * 0.0: Completely transparent.
-   * 1.0: (Default) Opaque. 
+   * 1.0: (Default) Opaque.
    */
   alpha?: number;
   /**
@@ -2741,7 +2741,7 @@ export class TranscodingVideoStream {
    */
   remoteUserUid?: number;
   /**
-   * The URL of the image.Use this parameter only when the source type of the video for the video mixing on the local client is 
+   * The URL of the image.Use this parameter only when the source type of the video for the video mixing on the local client is
    */
   imageUrl?: string;
   /**
@@ -2773,7 +2773,7 @@ export class TranscodingVideoStream {
   /**
    * Whether to mirror the video for the video mixing on the local client.
    * true: Mirror the captured video.
-   * false: (Default) Do not mirror the captured video. The paramter only works for videos with the source type 
+   * false: (Default) Do not mirror the captured video. The paramter only works for videos with the source type
    */
   mirror?: boolean;
 }
@@ -2803,13 +2803,13 @@ export class LastmileProbeConfig {
   /**
    * Sets whether to test the uplink network. Some users, for example, the audience members in a LIVE_BROADCASTING channel, do not need such a test.
    * true: Test.
-   * false: Not test. 
+   * false: Not test.
    */
   probeUplink?: boolean;
   /**
    * Sets whether to test the downlink network:
    * true: Test.
-   * false: Not test. 
+   * false: Not test.
    */
   probeDownlink?: boolean;
   /**
@@ -2919,7 +2919,7 @@ export enum ConnectionChangedReasonType {
   /**
    * 8: The connection failed because the token is not valid. Typical reasons include:
    * The App Certificate for the project is enabled in Agora Console, but you do not use a token when joining the channel. If you enable the App Certificate, you must use a token to join the channel.
-   * Theuid specified when calling joinChannelWithOptions to join the channel is inconsistent with the uid passed in when generating the token. 
+   * Theuid specified when calling joinChannelWithOptions to join the channel is inconsistent with the uid passed in when generating the token.
    */
   ConnectionChangedInvalidToken = 8,
   /**
@@ -2929,7 +2929,7 @@ export enum ConnectionChangedReasonType {
   /**
    * 10: The connection is rejected by server. Typical reasons include:
    * The user is already in the channel and still calls a method, for example,joinChannelWithOptions, to join the channel. Stop calling this method to clear this error.
-   * The user tries to join the channel when calling for a call test. The user needs to call the channel after the call test ends. 
+   * The user tries to join the channel when calling for a call test. The user needs to call the channel after the call test ends.
    */
   ConnectionChangedRejectedByServer = 10,
   /**
@@ -3396,12 +3396,12 @@ export enum VoiceBeautifierPreset {
   ChatBeautifierMagnetic = 0x01010100,
   /**
    * A fresher voice.
-   * Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may experience vocal distortion. 
+   * Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may experience vocal distortion.
    */
   ChatBeautifierFresh = 0x01010200,
   /**
    * A more vital voice.
-   * Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may experience vocal distortion. 
+   * Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may experience vocal distortion.
    */
   ChatBeautifierVitality = 0x01010300,
   /**
@@ -3489,7 +3489,7 @@ export enum AudioEffectPreset {
   RoomAcousticsPhonograph = 0x02010400,
   /**
    * The virtual stereo effect, which renders monophonic audio as stereo audio.
-   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid. 
+   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid.
    */
   RoomAcousticsVirtualStereo = 0x02010500,
   /**
@@ -3511,27 +3511,27 @@ export enum AudioEffectPreset {
   RoomAcousticsVirtualSurroundSound = 0x02010900,
   /**
    * A middle-aged man's voice.
-   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect. 
+   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
    */
   VoiceChangerEffectUncle = 0x02020100,
   /**
    * A senior man's voice.
-   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect. 
+   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
    */
   VoiceChangerEffectOldman = 0x02020200,
   /**
    * A boy's voice.
-   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect. 
+   * Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
    */
   VoiceChangerEffectBoy = 0x02020300,
   /**
    * A young woman's voice.
-   * Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect. 
+   * Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect.
    */
   VoiceChangerEffectSister = 0x02020400,
   /**
    * A girl's voice.
-   * Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect. 
+   * Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect.
    */
   VoiceChangerEffectGirl = 0x02020500,
   /**
@@ -3544,12 +3544,12 @@ export enum AudioEffectPreset {
   VoiceChangerEffectHulk = 0x02020700,
   /**
    * The voice effect typical of R&B music.
-   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid. 
+   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid.
    */
   StyleTransformationRnb = 0x02030100,
   /**
    * The voice effect typical of popular music.
-   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid. 
+   * Before using this preset, set the profile parameter of setAudioProfile to AudioProfileMusicHighQuality or AudioProfileMusicHighQualityStereo; otherwise, the preset setting is invalid.
    */
   StyleTransformationPopular = 0x02030200,
   /**
@@ -3707,11 +3707,11 @@ export class AudioRecordingConfiguration {
    * Recording sample rate (Hz). 16000
    * (Default) 32000
    * 44100
-   * 48000 If you set this parameter to 44100 or 48000, Agora recommends recording WAV files, or AAC files with quality to be AgoraAudioRecordingQualityMedium or AgoraAudioRecordingQualityHigh for better recording quality. 
+   * 48000 If you set this parameter to 44100 or 48000, Agora recommends recording WAV files, or AAC files with quality to be AgoraAudioRecordingQualityMedium or AgoraAudioRecordingQualityHigh for better recording quality.
    */
   sampleRate?: number;
   /**
-   * 
+   *
    */
   fileRecordingType?: AudioFileRecordingType;
   /**
@@ -4014,7 +4014,7 @@ export class ChannelMediaRelayConfiguration {
    * uid: The unique ID to identify the relay stream in the source channel. The default value is 0, which means the SDK generates a random uid. You must set it as 0.
    * token: The token for joining the source channel. It is generated with the channelName and uid you set in srcInfo.
    * If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.
-   * If you have enabled the App Certificate, you must use the token generated with the channelName and uid, and the uid must be set as 0. 
+   * If you have enabled the App Certificate, you must use the token generated with the channelName and uid, and the uid must be set as 0.
    */
   srcInfo?: ChannelMediaInfo;
   /**
@@ -4023,7 +4023,7 @@ export class ChannelMediaRelayConfiguration {
    * uid: The unique ID to identify the relay stream in the destination channel. The value ranges from 0 to (232-1). To avoid UID conflicts, this UID must be different from any other UID in the destination channel. The default value is 0, which means the SDK generates a random UID. Do not set this parameter as the UID of the host in the destination channel, and ensure that this UID is different from any other UID in the channel.
    * token: The token for joining the destination channel. It is generated with the channelName and uid you set in destInfos.
    * If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.
-   * If you have enabled the App Certificate, you must use the token generated with the channelName and uid. 
+   * If you have enabled the App Certificate, you must use the token generated with the channelName and uid.
    */
   destInfos?: ChannelMediaInfo[];
   /**
@@ -4143,11 +4143,11 @@ export class EncryptionConfig {
   encryptionMode?: EncryptionMode;
   /**
    * Encryption key in string type with unlimited length. Agora recommends using a 32-byte key.
-   * If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns -2. 
+   * If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns -2.
    */
   encryptionKey?: string;
   /**
-   * Salt, 32 bytes in length. Agora recommends that you use OpenSSL to generate salt on the server side. See Media Stream Encryption for details. 
+   * Salt, 32 bytes in length. Agora recommends that you use OpenSSL to generate salt on the server side. See Media Stream Encryption for details.
    * This parameter takes effect only in Aes128Gcm2 or Aes256Gcm2 encrypted mode. In this case, ensure that this parameter is not 0.
    */
   encryptionKdfSalt?: number[];
@@ -4234,7 +4234,7 @@ export enum StreamSubscribeState {
    * Calls enableLocalAudio (false) or enableLocalVideo (false) to disable local audio or video capture.
    * The role of the local user is audience. The local user calls the following method to stop receiving the remote media stream:
    * Call muteRemoteAudioStream (true), muteAllRemoteAudioStreams (true) or setDefaultMuteAllRemoteAudioStreams (true) to stop receiving the remote audio stream.
-   * Call muteRemoteVideoStream (true), muteAllRemoteVideoStreams (true) or setDefaultMuteAllRemoteVideoStreams (true) to stop receiving the remote video stream. 
+   * Call muteRemoteVideoStream (true), muteAllRemoteVideoStreams (true) or setDefaultMuteAllRemoteVideoStreams (true) to stop receiving the remote video stream.
    */
   SubStateNoSubscribed = 1,
   /**
@@ -4260,7 +4260,7 @@ export enum StreamPublishState {
    * Local user calls muteLocalAudioStream (true) or muteLocalVideoStream (true) to stop sending local media streams.
    * The local user calls disableAudio or disableVideo to disable the local audio or video module.
    * The local user calls enableLocalAudio (false) or enableLocalVideo (false) to disable the local audio or video capture.
-   * The role of the local user is audience. 
+   * The role of the local user is audience.
    */
   PubStateNoPublished = 1,
   /**

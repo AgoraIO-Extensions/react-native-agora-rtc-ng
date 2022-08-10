@@ -83,11 +83,11 @@ export class AudioParameters {
  */
 export enum RawAudioFrameOpModeType {
   /**
-   * 0: Read-only mode: 
+   * 0: Read-only mode:
    */
   RawAudioFrameOpModeReadOnly = 0,
   /**
-   * 2: Read and write mode: 
+   * 2: Read and write mode:
    */
   RawAudioFrameOpModeReadWrite = 2,
 }
@@ -739,7 +739,7 @@ export class AudioSpectrumData {
  */
 export class UserAudioSpectrumInfo {
   /**
-   * 
+   *
    */
   uid?: number;
   /**

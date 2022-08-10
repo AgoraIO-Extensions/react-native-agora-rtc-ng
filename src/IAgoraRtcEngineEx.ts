@@ -44,9 +44,9 @@ export abstract class IRtcEngineEx extends IRtcEngine {
    *
    * @param options The channel media options. See ChannelMediaOptions .
    *
-   * @param token The token generated on your server for authentication. See 
+   * @param token The token generated on your server for authentication. See
    *
-   * @param connection 
+   * @param connection
    *
    * @returns
    * 0: Success.
@@ -166,7 +166,7 @@ export abstract class IRtcEngineEx extends IRtcEngine {
    *
    * @param mute Whether to stop receiving the video stream of the specified user:
    *  true: Stop receiving the video stream of the specified user.
-   *  false: (Default) Resume receiving the video stream of the specified user. 
+   *  false: (Default) Resume receiving the video stream of the specified user.
    *
    * @returns
    * 0: Success.
@@ -314,7 +314,7 @@ export abstract class IRtcEngineEx extends IRtcEngine {
    * The SDK has the following restrictions on this method:
    * Up to 30 packets can be sent per second in a channel with each packet having a maximum size of 1 kB.
    * Each client can send up to 6 KB of data per second.
-   * Each user can have up to five data streams simultaneously. A successful method call triggers the onStreamMessage callback on the remote client, from which the remote user gets the stream message. 
+   * Each user can have up to five data streams simultaneously. A successful method call triggers the onStreamMessage callback on the remote client, from which the remote user gets the stream message.
    * A failed method call triggers the onStreamMessageError callback on the remote client. Ensure that you call createDataStreamEx to create a data channel before calling this method.
    * This method applies only to the `COMMUNICATION` profile or to the hosts in the `LIVE_BROADCASTING` profile. If an audience in the `LIVE_BROADCASTING` profile calls this method, the audience may be switched to a host.
    *
@@ -343,7 +343,7 @@ export abstract class IRtcEngineEx extends IRtcEngine {
    * The watermark coordinatesare dependent on the settings in the setVideoEncoderConfigurationEx method:
    * If the orientation mode of the encoding video ( OrientationMode ) is fixed landscape mode or the adaptive landscape mode, the watermark uses the landscape orientation.
    * If the orientation mode of the encoding video (OrientationMode) is fixed portrait mode or the adaptive portrait mode, the watermark uses the portrait orientation.
-   * When setting the watermark position, the region must be less than thesetVideoEncoderConfigurationEx dimensions set in the method; otherwise, the watermark image will be cropped. 
+   * When setting the watermark position, the region must be less than thesetVideoEncoderConfigurationEx dimensions set in the method; otherwise, the watermark image will be cropped.
    * Ensure that you have called enableVideo before calling this method.
    * This method supports adding a watermark image in the PNG file format only. Supported pixel formats of the PNG image are RGBA, RGB, Palette, Gray, and Alpha_gray.
    * If the dimensions of the PNG image differ from your settings in this method, the image will be cropped or zoomed to conform to your settings.
@@ -352,7 +352,7 @@ export abstract class IRtcEngineEx extends IRtcEngine {
    *
    * @param connection The connection information. See RtcConnection .
    *
-   * @param options The options of the watermark image to be added. 
+   * @param options The options of the watermark image to be added.
    *
    * @param watermarkUrl The local file path of the watermark image to be added. This method supports adding a watermark image from the local absolute or relative file path.
    *
