@@ -229,7 +229,7 @@ export default class LocalSpatialAudioEngine
         <View style={styles.container}>
           {position.map((value, index) => (
             <TextInput
-              style={STYLES.input}
+              style={{ ...STYLES.input, flex: 1 }}
               onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 position[index] = +text;
@@ -249,7 +249,7 @@ export default class LocalSpatialAudioEngine
         <View style={styles.container}>
           {axisForward.map((value, index) => (
             <TextInput
-              style={STYLES.input}
+              style={{ ...STYLES.input, flex: 1 }}
               onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisForward[index] = +text;
@@ -269,7 +269,7 @@ export default class LocalSpatialAudioEngine
         <View style={styles.container}>
           {axisRight.map((value, index) => (
             <TextInput
-              style={STYLES.input}
+              style={{ ...STYLES.input, flex: 1 }}
               onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisRight[index] = +text;
@@ -289,7 +289,7 @@ export default class LocalSpatialAudioEngine
         <View style={styles.container}>
           {axisUp.map((value, index) => (
             <TextInput
-              style={STYLES.input}
+              style={{ ...STYLES.input, flex: 1 }}
               onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisUp[index] = +text;
