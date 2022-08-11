@@ -222,6 +222,7 @@ export default class AudioMixing
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ cycle: +text });
           }}
           keyboardType={'numeric'}
@@ -232,6 +233,7 @@ export default class AudioMixing
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}
           keyboardType={'numeric'}

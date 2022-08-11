@@ -89,6 +89,10 @@ export default class LocalSpatialAudioEngine
     // Only need to enable audio on this case
     this.engine.enableAudio();
 
+    this.engine.setParameters(
+      JSON.stringify({ 'rtc.audio.force_bluetooth_a2dp': true })
+    );
+
     this.initializeLocalSpatialAudioEngine();
   }
 
@@ -192,6 +196,7 @@ export default class LocalSpatialAudioEngine
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ range: +text });
           }}
           keyboardType={'numeric'}
@@ -226,6 +231,7 @@ export default class LocalSpatialAudioEngine
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 position[index] = +text;
                 this.setState({ position });
               }}
@@ -245,6 +251,7 @@ export default class LocalSpatialAudioEngine
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 axisForward[index] = +text;
                 this.setState({ axisForward });
               }}
@@ -264,6 +271,7 @@ export default class LocalSpatialAudioEngine
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 axisRight[index] = +text;
                 this.setState({ axisRight });
               }}
@@ -283,6 +291,7 @@ export default class LocalSpatialAudioEngine
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 axisUp[index] = +text;
                 this.setState({ axisUp });
               }}

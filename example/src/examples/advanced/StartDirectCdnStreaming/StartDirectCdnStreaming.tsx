@@ -279,6 +279,7 @@ export default class StartDirectCdnStreaming
           <TextInput
             style={STYLES.input}
             onChangeText={(text) => {
+              if (isNaN(+text)) return;
               this.setState({ width: +text });
             }}
             keyboardType={'numeric'}
@@ -289,6 +290,7 @@ export default class StartDirectCdnStreaming
           <TextInput
             style={STYLES.input}
             onChangeText={(text) => {
+              if (isNaN(+text)) return;
               this.setState({ height: +text });
             }}
             keyboardType={'numeric'}
@@ -302,6 +304,7 @@ export default class StartDirectCdnStreaming
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ frameRate: +text });
           }}
           keyboardType={'numeric'}
@@ -316,6 +319,7 @@ export default class StartDirectCdnStreaming
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ bitrate: +text });
           }}
           keyboardType={'numeric'}
@@ -328,6 +332,7 @@ export default class StartDirectCdnStreaming
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ minBitrate: +text });
           }}
           keyboardType={'numeric'}

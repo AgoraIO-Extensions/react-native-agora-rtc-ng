@@ -239,6 +239,7 @@ export default class MediaRecorder
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ maxDurationMs: +text });
           }}
           keyboardType={'numeric'}

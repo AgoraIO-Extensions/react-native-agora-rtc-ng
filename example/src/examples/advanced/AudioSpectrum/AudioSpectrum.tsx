@@ -179,6 +179,7 @@ export default class AudioSpectrum
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ intervalInMS: +text });
           }}
           keyboardType={'numeric'}

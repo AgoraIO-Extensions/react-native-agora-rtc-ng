@@ -196,7 +196,6 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   protected getApiTypeFromStartAudioMixing(
     filePath: string,
     loopback: boolean,
-    replace: boolean,
     cycle: number,
     startPos: number = 0
   ): string {

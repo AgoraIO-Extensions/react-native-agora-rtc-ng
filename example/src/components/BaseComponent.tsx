@@ -332,6 +332,7 @@ export const STYLES = StyleSheet.create({
     width: '100%',
   },
   input: {
+    flex: 1,
     height: 50,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,

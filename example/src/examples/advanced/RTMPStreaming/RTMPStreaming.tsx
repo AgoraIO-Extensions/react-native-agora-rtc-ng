@@ -382,6 +382,7 @@ export default class RTMPStreaming
               <TextInput
                 style={STYLES.input}
                 onChangeText={(text) => {
+                  if (isNaN(+text)) return;
                   this.setState({ width: +text });
                 }}
                 keyboardType={'numeric'}
@@ -394,6 +395,7 @@ export default class RTMPStreaming
               <TextInput
                 style={STYLES.input}
                 onChangeText={(text) => {
+                  if (isNaN(+text)) return;
                   this.setState({ height: +text });
                 }}
                 keyboardType={'numeric'}
@@ -407,6 +409,7 @@ export default class RTMPStreaming
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 this.setState({ videoBitrate: +text });
               }}
               keyboardType={'numeric'}
@@ -421,6 +424,7 @@ export default class RTMPStreaming
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 this.setState({ videoFramerate: +text });
               }}
               keyboardType={'numeric'}
@@ -435,6 +439,7 @@ export default class RTMPStreaming
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 this.setState({ videoGop: +text });
               }}
               keyboardType={'numeric'}
@@ -500,6 +505,7 @@ export default class RTMPStreaming
             <TextInput
               style={STYLES.input}
               onChangeText={(text) => {
+                if (isNaN(+text)) return;
                 this.setState({ audioBitrate: +text });
               }}
               keyboardType={'numeric'}

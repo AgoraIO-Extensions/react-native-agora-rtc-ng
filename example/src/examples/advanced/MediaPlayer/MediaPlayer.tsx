@@ -310,6 +310,7 @@ export default class MediaPlayer
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}
           keyboardType={'numeric'}

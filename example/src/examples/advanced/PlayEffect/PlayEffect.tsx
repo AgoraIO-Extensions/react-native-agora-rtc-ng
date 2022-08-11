@@ -207,6 +207,7 @@ export default class PlayEffect
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ soundId: +text });
           }}
           keyboardType={'numeric'}
@@ -228,6 +229,7 @@ export default class PlayEffect
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}
           keyboardType={'numeric'}
@@ -257,6 +259,7 @@ export default class PlayEffect
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}
           keyboardType={'numeric'}

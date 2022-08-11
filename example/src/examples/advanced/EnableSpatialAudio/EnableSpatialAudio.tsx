@@ -82,6 +82,10 @@ export default class EnableSpatialAudio
       this.engine?.loadExtensionProvider('agora_spatial_audio_extension');
     }
 
+    this.engine.setParameters(
+      JSON.stringify({ 'rtc.audio.force_bluetooth_a2dp': true })
+    );
+
     // Only need to enable audio on this case
     this.engine.enableAudio();
   }

@@ -208,7 +208,10 @@ export default class EnableContentInspect
         <Divider />
         <TextInput
           style={STYLES.input}
-          onChangeText={(text) => this.setState({ interval: +text })}
+          onChangeText={(text) => {
+            if (isNaN(+text)) return;
+            this.setState({ interval: +text });
+          }}
           keyboardType={'numeric'}
           placeholder={`interval (defaults: ${interval})`}
           placeholderTextColor={'gray'}

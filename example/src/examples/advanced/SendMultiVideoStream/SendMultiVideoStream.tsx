@@ -234,6 +234,7 @@ export default class SendMultiVideoStream
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
           keyboardType={'numeric'}

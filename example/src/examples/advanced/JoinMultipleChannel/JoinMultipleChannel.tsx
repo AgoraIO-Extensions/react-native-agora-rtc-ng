@@ -363,6 +363,7 @@ export default class JoinMultipleChannel
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ uid: +text });
           }}
           keyboardType={'numeric'}
@@ -387,6 +388,7 @@ export default class JoinMultipleChannel
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
+            if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
           keyboardType={'numeric'}
