@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -11,11 +11,13 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
+  path: string;
   provider: string;
   extension: string;
   enableExtension: boolean;
@@ -35,6 +37,7 @@ export default class Extension
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
+      path: 'agora_segmentation_extension',
       provider: 'agora_video_filters_segmentation',
       extension: 'portrait_segmentation',
       enableExtension: false,
@@ -75,7 +78,11 @@ export default class Extension
    * Step 2-1: enableExtension
    */
   enableExtension = () => {
-    const { provider, extension } = this.state;
+    const { path, provider, extension } = this.state;
+    if (!path) {
+      console.error('path is invalid');
+      return;
+    }
     if (!provider) {
       console.error('provider is invalid');
       return;
@@ -86,7 +93,7 @@ export default class Extension
     }
 
     if (Platform.OS === 'android') {
-      this.engine?.loadExtensionProvider(`${provider}_extension`);
+      this.engine?.loadExtensionProvider(path);
     }
     this.engine?.enableExtension(provider, extension, true);
     this.setState({ enableExtension: true });
@@ -190,29 +197,39 @@ export default class Extension
   }
 
   protected renderBottom(): React.ReactNode {
-    const { provider, extension } = this.state;
+    const { path, provider, extension } = this.state;
     return (
       <>
-        <TextInput
+        {Platform.OS === 'android' ? (
+          <Input
+            style={STYLES.input}
+            onEndEditing={({ nativeEvent: { text } }) => {
+              this.setState({
+                path: text,
+              });
+            }}
+            placeholder={'path'}
+            value={path}
+          />
+        ) : undefined}
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               provider: text,
             });
           }}
           placeholder={'provider'}
-          placeholderTextColor={'gray'}
           value={provider}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               extension: text,
             });
           }}
           placeholder={'extension'}
-          placeholderTextColor={'gray'}
           value={extension}
         />
       </>

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Dimensions,
-  PermissionsAndroid,
-  Platform,
-  TextInput,
-} from 'react-native';
+import { Dimensions, PermissionsAndroid, Platform } from 'react-native';
 import {
   AudioSpectrumData,
   ChannelProfileType,
@@ -20,6 +15,7 @@ import {
   BaseAudioComponentState,
   BaseComponent,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -176,15 +172,18 @@ export default class AudioSpectrum
       this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ intervalInMS: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`intervalInMS (defaults: ${intervalInMS})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`intervalInMS (defaults: ${
+            this.createState().intervalInMS
+          })`}
           value={
             intervalInMS === this.createState().intervalInMS
               ? ''

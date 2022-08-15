@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -17,6 +17,7 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -159,13 +160,12 @@ export default class PushVideoFrame
     const { filePath } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
           placeholder={`filePath`}
-          placeholderTextColor={'gray'}
           value={filePath}
         />
       </>

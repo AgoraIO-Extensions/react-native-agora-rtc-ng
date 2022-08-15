@@ -5,7 +5,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  TextInput,
 } from 'react-native';
 import {
   ChannelProfileType,
@@ -25,6 +24,7 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
@@ -271,6 +271,8 @@ export default class JoinMultipleChannel
         remoteUsers2: [],
       });
     }
+    // Keep preview after leave channel
+    this.engine?.startPreview();
   }
 
   onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
@@ -352,23 +354,24 @@ export default class JoinMultipleChannel
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ channelId: text });
           }}
           placeholder={`channelId`}
           value={channelId}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid: +text });
           }}
-          keyboardType={'numeric'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
           placeholder={`uid (must > 0)`}
-          placeholderTextColor={'gray'}
           value={uid > 0 ? uid.toString() : ''}
         />
         <Button
@@ -377,23 +380,24 @@ export default class JoinMultipleChannel
             joinChannelSuccess ? this.leaveChannel() : this.joinChannel();
           }}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ channelId2: text });
           }}
           placeholder={`channelId2`}
           value={channelId2}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
-          keyboardType={'numeric'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
           placeholder={`uid2 (must > 0)`}
-          placeholderTextColor={'gray'}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
         <Button

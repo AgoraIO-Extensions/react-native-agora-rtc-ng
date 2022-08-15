@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   AudioMixingReasonType,
   AudioMixingStateType,
@@ -15,6 +15,7 @@ import {
   BaseAudioComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 
@@ -201,13 +202,12 @@ export default class AudioMixing
     const { filePath, loopback, cycle, startPos } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
-          placeholderTextColor={'gray'}
           value={filePath}
         />
         <ActionItem
@@ -219,26 +219,29 @@ export default class AudioMixing
           }}
         />
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ cycle: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`cycle (defaults: ${cycle})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`cycle (defaults: ${this.createState().cycle})`}
           value={cycle === this.createState().cycle ? '' : cycle.toString()}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
+            console.log('onEndEditing', text);
             if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`startPos (defaults: ${startPos})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`startPos (defaults: ${this.createState().startPos})`}
           value={
             startPos === this.createState().startPos ? '' : startPos.toString()
           }

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
   BackgroundBlurDegree,
   BackgroundSourceType,
@@ -20,6 +14,7 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
@@ -198,18 +193,17 @@ export default class VirtualBackground
             color={`#${color?.toString(16)}`}
           />
         ) : undefined}
-        <TextInput
+        <Input
           editable={
             background_source_type === BackgroundSourceType.BackgroundImg
           }
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               source: text,
             });
           }}
           placeholder={'source'}
-          placeholderTextColor={'gray'}
           value={source}
         />
         <View style={styles.container}>

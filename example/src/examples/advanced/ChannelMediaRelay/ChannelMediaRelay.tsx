@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, Text, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform, Text } from 'react-native';
 import {
   ChannelMediaRelayError,
   ChannelMediaRelayEvent,
@@ -15,6 +15,7 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -196,13 +197,12 @@ export default class ChannelMediaRelay
     const { destChannelNames } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ destChannelNames: text.split(' ') });
           }}
           placeholder={'destChannelNames (split by blank)'}
-          placeholderTextColor={'gray'}
           value={destChannelNames.join(' ')}
         />
         <Text>{`destCount: ${destChannelNames.length}`}</Text>

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -14,7 +8,9 @@ import {
   IRtcEngineEx,
   LocalVideoStreamError,
   LocalVideoStreamState,
+  RtcConnection,
   RtcSurfaceView,
+  UserOfflineReasonType,
   VideoContentHint,
   VideoSourceType,
 } from 'react-native-agora-rtc-ng';
@@ -24,6 +20,7 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
@@ -226,6 +223,28 @@ export default class ScreenShare
     this.engine?.release();
   }
 
+  onJoinChannelSuccess(connection: RtcConnection, elapsed: number) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2) return;
+    super.onJoinChannelSuccess(connection, elapsed);
+  }
+
+  onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2 || remoteUid === uid2) return;
+    super.onUserJoined(connection, remoteUid, elapsed);
+  }
+
+  onUserOffline(
+    connection: RtcConnection,
+    remoteUid: number,
+    reason: UserOfflineReasonType
+  ) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2 || remoteUid === uid2) return;
+    super.onUserOffline(connection, remoteUid, reason);
+  }
+
   onLocalVideoStateChanged(
     source: VideoSourceType,
     state: LocalVideoStreamState,
@@ -294,15 +313,16 @@ export default class ScreenShare
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
-          keyboardType={'numeric'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
           placeholder={`uid2 (must > 0)`}
-          placeholderTextColor={'gray'}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
         <ActionItem
@@ -316,30 +336,40 @@ export default class ScreenShare
         <Divider />
         {captureAudio ? (
           <>
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ sampleRate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`sampleRate (defaults: ${sampleRate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`sampleRate (defaults: ${
+                this.createState().sampleRate
+              })`}
               value={
                 sampleRate === this.createState().sampleRate
                   ? ''
                   : sampleRate.toString()
               }
             />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ channels: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`channels (defaults: ${channels})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`channels (defaults: ${
+                this.createState().channels
+              })`}
               value={
                 channels === this.createState().channels
                   ? ''
@@ -367,57 +397,71 @@ export default class ScreenShare
         {captureVideo ? (
           <>
             <View style={styles.container}>
-              <TextInput
+              <Input
                 style={STYLES.input}
-                onChangeText={(text) => {
+                onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
                 }}
-                keyboardType={'numeric'}
-                placeholder={`width (defaults: ${width})`}
-                placeholderTextColor={'gray'}
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'numeric'
+                    : 'numbers-and-punctuation'
+                }
+                placeholder={`width (defaults: ${this.createState().width})`}
                 value={
                   width === this.createState().width ? '' : width.toString()
                 }
               />
-              <TextInput
+              <Input
                 style={STYLES.input}
-                onChangeText={(text) => {
+                onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
                 }}
-                keyboardType={'numeric'}
-                placeholder={`height (defaults: ${height})`}
-                placeholderTextColor={'gray'}
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'numeric'
+                    : 'numbers-and-punctuation'
+                }
+                placeholder={`height (defaults: ${this.createState().height})`}
                 value={
                   height === this.createState().height ? '' : height.toString()
                 }
               />
             </View>
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ frameRate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`frameRate (defaults: ${frameRate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`frameRate (defaults: ${
+                this.createState().frameRate
+              })`}
               value={
                 frameRate === this.createState().frameRate
                   ? ''
                   : frameRate.toString()
               }
             />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ bitrate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`bitrate (defaults: ${bitrate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`bitrate (defaults: ${this.createState().bitrate})`}
               value={
                 bitrate === this.createState().bitrate ? '' : bitrate.toString()
               }

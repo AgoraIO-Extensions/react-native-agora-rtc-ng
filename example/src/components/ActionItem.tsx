@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Switch, Text, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 
@@ -28,12 +28,18 @@ export const ActionItem = ({
   onSliderValueChange,
 }: Props) => {
   const [isSwitchOn, setIsSwitchOn] = useState(switchValue);
+
+  useEffect(() => {
+    setIsSwitchOn(switchValue);
+  }, [switchValue]);
+
   let showSlider: boolean;
   if (isShowSwitch) {
     showSlider = isShowSlider && isSwitchOn;
   } else {
     showSlider = isShowSlider;
   }
+
   return (
     <>
       <View style={styles.row}>

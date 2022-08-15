@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
   AudioScenarioType,
   ChannelProfileType,
@@ -19,6 +13,7 @@ import {
   BaseComponent,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -193,15 +188,16 @@ export default class LocalSpatialAudioEngine
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ range: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`range (defaults: ${range})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`range (defaults: ${this.createState().range})`}
           value={range === this.createState().range ? '' : range.toString()}
         />
         <ActionItem
@@ -228,16 +224,21 @@ export default class LocalSpatialAudioEngine
         <Divider />
         <View style={styles.container}>
           {position.map((value, index) => (
-            <TextInput
+            <Input
               style={{ ...STYLES.input, flex: 1 }}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 position[index] = +text;
                 this.setState({ position });
               }}
-              keyboardType={'numeric'}
-              placeholder={`position (defaults: ${position[index]})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`position (defaults: ${
+                this.createState().position[index]
+              })`}
               value={
                 position[index] === this.createState().position[index]
                   ? ''
@@ -248,16 +249,21 @@ export default class LocalSpatialAudioEngine
         </View>
         <View style={styles.container}>
           {axisForward.map((value, index) => (
-            <TextInput
+            <Input
               style={{ ...STYLES.input, flex: 1 }}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisForward[index] = +text;
                 this.setState({ axisForward });
               }}
-              keyboardType={'numeric'}
-              placeholder={`axisForward (defaults: ${axisForward[index]})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`axisForward (defaults: ${
+                this.createState().axisForward[index]
+              })`}
               value={
                 axisForward[index] === this.createState().axisForward[index]
                   ? ''
@@ -268,16 +274,21 @@ export default class LocalSpatialAudioEngine
         </View>
         <View style={styles.container}>
           {axisRight.map((value, index) => (
-            <TextInput
+            <Input
               style={{ ...STYLES.input, flex: 1 }}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisRight[index] = +text;
                 this.setState({ axisRight });
               }}
-              keyboardType={'numeric'}
-              placeholder={`axisRight (defaults: ${axisRight[index]})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`axisRight (defaults: ${
+                this.createState().axisRight[index]
+              })`}
               value={
                 axisRight[index] === this.createState().axisRight[index]
                   ? ''
@@ -288,16 +299,21 @@ export default class LocalSpatialAudioEngine
         </View>
         <View style={styles.container}>
           {axisUp.map((value, index) => (
-            <TextInput
+            <Input
               style={{ ...STYLES.input, flex: 1 }}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisUp[index] = +text;
                 this.setState({ axisUp });
               }}
-              keyboardType={'numeric'}
-              placeholder={`axisUp (defaults: ${axisUp[index]})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`axisUp (defaults: ${
+                this.createState().axisUp[index]
+              })`}
               value={
                 axisUp[index] === this.createState().axisUp[index]
                   ? ''

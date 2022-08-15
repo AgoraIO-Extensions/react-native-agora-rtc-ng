@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -7,6 +7,8 @@ import {
   IRtcEngineEventHandler,
   RhythmPlayerErrorType,
   RhythmPlayerStateType,
+  RtcConnection,
+  RtcStats,
 } from 'react-native-agora-rtc-ng';
 
 import {
@@ -14,6 +16,7 @@ import {
   BaseComponent,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
@@ -23,7 +26,7 @@ interface State extends BaseAudioComponentState {
   sound2: string;
   beatsPerMeasure: number;
   beatsPerMinute: number;
-  startRhythmPlayer: boolean;
+  startRhythmPlayer?: boolean;
 }
 
 export default class RhythmPlayer
@@ -98,6 +101,8 @@ export default class RhythmPlayer
     this.engine?.joinChannelWithOptions(token, channelId, uid, {
       // Make myself as the broadcaster to send stream to remote
       clientRoleType: ClientRoleType.ClientRoleBroadcaster,
+      // ⚠️ Must be true, if you want to publish to remote
+      publishRhythmPlayerTrack: true,
     });
   }
 
@@ -158,6 +163,13 @@ export default class RhythmPlayer
     this.engine?.release();
   }
 
+  onLeaveChannel(connection: RtcConnection, stats: RtcStats) {
+    this.info('onLeaveChannel', 'connection', connection, 'stats', stats);
+    const state = this.createState();
+    delete state.startRhythmPlayer;
+    this.setState(state);
+  }
+
   onRhythmPlayerStateChanged(
     state: RhythmPlayerStateType,
     errorCode: RhythmPlayerErrorType
@@ -188,25 +200,23 @@ export default class RhythmPlayer
     const { sound1, sound2, beatsPerMeasure, beatsPerMinute } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ sound1: text });
           }}
           placeholder={'sound1'}
-          placeholderTextColor={'gray'}
           value={sound1}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ sound2: text });
           }}
           placeholder={'sound2'}
-          placeholderTextColor={'gray'}
           value={sound2}
         />
-        {this.renderSlider('beatsPerMeasure', beatsPerMeasure, 1, 9)}
+        {this.renderSlider('beatsPerMeasure', beatsPerMeasure, 1, 9, false)}
         <Divider />
         {this.renderSlider('beatsPerMinute', beatsPerMinute, 60, 360)}
         <Divider />

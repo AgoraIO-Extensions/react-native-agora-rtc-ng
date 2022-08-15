@@ -5,12 +5,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
+  ContentInspectModule,
   ContentInspectResult,
   ContentInspectType,
   createAgoraRtcEngine,
@@ -22,13 +22,15 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
 
 interface State extends BaseVideoComponentState {
-  moduleTypes: ContentInspectType[];
+  modules: ContentInspectModule[];
+  type: ContentInspectType;
   interval: number;
   enableContentInspect: boolean;
 }
@@ -37,9 +39,6 @@ export default class ContentInspect
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
-  private _moduleType: ContentInspectType =
-    ContentInspectType.ContentInspectModeration;
-
   protected createState(): State {
     return {
       appId: Config.appId,
@@ -50,7 +49,8 @@ export default class ContentInspect
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      moduleTypes: [],
+      modules: [],
+      type: ContentInspectType.ContentInspectModeration,
       interval: 1,
       enableContentInspect: false,
     };
@@ -125,23 +125,16 @@ export default class ContentInspect
    * Step 3-1: enableContentInspect
    */
   enableContentInspect = () => {
-    const { moduleTypes, interval } = this.state;
-    if (moduleTypes.length <= 0) {
-      console.error('moduleTypes is not enough');
-      return;
-    }
-    if (interval <= 0) {
-      console.error('interval is invalid');
+    const { modules } = this.state;
+    if (modules.length <= 0 || modules.length > 32) {
+      console.error('modules length is invalid');
       return;
     }
 
     this.engine?.enableContentInspect(true, {
-      modules: moduleTypes.map((value) => {
-        return { type: value, interval };
-      }),
-      moduleCount: moduleTypes.length,
+      modules,
+      moduleCount: modules.length,
     });
-    // ContentInspectType.ContentInspectModeration
     this.setState({ enableContentInspect: true });
   };
 
@@ -172,49 +165,53 @@ export default class ContentInspect
   }
 
   protected renderBottom(): React.ReactNode {
-    const { moduleTypes, interval } = this.state;
+    const { modules, type, interval } = this.state;
     return (
       <>
         <View style={styles.container}>
           <PickerView
-            title={'moduleTypes'}
+            title={'type'}
             type={ContentInspectType}
-            selectedValue={this._moduleType}
+            selectedValue={type}
             onValueChange={(value) => {
-              this._moduleType = value;
+              this.setState({ type: value });
             }}
           />
           <Button
             title={'Add'}
             onPress={() => {
+              if (interval <= 0) {
+                console.error('interval is invalid');
+                return;
+              }
               this.setState({
-                moduleTypes: [...moduleTypes, this._moduleType!],
+                modules: [...modules, { type, interval }],
               });
             }}
           />
           <Button
             title={'Remove'}
             onPress={() => {
+              modules.pop();
               this.setState({
-                moduleTypes: moduleTypes.filter(
-                  (value) => value !== this._moduleType
-                ),
+                modules: modules,
               });
             }}
           />
         </View>
         <Divider />
-        <Text>{`moduleCount: ${moduleTypes.length}`}</Text>
+        <Text>{`moduleCount: ${modules.length}`}</Text>
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ interval: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`interval (defaults: ${interval})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`interval (defaults: ${this.createState().interval})`}
           value={
             interval === this.createState().interval ? '' : interval.toString()
           }

@@ -4,7 +4,6 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {
@@ -29,6 +28,7 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -342,19 +342,20 @@ export default class RTMPStreaming
       audioBitrate,
       audioChannels,
       audioCodecProfile,
+      startRtmpStream,
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
-          placeholderTextColor={'gray'}
           value={url}
         />
         <ActionItem
+          disabled={startRtmpStream}
           title={'startRtmpStreamWithTranscoding'}
           isShowSwitch={true}
           switchValue={startRtmpStreamWithTranscoding}
@@ -379,72 +380,93 @@ export default class RTMPStreaming
             </>
             <Divider />
             <View style={styles.container}>
-              <TextInput
+              <Input
                 style={STYLES.input}
-                onChangeText={(text) => {
+                onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
                 }}
-                keyboardType={'numeric'}
-                placeholder={`width (defaults: ${width})`}
-                placeholderTextColor={'gray'}
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'numeric'
+                    : 'numbers-and-punctuation'
+                }
+                placeholder={`width (defaults: ${this.createState().width})`}
                 value={
                   width === this.createState().width ? '' : width.toString()
                 }
               />
-              <TextInput
+              <Input
                 style={STYLES.input}
-                onChangeText={(text) => {
+                onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
                 }}
-                keyboardType={'numeric'}
-                placeholder={`height (defaults: ${height})`}
-                placeholderTextColor={'gray'}
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'numeric'
+                    : 'numbers-and-punctuation'
+                }
+                placeholder={`height (defaults: ${this.createState().height})`}
                 value={
                   height === this.createState().height ? '' : height.toString()
                 }
               />
             </View>
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoBitrate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`videoBitrate (defaults: ${videoBitrate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`videoBitrate (defaults: ${
+                this.createState().videoBitrate
+              })`}
               value={
                 videoBitrate === this.createState().videoBitrate
                   ? ''
                   : videoBitrate.toString()
               }
             />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoFramerate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`videoFramerate (defaults: ${videoFramerate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`videoFramerate (defaults: ${
+                this.createState().videoFramerate
+              })`}
               value={
                 videoFramerate === this.createState().videoFramerate
                   ? ''
                   : videoFramerate.toString()
               }
             />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoGop: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`videoGop (defaults: ${videoGop})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`videoGop (defaults: ${
+                this.createState().videoGop
+              })`}
               value={
                 videoGop === this.createState().videoGop
                   ? ''
@@ -473,22 +495,20 @@ export default class RTMPStreaming
               />
             </View>
             <Divider />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 this.setState({ watermarkUrl: text });
               }}
               placeholder={'watermarkUrl'}
-              placeholderTextColor={'gray'}
               value={watermarkUrl}
             />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 this.setState({ backgroundImageUrl: text });
               }}
               placeholder={'backgroundImageUrl'}
-              placeholderTextColor={'gray'}
               value={backgroundImageUrl}
             />
             <View style={styles.container}>
@@ -502,15 +522,20 @@ export default class RTMPStreaming
               />
             </View>
             <Divider />
-            <TextInput
+            <Input
               style={STYLES.input}
-              onChangeText={(text) => {
+              onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ audioBitrate: +text });
               }}
-              keyboardType={'numeric'}
-              placeholder={`audioBitrate (defaults: ${audioBitrate})`}
-              placeholderTextColor={'gray'}
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'numeric'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder={`audioBitrate (defaults: ${
+                this.createState().audioBitrate
+              })`}
               value={
                 audioBitrate === this.createState().audioBitrate
                   ? ''

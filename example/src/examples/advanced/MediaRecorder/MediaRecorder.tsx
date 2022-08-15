@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -25,6 +19,7 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
@@ -205,13 +200,12 @@ export default class MediaRecorder
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ storagePath: text });
           }}
           placeholder={'storagePath'}
-          placeholderTextColor={'gray'}
           value={storagePath}
         />
         <View style={styles.container}>
@@ -236,15 +230,18 @@ export default class MediaRecorder
           />
         </View>
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ maxDurationMs: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`maxDurationMs (defaults: ${maxDurationMs})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`maxDurationMs (defaults: ${
+            this.createState().maxDurationMs
+          })`}
           value={
             maxDurationMs === this.createState().maxDurationMs
               ? ''

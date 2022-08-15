@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -13,6 +13,7 @@ import {
   BaseComponent,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 
@@ -204,37 +205,38 @@ export default class PlayEffect
     } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ soundId: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`soundId (defaults: ${soundId})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`soundId (defaults: ${this.createState().soundId})`}
           value={
             soundId === this.createState().soundId ? '' : soundId.toString()
           }
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
-          placeholderTextColor={'gray'}
           value={filePath}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`loopCount (defaults: ${loopCount})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`loopCount (defaults: ${this.createState().loopCount})`}
           value={
             loopCount === this.createState().loopCount
               ? ''
@@ -256,15 +258,16 @@ export default class PlayEffect
           }}
         />
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`startPos (defaults: ${startPos})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`startPos (defaults: ${this.createState().startPos})`}
           value={
             startPos === this.createState().startPos ? '' : startPos.toString()
           }

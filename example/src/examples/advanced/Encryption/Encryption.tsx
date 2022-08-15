@@ -4,7 +4,6 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {
@@ -22,6 +21,7 @@ import {
   BaseVideoComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
@@ -176,25 +176,25 @@ export default class Encryption
           />
         </View>
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ encryptionKey: text });
           }}
           placeholder={'encryptionKey'}
-          placeholderTextColor={'gray'}
           value={encryptionKey}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               encryptionKdfSalt: text.split(' ').map((value) => +value),
             });
           }}
-          keyboardType={'numeric'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
           placeholder={'encryptionKdfSalt (split by blank)'}
-          placeholderTextColor={'gray'}
           value={encryptionKdfSalt.join(' ')}
         />
         <Text>{`encryptionKdfSaltLength: ${encryptionKdfSalt.length}`}</Text>

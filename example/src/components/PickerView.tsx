@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -23,6 +23,11 @@ export const PickerView = ({
   const [value, setValue] = useState(
     selectedValue === undefined ? values[0] : selectedValue
   );
+
+  useEffect(() => {
+    setValue(selectedValue === undefined ? values[0] : selectedValue);
+  }, [selectedValue, values]);
+
   return (
     <>
       <Text>{title}</Text>

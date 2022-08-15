@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextInput } from 'react-native';
+import { Button, Platform } from 'react-native';
 import {
   createAgoraRtcEngine,
   IMediaPlayer,
@@ -17,6 +17,7 @@ import {
   BaseComponentState,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -282,9 +283,9 @@ export default class MediaPlayer
       this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={'url'}
@@ -307,15 +308,16 @@ export default class MediaPlayer
           onPress={this.adjustPlayoutVolume}
         />
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}
-          keyboardType={'numeric'}
-          placeholder={`loopCount (defaults: ${loopCount})`}
-          placeholderTextColor={'gray'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
+          placeholder={`loopCount (defaults: ${this.createState().loopCount})`}
           value={
             loopCount === this.createState().loopCount
               ? ''

@@ -19,7 +19,6 @@ import {
   RtcConnection,
   RtcStats,
   UserOfflineReasonType,
-  WarnCodeType,
 } from 'react-native-agora-rtc-ng';
 
 import {

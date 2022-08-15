@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -9,13 +9,13 @@ import {
   RtcConnection,
   RtcStats,
   UserOfflineReasonType,
-  WarnCodeType,
 } from 'react-native-agora-rtc-ng';
 
 import {
   BaseAudioComponentState,
   BaseComponent,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -151,12 +151,15 @@ export default class StringUid
   }
 
   protected renderBottom(): React.ReactNode {
-    const { userAccount } = this.state;
+    const { userAccount, joinChannelSuccess } = this.state;
     return (
       <>
-        <TextInput
+        <Input
+          editable={!joinChannelSuccess}
           style={STYLES.input}
-          onChangeText={(text) => this.setState({ userAccount: text })}
+          onEndEditing={({ nativeEvent: { text } }) =>
+            this.setState({ userAccount: text })
+          }
           placeholder={`userAccount`}
           value={userAccount}
         />

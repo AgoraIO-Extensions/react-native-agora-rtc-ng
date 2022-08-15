@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, useState } from 'react';
+import React, { Component, ReactNode, useEffect, useState } from 'react';
 import {
   Alert,
   Button,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
   View,
 } from 'react-native';
 import {
@@ -50,6 +51,23 @@ const Header = ({ getData }: { getData: () => Array<string> }) => {
         onBackdropPress={toggleOverlay}
       />
     </>
+  );
+};
+
+export const Input = (props: TextInputProps) => {
+  const [value, setValue] = useState(props.value);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
+
+  return (
+    <TextInput
+      placeholderTextColor={'gray'}
+      {...props}
+      onChangeText={setValue}
+      value={value}
+    />
   );
 };
 
@@ -197,9 +215,11 @@ export abstract class BaseComponent<
     const { channelId, joinChannelSuccess } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => this.setState({ channelId: text })}
+          onEndEditing={({ nativeEvent: { text } }) => {
+            this.setState({ channelId: text });
+          }}
           placeholder={`channelId`}
           value={channelId}
         />

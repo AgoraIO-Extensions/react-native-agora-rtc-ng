@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -10,7 +10,9 @@ import {
   IRtcEngineEx,
   MediaPlayerError,
   MediaPlayerState,
+  RtcConnection,
   RtcSurfaceView,
+  UserOfflineReasonType,
   VideoSourceType,
 } from 'react-native-agora-rtc-ng';
 
@@ -18,6 +20,7 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -179,6 +182,28 @@ export default class SendMultiVideoStream
     this.engine?.release();
   }
 
+  onJoinChannelSuccess(connection: RtcConnection, elapsed: number) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2) return;
+    super.onJoinChannelSuccess(connection, elapsed);
+  }
+
+  onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2 || remoteUid === uid2) return;
+    super.onUserJoined(connection, remoteUid, elapsed);
+  }
+
+  onUserOffline(
+    connection: RtcConnection,
+    remoteUid: number,
+    reason: UserOfflineReasonType
+  ) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2 || remoteUid === uid2) return;
+    super.onUserOffline(connection, remoteUid, reason);
+  }
+
   onPlayerSourceStateChanged(state: MediaPlayerState, ec: MediaPlayerError) {
     this.info('onPlayerSourceStateChanged', 'state', state, 'ec', ec);
     switch (state) {
@@ -231,24 +256,24 @@ export default class SendMultiVideoStream
     const { uid2, url } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
-          keyboardType={'numeric'}
+          keyboardType={
+            Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
+          }
           placeholder={`uid2 (must > 0)`}
-          placeholderTextColor={'gray'}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
-          placeholderTextColor={'gray'}
           value={url}
         />
       </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform, TextInput } from 'react-native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -19,6 +19,7 @@ import {
   BaseComponent,
   BaseVideoComponentState,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -212,13 +213,12 @@ export default class EncodedVideoFrame
     const { imageBuffer } = this.state;
     return (
       <>
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ imageBuffer: text });
           }}
           placeholder={`imageBuffer`}
-          placeholderTextColor={'gray'}
           value={imageBuffer}
         />
       </>

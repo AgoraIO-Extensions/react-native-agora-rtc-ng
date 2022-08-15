@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  PermissionsAndroid,
-  Platform,
-  Text,
-  TextInput,
-} from 'react-native';
+import { Alert, PermissionsAndroid, Platform, Text } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -20,6 +14,7 @@ import {
   BaseComponent,
   Divider,
   STYLES,
+  Input,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
 import { ActionItem } from '../../../components/ActionItem';
@@ -235,13 +230,12 @@ export default class StreamMessage
         <Divider />
         <Text>{`streamId: ${streamId}`}</Text>
         <Divider />
-        <TextInput
+        <Input
           style={STYLES.input}
-          onChangeText={(text) => {
+          onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ data: text });
           }}
           placeholder={`data`}
-          placeholderTextColor={'gray'}
           value={data}
         />
       </>

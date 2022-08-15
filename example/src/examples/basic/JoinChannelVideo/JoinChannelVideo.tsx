@@ -21,7 +21,6 @@ import {
   UserOfflineReasonType,
   VideoSourceType,
   VideoViewSetupMode,
-  WarnCodeType,
 } from 'react-native-agora-rtc-ng';
 
 import {
