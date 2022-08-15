@@ -27,7 +27,7 @@ interface State extends BaseVideoComponentState {
   imageBuffer: string;
 }
 
-export default class PushEncodedVideoImage
+export default class EncodedVideoFrame
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler, IVideoEncodedFrameObserver
 {
@@ -187,7 +187,7 @@ export default class PushEncodedVideoImage
     });
   }
 
-  OnEncodedVideoFrameReceived(
+  onEncodedVideoFrameReceived(
     uid: number,
     imageBuffer: Uint8Array,
     length: number,

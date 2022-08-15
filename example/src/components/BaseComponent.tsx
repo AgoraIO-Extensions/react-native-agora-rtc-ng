@@ -17,7 +17,6 @@ import {
   RtcStats,
   RtcSurfaceView,
   UserOfflineReasonType,
-  WarnCodeType,
 } from 'react-native-agora-rtc-ng';
 import {
   copyFileAssets,
@@ -112,10 +111,6 @@ export abstract class BaseComponent<
   protected leaveChannel() {}
 
   protected abstract releaseRtcEngine(): void;
-
-  onWarning(warn: WarnCodeType, msg: string) {
-    this.warn('onWarning', 'warn', warn, 'msg', msg);
-  }
 
   onError(err: ErrorCodeType, msg: string) {
     this.error('onError', 'err', err, 'msg', msg);

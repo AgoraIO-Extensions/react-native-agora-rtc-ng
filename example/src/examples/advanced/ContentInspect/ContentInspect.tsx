@@ -1,43 +1,45 @@
 import React from 'react';
 import {
+  Button,
   PermissionsAndroid,
   Platform,
   StyleSheet,
+  Text,
   TextInput,
   View,
 } from 'react-native';
 import {
-  BackgroundBlurDegree,
-  BackgroundSourceType,
   ChannelProfileType,
   ClientRoleType,
+  ContentInspectResult,
+  ContentInspectType,
   createAgoraRtcEngine,
   IRtcEngineEventHandler,
-  SegmentationProperty,
 } from 'react-native-agora-rtc-ng';
-import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
 import {
   BaseComponent,
   BaseVideoComponentState,
+  Divider,
   STYLES,
 } from '../../../components/BaseComponent';
+import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
-  background_source_type: BackgroundSourceType;
-  color: number;
-  source: string;
-  blur_degree: BackgroundBlurDegree;
-  enableVirtualBackground: boolean;
+  moduleTypes: ContentInspectType[];
+  interval: number;
+  enableContentInspect: boolean;
 }
 
-export default class EnableVirtualBackground
+export default class ContentInspect
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
+  private _moduleType: ContentInspectType =
+    ContentInspectType.ContentInspectModeration;
+
   protected createState(): State {
     return {
       appId: Config.appId,
@@ -48,11 +50,9 @@ export default class EnableVirtualBackground
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      background_source_type: BackgroundSourceType.BackgroundColor,
-      color: 0xffffff,
-      source: this.getAssetPath('agora-logo.png'),
-      blur_degree: BackgroundBlurDegree.BlurDegreeMedium,
-      enableVirtualBackground: false,
+      moduleTypes: [],
+      interval: 1,
+      enableContentInspect: false,
     };
   }
 
@@ -83,13 +83,8 @@ export default class EnableVirtualBackground
 
     // Must call after initialize and before joinChannel
     if (Platform.OS === 'android') {
-      this.engine?.loadExtensionProvider('agora_segmentation_extension');
+      this.engine?.loadExtensionProvider('agora_content_inspect_extension');
     }
-    this.engine?.enableExtension(
-      'agora_video_filters_segmentation',
-      'portrait_segmentation',
-      true
-    );
 
     // Need to enable video on this case
     // If you only call `enableAudio`, only relay the audio stream to the target channel
@@ -127,37 +122,35 @@ export default class EnableVirtualBackground
   }
 
   /**
-   * Step 3-1: enableVirtualBackground
+   * Step 3-1: enableContentInspect
    */
-  enableVirtualBackground = async () => {
-    const { background_source_type, color, source, blur_degree } = this.state;
-    if (
-      background_source_type === BackgroundSourceType.BackgroundImg &&
-      !source
-    ) {
-      console.error('source is invalid');
+  enableContentInspect = () => {
+    const { moduleTypes, interval } = this.state;
+    if (moduleTypes.length <= 0) {
+      console.error('moduleTypes is not enough');
+      return;
+    }
+    if (interval <= 0) {
+      console.error('interval is invalid');
       return;
     }
 
-    this.engine?.enableVirtualBackground(
-      true,
-      {
-        background_source_type,
-        color,
-        source: await this.getAbsolutePath(source),
-        blur_degree,
-      },
-      {}
-    );
-    this.setState({ enableVirtualBackground: true });
+    this.engine?.enableContentInspect(true, {
+      modules: moduleTypes.map((value) => {
+        return { type: value, interval };
+      }),
+      moduleCount: moduleTypes.length,
+    });
+    // ContentInspectType.ContentInspectModeration
+    this.setState({ enableContentInspect: true });
   };
 
   /**
-   * Step 3-2: disableVirtualBackground
+   * Step 3-2: disableContentInspect
    */
-  disableVirtualBackground = () => {
-    this.engine?.enableVirtualBackground(false, {}, {});
-    this.setState({ enableVirtualBackground: false });
+  disableContentInspect = () => {
+    this.engine?.enableContentInspect(false, {});
+    this.setState({ enableContentInspect: false });
   };
 
   /**
@@ -174,77 +167,77 @@ export default class EnableVirtualBackground
     this.engine?.release();
   }
 
+  onContentInspectResult(result: ContentInspectResult) {
+    this.info('onContentInspectResult', 'result', result);
+  }
+
   protected renderBottom(): React.ReactNode {
-    const { background_source_type, color, source, blur_degree } = this.state;
+    const { moduleTypes, interval } = this.state;
     return (
       <>
         <View style={styles.container}>
           <PickerView
-            title={'backgroundSourceType'}
-            type={BackgroundSourceType}
-            selectedValue={background_source_type}
+            title={'moduleTypes'}
+            type={ContentInspectType}
+            selectedValue={this._moduleType}
             onValueChange={(value) => {
-              this.setState({ background_source_type: value });
+              this._moduleType = value;
             }}
           />
-        </View>
-        {background_source_type === BackgroundSourceType.BackgroundColor ? (
-          <ColorPicker
-            style={styles.picker}
-            onColorChange={(selectedColor) => {
+          <Button
+            title={'Add'}
+            onPress={() => {
               this.setState({
-                color: +fromHsv(selectedColor).replace('#', '0x'),
+                moduleTypes: [...moduleTypes, this._moduleType!],
               });
             }}
-            color={`#${color?.toString(16)}`}
           />
-        ) : undefined}
-        <TextInput
-          editable={
-            background_source_type === BackgroundSourceType.BackgroundImg
-          }
-          style={STYLES.input}
-          onChangeText={(text) => {
-            this.setState({
-              source: text,
-            });
-          }}
-          placeholder={'source'}
-          placeholderTextColor={'gray'}
-          value={source}
-        />
-        <View style={styles.container}>
-          <PickerView
-            enabled={
-              background_source_type === BackgroundSourceType.BackgroundBlur
-            }
-            title={'blurDegree'}
-            type={BackgroundBlurDegree}
-            selectedValue={blur_degree}
-            onValueChange={(value) => {
-              this.setState({ blur_degree: value });
+          <Button
+            title={'Remove'}
+            onPress={() => {
+              this.setState({
+                moduleTypes: moduleTypes.filter(
+                  (value) => value !== this._moduleType
+                ),
+              });
             }}
           />
         </View>
+        <Divider />
+        <Text>{`moduleCount: ${moduleTypes.length}`}</Text>
+        <Divider />
+        <TextInput
+          style={STYLES.input}
+          onChangeText={(text) => {
+            if (isNaN(+text)) return;
+            this.setState({ interval: +text });
+          }}
+          keyboardType={'numeric'}
+          placeholder={`interval (defaults: ${interval})`}
+          placeholderTextColor={'gray'}
+          value={
+            interval === this.createState().interval ? '' : interval.toString()
+          }
+        />
       </>
     );
   }
 
   protected renderFloat(): React.ReactNode {
-    const { startPreview, joinChannelSuccess, enableVirtualBackground } =
+    const { startPreview, joinChannelSuccess, enableContentInspect } =
       this.state;
     return (
       <>
         <ActionItem
           disabled={!(startPreview || joinChannelSuccess)}
-          title={`${
-            enableVirtualBackground ? 'disable' : 'enable'
-          } Virtual Background`}
           onPress={
-            enableVirtualBackground
-              ? this.disableVirtualBackground
-              : this.enableVirtualBackground
+            enableContentInspect
+              ? this.disableContentInspect
+              : this.enableContentInspect
           }
+          title={`${
+            enableContentInspect ? 'disable' : 'enable'
+          } Content Inspect`}
         />
       </>
     );
@@ -256,9 +249,5 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  picker: {
-    width: '100%',
-    height: 200,
   },
 });

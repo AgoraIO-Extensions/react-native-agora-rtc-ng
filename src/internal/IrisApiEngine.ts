@@ -179,7 +179,7 @@ EventEmitter.addListener('onEvent', function (args) {
       });
   } else if (event.indexOf('MediaRecorderObserver_') >= 0) {
     event = event.replace('MediaRecorderObserver_', '');
-    const key = data.connection.channelId ?? '' + data.connection.localUid;
+    const key = (data.connection.channelId ?? '') + data.connection.localUid;
     if (MediaRecorderInternal._observers.has(key)) {
       processIMediaRecorderObserver(
         MediaRecorderInternal._observers.get(key)!,

@@ -47,7 +47,7 @@ interface State extends BaseVideoComponentState {
   startDirectCdnStreaming: boolean;
 }
 
-export default class StartDirectCdnStreaming
+export default class DirectCdnStreaming
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler, IDirectCdnStreamingEventHandler
 {

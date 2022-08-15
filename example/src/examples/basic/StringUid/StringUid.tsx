@@ -122,10 +122,6 @@ export default class StringUid
     this.engine?.release();
   }
 
-  onWarning(warn: WarnCodeType, msg: string) {
-    super.onWarning(warn, msg);
-  }
-
   onError(err: ErrorCodeType, msg: string) {
     super.onError(err, msg);
   }

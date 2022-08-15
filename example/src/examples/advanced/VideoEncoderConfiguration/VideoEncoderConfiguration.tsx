@@ -39,7 +39,7 @@ interface State extends BaseVideoComponentState {
   mirrorMode: VideoMirrorModeType;
 }
 
-export default class SetVideoEncoderConfiguration
+export default class VideoEncoderConfiguration
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {

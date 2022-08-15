@@ -10,7 +10,6 @@ import {
   VideoBufferType,
   VideoPixelFormat,
 } from 'react-native-agora-rtc-ng';
-import { Buffer } from 'buffer';
 // @ts-ignore
 import ImageTools from 'react-native-image-tool';
 
@@ -70,11 +69,6 @@ export default class PushVideoFrame
         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         PermissionsAndroid.PERMISSIONS.CAMERA,
       ]);
-    }
-
-    // Must call after initialize and before joinChannel
-    if (Platform.OS === 'android') {
-      this.engine?.loadExtensionProvider('agora_screen_capture_extension');
     }
 
     // Need to enable video on this case

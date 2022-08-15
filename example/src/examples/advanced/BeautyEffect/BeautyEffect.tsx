@@ -26,7 +26,7 @@ interface State extends BaseVideoComponentState {
   enableBeautyEffect: boolean;
 }
 
-export default class SetBeautyEffectOptions
+export default class BeautyEffect
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {

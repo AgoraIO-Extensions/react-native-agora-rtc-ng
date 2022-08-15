@@ -314,8 +314,8 @@ export default class VoiceChanger
             title={'reverbKey'}
             type={AudioReverbType}
             selectedValue={reverbKey}
-            onValueChange={(value: AudioReverbType) => {
-              this.setState({ reverbKey: value });
+            onValueChange={(v: AudioReverbType) => {
+              this.setState({ reverbKey: v });
             }}
           />
         </View>

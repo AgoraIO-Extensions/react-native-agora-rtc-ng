@@ -21,7 +21,7 @@ interface State extends BaseVideoComponentState {
   enableExtension: boolean;
 }
 
-export default class EnableExtension
+export default class Extension
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
@@ -225,7 +225,7 @@ export default class EnableExtension
       <>
         <ActionItem
           disabled={joinChannelSuccess}
-          title={`${enableExtension ? 'disable' : 'enable'} Encryption`}
+          title={`${enableExtension ? 'disable' : 'enable'} Extension`}
           onPress={
             enableExtension ? this.disableExtension : this.enableExtension
           }

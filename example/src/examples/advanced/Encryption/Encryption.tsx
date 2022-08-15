@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   PermissionsAndroid,
   Platform,
   StyleSheet,
@@ -11,10 +10,11 @@ import {
 import {
   ChannelProfileType,
   ClientRoleType,
-  ContentInspectResult,
-  ContentInspectType,
   createAgoraRtcEngine,
+  EncryptionErrorType,
+  EncryptionMode,
   IRtcEngineEventHandler,
+  RtcConnection,
 } from 'react-native-agora-rtc-ng';
 
 import {
@@ -23,23 +23,21 @@ import {
   Divider,
   STYLES,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
 import Config from '../../../config/agora.config.json';
 import { PickerView } from '../../../components/PickerView';
+import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
-  moduleTypes: ContentInspectType[];
-  interval: number;
-  enableContentInspect: boolean;
+  encryptionMode: EncryptionMode;
+  encryptionKey: string;
+  encryptionKdfSalt: number[];
+  enableEncryption: boolean;
 }
 
-export default class EnableContentInspect
+export default class Encryption
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
-  private _moduleType: ContentInspectType =
-    ContentInspectType.ContentInspectModeration;
-
   protected createState(): State {
     return {
       appId: Config.appId,
@@ -50,9 +48,10 @@ export default class EnableContentInspect
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      moduleTypes: [],
-      interval: 1,
-      enableContentInspect: false,
+      encryptionMode: EncryptionMode.Aes128Xts,
+      encryptionKey: '',
+      encryptionKdfSalt: [],
+      enableEncryption: false,
     };
   }
 
@@ -81,18 +80,9 @@ export default class EnableContentInspect
       ]);
     }
 
-    // Must call after initialize and before joinChannel
-    if (Platform.OS === 'android') {
-      this.engine?.loadExtensionProvider('agora_content_inspect_extension');
-    }
-
     // Need to enable video on this case
     // If you only call `enableAudio`, only relay the audio stream to the target channel
     this.engine.enableVideo();
-
-    // This case works if startPreview without joinChannel
-    this.engine.startPreview();
-    this.setState({ startPreview: true });
   }
 
   /**
@@ -122,35 +112,29 @@ export default class EnableContentInspect
   }
 
   /**
-   * Step 3-1: enableContentInspect
+   * Step 3-1: enableEncryption
    */
-  enableContentInspect = () => {
-    const { moduleTypes, interval } = this.state;
-    if (moduleTypes.length <= 0) {
-      console.error('moduleTypes is not enough');
-      return;
-    }
-    if (interval <= 0) {
-      console.error('interval is invalid');
+  enableEncryption = () => {
+    const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
+    if (!encryptionKey) {
+      console.error('encryptionKey is invalid');
       return;
     }
 
-    this.engine?.enableContentInspect(true, {
-      modules: moduleTypes.map((value) => {
-        return { type: value, interval };
-      }),
-      moduleCount: moduleTypes.length,
+    this.engine?.enableEncryption(true, {
+      encryptionMode,
+      encryptionKey,
+      encryptionKdfSalt,
     });
-    // ContentInspectType.ContentInspectModeration
-    this.setState({ enableContentInspect: true });
+    this.setState({ enableEncryption: true });
   };
 
   /**
-   * Step 3-2: disableContentInspect
+   * Step 3-2: disableEncryption
    */
-  disableContentInspect = () => {
-    this.engine?.enableContentInspect(false, {});
-    this.setState({ enableContentInspect: false });
+  disableEncryption = () => {
+    this.engine?.enableEncryption(false, {});
+    this.setState({ enableEncryption: false });
   };
 
   /**
@@ -167,77 +151,68 @@ export default class EnableContentInspect
     this.engine?.release();
   }
 
-  onContentInspectResult(result: ContentInspectResult) {
-    this.info('onContentInspectResult', 'result', result);
+  onEncryptionError(connection: RtcConnection, errorType: EncryptionErrorType) {
+    this.error(
+      'onEncryptionError',
+      'connection',
+      connection,
+      'errorType',
+      errorType
+    );
   }
 
   protected renderBottom(): React.ReactNode {
-    const { moduleTypes, interval } = this.state;
+    const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
     return (
       <>
         <View style={styles.container}>
           <PickerView
-            title={'moduleTypes'}
-            type={ContentInspectType}
-            selectedValue={this._moduleType}
+            title={'encryptionMode'}
+            type={EncryptionMode}
+            selectedValue={encryptionMode}
             onValueChange={(value) => {
-              this._moduleType = value;
-            }}
-          />
-          <Button
-            title={'Add'}
-            onPress={() => {
-              this.setState({
-                moduleTypes: [...moduleTypes, this._moduleType!],
-              });
-            }}
-          />
-          <Button
-            title={'Remove'}
-            onPress={() => {
-              this.setState({
-                moduleTypes: moduleTypes.filter(
-                  (value) => value !== this._moduleType
-                ),
-              });
+              this.setState({ encryptionMode: value });
             }}
           />
         </View>
         <Divider />
-        <Text>{`moduleCount: ${moduleTypes.length}`}</Text>
-        <Divider />
         <TextInput
           style={STYLES.input}
           onChangeText={(text) => {
-            if (isNaN(+text)) return;
-            this.setState({ interval: +text });
+            this.setState({ encryptionKey: text });
+          }}
+          placeholder={'encryptionKey'}
+          placeholderTextColor={'gray'}
+          value={encryptionKey}
+        />
+        <TextInput
+          style={STYLES.input}
+          onChangeText={(text) => {
+            this.setState({
+              encryptionKdfSalt: text.split(' ').map((value) => +value),
+            });
           }}
           keyboardType={'numeric'}
-          placeholder={`interval (defaults: ${interval})`}
+          placeholder={'encryptionKdfSalt (split by blank)'}
           placeholderTextColor={'gray'}
-          value={
-            interval === this.createState().interval ? '' : interval.toString()
-          }
+          value={encryptionKdfSalt.join(' ')}
         />
+        <Text>{`encryptionKdfSaltLength: ${encryptionKdfSalt.length}`}</Text>
+        <Divider />
       </>
     );
   }
 
   protected renderFloat(): React.ReactNode {
-    const { startPreview, joinChannelSuccess, enableContentInspect } =
-      this.state;
+    const { joinChannelSuccess, enableEncryption } = this.state;
     return (
       <>
         <ActionItem
-          disabled={!(startPreview || joinChannelSuccess)}
+          disabled={joinChannelSuccess}
+          title={`${enableEncryption ? 'disable' : 'enable'} Encryption`}
           onPress={
-            enableContentInspect
-              ? this.disableContentInspect
-              : this.enableContentInspect
+            enableEncryption ? this.disableEncryption : this.enableEncryption
           }
-          title={`${
-            enableContentInspect ? 'disable' : 'enable'
-          } Content Inspect`}
         />
       </>
     );

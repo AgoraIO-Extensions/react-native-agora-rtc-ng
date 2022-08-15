@@ -12,7 +12,7 @@ export class MediaRecorderInternal extends IMediaRecorderImpl {
     connection: RtcConnection,
     callback: IMediaRecorderObserver
   ): number {
-    const key = connection.channelId ?? '' + connection.localUid;
+    const key = (connection.channelId ?? '') + connection.localUid;
     MediaRecorderInternal._observers.set(key, callback);
     return super.setMediaRecorderObserver(connection, callback);
   }

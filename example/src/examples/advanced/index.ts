@@ -2,27 +2,27 @@ import JoinMultipleChannel from './JoinMultipleChannel/JoinMultipleChannel';
 import StreamMessage from './StreamMessage/StreamMessage';
 import ChannelMediaRelay from './ChannelMediaRelay/ChannelMediaRelay';
 import VoiceChanger from './VoiceChanger/VoiceChanger';
-import EnableSpatialAudio from './EnableSpatialAudio/EnableSpatialAudio';
+import SpatialAudio from './SpatialAudio/SpatialAudio';
 import MediaPlayer from './MediaPlayer/MediaPlayer';
 import MediaRecorder from './MediaRecorder/MediaRecorder';
 import PlayEffect from './PlayEffect/PlayEffect';
 import TakeSnapshot from './TakeSnapshot/TakeSnapshot';
-import EnableContentInspect from './EnableContentInspect/EnableContentInspect';
-import StartRhythmPlayer from './StartRhythmPlayer/StartRhythmPlayer';
+import ContentInspect from './ContentInspect/ContentInspect';
+import RhythmPlayer from './RhythmPlayer/RhythmPlayer';
 import SendMultiVideoStream from './SendMultiVideoStream/SendMultiVideoStream';
 import AudioMixing from './AudioMixing/AudioMixing';
 import AudioSpectrum from './AudioSpectrum/AudioSpectrum';
 import RTMPStreaming from './RTMPStreaming/RTMPStreaming';
 import LocalSpatialAudioEngine from './LocalSpatialAudioEngine/LocalSpatialAudioEngine';
 import ScreenShare from './ScreenShare/ScreenShare';
-import EnableEncryption from './EnableEncryption/EnableEncryption';
-import SetVideoEncoderConfiguration from './SetVideoEncoderConfiguration/SetVideoEncoderConfiguration';
-import StartDirectCdnStreaming from './StartDirectCdnStreaming/StartDirectCdnStreaming';
-import EnableVirtualBackground from './EnableVirtualBackground/EnableVirtualBackground';
+import Encryption from './Encryption/Encryption';
+import VideoEncoderConfiguration from './VideoEncoderConfiguration/VideoEncoderConfiguration';
+import DirectCdnStreaming from './DirectCdnStreaming/DirectCdnStreaming';
+import VirtualBackground from './VirtualBackground/VirtualBackground';
 import SendMetadata from './SendMetadata/SendMetadata';
-import EnableExtension from './EnableExtension/EnableExtension';
-import SetBeautyEffectOptions from './SetBeautyEffectOptions/SetBeautyEffectOptions';
-import PushEncodedVideoImage from './PushEncodedVideoImage/PushEncodedVideoImage';
+import Extension from './Extension/Extension';
+import BeautyEffect from './BeautyEffect/BeautyEffect';
+import EncodedVideoFrame from './EncodedVideoFrame/EncodedVideoFrame';
 import PushVideoFrame from './PushVideoFrame/PushVideoFrame';
 
 const Advanced = {
@@ -37,28 +37,28 @@ const Advanced = {
       component: AudioSpectrum,
     },
     {
+      name: 'BeautyEffect',
+      component: BeautyEffect,
+    },
+    {
       name: 'ChannelMediaRelay',
       component: ChannelMediaRelay,
     },
     {
-      name: 'EnableContentInspect',
-      component: EnableContentInspect,
+      name: 'ContentInspect',
+      component: ContentInspect,
     },
     {
-      name: 'EnableEncryption',
-      component: EnableEncryption,
+      name: 'DirectCdnStreaming',
+      component: DirectCdnStreaming,
     },
     {
-      name: 'EnableExtension',
-      component: EnableExtension,
+      name: 'Encryption',
+      component: Encryption,
     },
     {
-      name: 'EnableSpatialAudio',
-      component: EnableSpatialAudio,
-    },
-    {
-      name: 'EnableVirtualBackground',
-      component: EnableVirtualBackground,
+      name: 'Extension',
+      component: Extension,
     },
     {
       name: 'JoinMultipleChannel',
@@ -82,11 +82,15 @@ const Advanced = {
     },
     {
       name: 'PushEncodedVideoImage',
-      component: PushEncodedVideoImage,
+      component: EncodedVideoFrame,
     },
     {
       name: 'PushVideoFrame',
       component: PushVideoFrame,
+    },
+    {
+      name: 'RhythmPlayer',
+      component: RhythmPlayer,
     },
     {
       name: 'RTMPStreaming',
@@ -105,20 +109,8 @@ const Advanced = {
       component: SendMultiVideoStream,
     },
     {
-      name: 'SetBeautyEffectOptions',
-      component: SetBeautyEffectOptions,
-    },
-    {
-      name: 'SetVideoEncoderConfiguration',
-      component: SetVideoEncoderConfiguration,
-    },
-    {
-      name: 'StartDirectCdnStreaming',
-      component: StartDirectCdnStreaming,
-    },
-    {
-      name: 'StartRhythmPlayer',
-      component: StartRhythmPlayer,
+      name: 'SpatialAudio',
+      component: SpatialAudio,
     },
     {
       name: 'StreamMessage',
@@ -127,6 +119,14 @@ const Advanced = {
     {
       name: 'TakeSnapshot',
       component: TakeSnapshot,
+    },
+    {
+      name: 'VideoEncoderConfiguration',
+      component: VideoEncoderConfiguration,
+    },
+    {
+      name: 'VirtualBackground',
+      component: VirtualBackground,
     },
     {
       name: 'VoiceChanger',

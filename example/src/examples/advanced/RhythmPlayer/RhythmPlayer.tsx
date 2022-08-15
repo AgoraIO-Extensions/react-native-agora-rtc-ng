@@ -26,7 +26,7 @@ interface State extends BaseAudioComponentState {
   startRhythmPlayer: boolean;
 }
 
-export default class StartRhythmPlayer
+export default class RhythmPlayer
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {

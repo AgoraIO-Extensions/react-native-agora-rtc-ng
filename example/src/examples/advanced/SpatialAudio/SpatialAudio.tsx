@@ -28,7 +28,7 @@ interface State extends BaseAudioComponentState {
   enableSpatialAudio: boolean;
 }
 
-export default class EnableSpatialAudio
+export default class SpatialAudio
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {

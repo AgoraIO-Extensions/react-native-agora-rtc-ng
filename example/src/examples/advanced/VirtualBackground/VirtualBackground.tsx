@@ -3,24 +3,22 @@ import {
   PermissionsAndroid,
   Platform,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
 import {
+  BackgroundBlurDegree,
+  BackgroundSourceType,
   ChannelProfileType,
   ClientRoleType,
   createAgoraRtcEngine,
-  EncryptionErrorType,
-  EncryptionMode,
   IRtcEngineEventHandler,
-  RtcConnection,
 } from 'react-native-agora-rtc-ng';
+import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
   STYLES,
 } from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
@@ -28,13 +26,14 @@ import { PickerView } from '../../../components/PickerView';
 import { ActionItem } from '../../../components/ActionItem';
 
 interface State extends BaseVideoComponentState {
-  encryptionMode: EncryptionMode;
-  encryptionKey: string;
-  encryptionKdfSalt: number[];
-  enableEncryption: boolean;
+  background_source_type: BackgroundSourceType;
+  color: number;
+  source: string;
+  blur_degree: BackgroundBlurDegree;
+  enableVirtualBackground: boolean;
 }
 
-export default class EnableEncryption
+export default class VirtualBackground
   extends BaseComponent<{}, State>
   implements IRtcEngineEventHandler
 {
@@ -48,10 +47,11 @@ export default class EnableEncryption
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      encryptionMode: EncryptionMode.Aes128Xts,
-      encryptionKey: '',
-      encryptionKdfSalt: [],
-      enableEncryption: false,
+      background_source_type: BackgroundSourceType.BackgroundColor,
+      color: 0xffffff,
+      source: this.getAssetPath('agora-logo.png'),
+      blur_degree: BackgroundBlurDegree.BlurDegreeMedium,
+      enableVirtualBackground: false,
     };
   }
 
@@ -80,9 +80,23 @@ export default class EnableEncryption
       ]);
     }
 
+    // Must call after initialize and before joinChannel
+    if (Platform.OS === 'android') {
+      this.engine?.loadExtensionProvider('agora_segmentation_extension');
+    }
+    this.engine?.enableExtension(
+      'agora_video_filters_segmentation',
+      'portrait_segmentation',
+      true
+    );
+
     // Need to enable video on this case
     // If you only call `enableAudio`, only relay the audio stream to the target channel
     this.engine.enableVideo();
+
+    // This case works if startPreview without joinChannel
+    this.engine.startPreview();
+    this.setState({ startPreview: true });
   }
 
   /**
@@ -112,29 +126,37 @@ export default class EnableEncryption
   }
 
   /**
-   * Step 3-1: enableEncryption
+   * Step 3-1: enableVirtualBackground
    */
-  enableEncryption = () => {
-    const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
-    if (!encryptionKey) {
-      console.error('encryptionKey is invalid');
+  enableVirtualBackground = async () => {
+    const { background_source_type, color, source, blur_degree } = this.state;
+    if (
+      background_source_type === BackgroundSourceType.BackgroundImg &&
+      !source
+    ) {
+      console.error('source is invalid');
       return;
     }
 
-    this.engine?.enableEncryption(true, {
-      encryptionMode,
-      encryptionKey,
-      encryptionKdfSalt,
-    });
-    this.setState({ enableEncryption: true });
+    this.engine?.enableVirtualBackground(
+      true,
+      {
+        background_source_type,
+        color,
+        source: await this.getAbsolutePath(source),
+        blur_degree,
+      },
+      {}
+    );
+    this.setState({ enableVirtualBackground: true });
   };
 
   /**
-   * Step 3-2: disableEncryption
+   * Step 3-2: disableVirtualBackground
    */
-  disableEncryption = () => {
-    this.engine?.enableEncryption(false, {});
-    this.setState({ enableEncryption: false });
+  disableVirtualBackground = () => {
+    this.engine?.enableVirtualBackground(false, {}, {});
+    this.setState({ enableVirtualBackground: false });
   };
 
   /**
@@ -151,67 +173,76 @@ export default class EnableEncryption
     this.engine?.release();
   }
 
-  onEncryptionError(connection: RtcConnection, errorType: EncryptionErrorType) {
-    this.error(
-      'onEncryptionError',
-      'connection',
-      connection,
-      'errorType',
-      errorType
-    );
-  }
-
   protected renderBottom(): React.ReactNode {
-    const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
+    const { background_source_type, color, source, blur_degree } = this.state;
     return (
       <>
         <View style={styles.container}>
           <PickerView
-            title={'encryptionMode'}
-            type={EncryptionMode}
-            selectedValue={encryptionMode}
+            title={'backgroundSourceType'}
+            type={BackgroundSourceType}
+            selectedValue={background_source_type}
             onValueChange={(value) => {
-              this.setState({ encryptionMode: value });
+              this.setState({ background_source_type: value });
             }}
           />
         </View>
-        <Divider />
+        {background_source_type === BackgroundSourceType.BackgroundColor ? (
+          <ColorPicker
+            style={styles.picker}
+            onColorChange={(selectedColor) => {
+              this.setState({
+                color: +fromHsv(selectedColor).replace('#', '0x'),
+              });
+            }}
+            color={`#${color?.toString(16)}`}
+          />
+        ) : undefined}
         <TextInput
-          style={STYLES.input}
-          onChangeText={(text) => {
-            this.setState({ encryptionKey: text });
-          }}
-          placeholder={'encryptionKey'}
-          placeholderTextColor={'gray'}
-          value={encryptionKey}
-        />
-        <TextInput
+          editable={
+            background_source_type === BackgroundSourceType.BackgroundImg
+          }
           style={STYLES.input}
           onChangeText={(text) => {
             this.setState({
-              encryptionKdfSalt: text.split(' ').map((value) => +value),
+              source: text,
             });
           }}
-          keyboardType={'numeric'}
-          placeholder={'encryptionKdfSalt (split by blank)'}
+          placeholder={'source'}
           placeholderTextColor={'gray'}
-          value={encryptionKdfSalt.join(' ')}
+          value={source}
         />
-        <Text>{`encryptionKdfSaltLength: ${encryptionKdfSalt.length}`}</Text>
-        <Divider />
+        <View style={styles.container}>
+          <PickerView
+            enabled={
+              background_source_type === BackgroundSourceType.BackgroundBlur
+            }
+            title={'blurDegree'}
+            type={BackgroundBlurDegree}
+            selectedValue={blur_degree}
+            onValueChange={(value) => {
+              this.setState({ blur_degree: value });
+            }}
+          />
+        </View>
       </>
     );
   }
 
   protected renderFloat(): React.ReactNode {
-    const { joinChannelSuccess, enableEncryption } = this.state;
+    const { startPreview, joinChannelSuccess, enableVirtualBackground } =
+      this.state;
     return (
       <>
         <ActionItem
-          disabled={joinChannelSuccess}
-          title={`${enableEncryption ? 'disable' : 'enable'} Encryption`}
+          disabled={!(startPreview || joinChannelSuccess)}
+          title={`${
+            enableVirtualBackground ? 'disable' : 'enable'
+          } Virtual Background`}
           onPress={
-            enableEncryption ? this.disableEncryption : this.enableEncryption
+            enableVirtualBackground
+              ? this.disableVirtualBackground
+              : this.enableVirtualBackground
           }
         />
       </>
@@ -224,5 +255,9 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  picker: {
+    width: '100%',
+    height: 200,
   },
 });
