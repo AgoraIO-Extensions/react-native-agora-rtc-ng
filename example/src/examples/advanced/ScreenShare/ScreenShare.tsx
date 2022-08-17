@@ -13,6 +13,7 @@ import {
   UserOfflineReasonType,
   VideoContentHint,
   VideoSourceType,
+  showRPSystemBroadcastPickerView,
 } from 'react-native-agora-rtc-ng';
 
 import {
@@ -173,6 +174,11 @@ export default class ScreenShare
       },
     });
     this.engine?.startPreview(VideoSourceType.VideoSourceScreen);
+
+    if (Platform.OS === 'ios') {
+      // Show the picker view for screen share, ⚠️ only support for iOS 12+
+      showRPSystemBroadcastPickerView();
+    }
   };
 
   /**

@@ -1,3 +1,9 @@
+import { NativeModules } from 'react-native';
+
+const { ReactNativeAgoraRtcNg } = NativeModules;
+export const showRPSystemBroadcastPickerView: Function =
+  ReactNativeAgoraRtcNg.showRPSystemBroadcastPickerView;
+
 import { IRtcEngine } from './IAgoraRtcEngine';
 import { RtcEngineInternal } from './internal/RtcEngineInternal';
 
