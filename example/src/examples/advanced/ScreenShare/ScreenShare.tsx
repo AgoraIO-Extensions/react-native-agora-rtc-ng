@@ -14,6 +14,9 @@ import {
   VideoContentHint,
   VideoSourceType,
   showRPSystemBroadcastPickerView,
+  RtcStats,
+  LocalAudioStreamState,
+  LocalAudioStreamError,
 } from 'react-native-agora-rtc-ng';
 
 import Config from '../../../config/agora.config.json';
@@ -48,6 +51,7 @@ interface State extends BaseVideoComponentState {
   bitrate: number;
   contentHint: VideoContentHint;
   startScreenCapture: boolean;
+  publishScreenCapture: boolean;
 }
 
 export default class ScreenShare
@@ -80,6 +84,7 @@ export default class ScreenShare
       bitrate: 0,
       contentHint: VideoContentHint.ContentHintMotion,
       startScreenCapture: false,
+      publishScreenCapture: false,
     };
   }
 
@@ -222,6 +227,14 @@ export default class ScreenShare
   };
 
   /**
+   * Step 3-4: unpublishScreenCapture
+   */
+  unpublishScreenCapture = () => {
+    const { channelId, uid2 } = this.state;
+    this.engine?.leaveChannelEx({ channelId, localUid: uid2 });
+  };
+
+  /**
    * Step 4: leaveChannel
    */
   protected leaveChannel() {
@@ -238,8 +251,20 @@ export default class ScreenShare
 
   onJoinChannelSuccess(connection: RtcConnection, elapsed: number) {
     const { uid2 } = this.state;
-    if (connection.localUid === uid2) return;
+    if (connection.localUid === uid2) {
+      this.setState({ publishScreenCapture: true });
+      return;
+    }
     super.onJoinChannelSuccess(connection, elapsed);
+  }
+
+  onLeaveChannel(connection: RtcConnection, stats: RtcStats) {
+    const { uid2 } = this.state;
+    if (connection.localUid === uid2) {
+      this.setState({ publishScreenCapture: false });
+      return;
+    }
+    super.onLeaveChannel(connection, stats);
   }
 
   onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
@@ -256,6 +281,22 @@ export default class ScreenShare
     const { uid2 } = this.state;
     if (connection.localUid === uid2 || remoteUid === uid2) return;
     super.onUserOffline(connection, remoteUid, reason);
+  }
+
+  onLocalAudioStateChanged(
+    connection: RtcConnection,
+    state: LocalAudioStreamState,
+    error: LocalAudioStreamError
+  ) {
+    this.info(
+      'onLocalAudioStateChanged',
+      'connection',
+      connection,
+      'state',
+      state,
+      'error',
+      error
+    );
   }
 
   onLocalVideoStateChanged(
@@ -282,7 +323,9 @@ export default class ScreenShare
           ) {
             this.stopScreenCapture();
           }
-          this.setState({ startScreenCapture: false });
+          this.setState({
+            startScreenCapture: false,
+          });
           break;
         case LocalVideoStreamState.LocalVideoStreamStateCapturing:
         case LocalVideoStreamState.LocalVideoStreamStateEncoding:
@@ -323,10 +366,12 @@ export default class ScreenShare
       frameRate,
       bitrate,
       contentHint,
+      publishScreenCapture,
     } = this.state;
     return (
       <>
         <AgoraTextInput
+          editable={!publishScreenCapture}
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
@@ -347,44 +392,48 @@ export default class ScreenShare
         <AgoraDivider />
         {captureAudio ? (
           <>
-            <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
-                if (isNaN(+text)) return;
-                this.setState({ sampleRate: +text });
-              }}
-              keyboardType={
-                Platform.OS === 'android'
-                  ? 'numeric'
-                  : 'numbers-and-punctuation'
-              }
-              placeholder={`sampleRate (defaults: ${
-                this.createState().sampleRate
-              })`}
-              value={
-                sampleRate === this.createState().sampleRate
-                  ? ''
-                  : sampleRate.toString()
-              }
-            />
-            <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
-                if (isNaN(+text)) return;
-                this.setState({ channels: +text });
-              }}
-              keyboardType={
-                Platform.OS === 'android'
-                  ? 'numeric'
-                  : 'numbers-and-punctuation'
-              }
-              placeholder={`channels (defaults: ${
-                this.createState().channels
-              })`}
-              value={
-                channels === this.createState().channels
-                  ? ''
-                  : channels.toString()
-              }
-            />
+            {Platform.OS === 'android' ? (
+              <>
+                <AgoraTextInput
+                  onEndEditing={({ nativeEvent: { text } }) => {
+                    if (isNaN(+text)) return;
+                    this.setState({ sampleRate: +text });
+                  }}
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'numeric'
+                      : 'numbers-and-punctuation'
+                  }
+                  placeholder={`sampleRate (defaults: ${
+                    this.createState().sampleRate
+                  })`}
+                  value={
+                    sampleRate === this.createState().sampleRate
+                      ? ''
+                      : sampleRate.toString()
+                  }
+                />
+                <AgoraTextInput
+                  onEndEditing={({ nativeEvent: { text } }) => {
+                    if (isNaN(+text)) return;
+                    this.setState({ channels: +text });
+                  }}
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'numeric'
+                      : 'numbers-and-punctuation'
+                  }
+                  placeholder={`channels (defaults: ${
+                    this.createState().channels
+                  })`}
+                  value={
+                    channels === this.createState().channels
+                      ? ''
+                      : channels.toString()
+                  }
+                />
+              </>
+            ) : undefined}
             <AgoraSlider
               title={'captureSignalVolume'}
               minimumValue={0}
@@ -491,7 +540,7 @@ export default class ScreenShare
   }
 
   protected renderFloat(): React.ReactNode {
-    const { startScreenCapture } = this.state;
+    const { startScreenCapture, publishScreenCapture } = this.state;
     return (
       <>
         <AgoraButton
@@ -503,9 +552,14 @@ export default class ScreenShare
           }
         />
         <AgoraButton
-          disabled={!startScreenCapture}
-          title={`publish Screen Capture`}
-          onPress={this.publishScreenCapture}
+          title={`${
+            publishScreenCapture ? 'unpublish' : 'publish'
+          } Screen Capture`}
+          onPress={
+            publishScreenCapture
+              ? this.unpublishScreenCapture
+              : this.publishScreenCapture
+          }
         />
       </>
     );

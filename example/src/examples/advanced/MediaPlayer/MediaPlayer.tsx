@@ -237,7 +237,7 @@ export default class MediaPlayer
         this.setState({ play: false });
         break;
       case MediaPlayerState.PlayerStateStopped:
-        this.setState({ open: false, play: false, pause: false });
+        this.setState({ open: false, play: false, pause: false, mute: false });
         break;
       case MediaPlayerState.PlayerStatePausingInternal:
         break;
@@ -381,7 +381,7 @@ export default class MediaPlayer
           onPress={pause ? this.resume : this.pause}
         />
         <AgoraButton
-          disabled={!play}
+          disabled={!open}
           title={`${mute ? 'un' : ''}mute`}
           onPress={mute ? this.unmute : this.mute}
         />

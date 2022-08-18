@@ -30,6 +30,7 @@ import {
   AgoraSlider,
   AgoraStyle,
   AgoraSwitch,
+  AgoraText,
   AgoraTextInput,
   AgoraView,
 } from '../../../components/ui';
@@ -366,7 +367,7 @@ export default class RTMPStreaming
           <>
             <AgoraDivider />
             <>
-              <AgoraView>backgroundColor</AgoraView>
+              <AgoraText>backgroundColor</AgoraText>
               <ColorPicker
                 style={styles.picker}
                 onColorChange={(selectedColor) => {

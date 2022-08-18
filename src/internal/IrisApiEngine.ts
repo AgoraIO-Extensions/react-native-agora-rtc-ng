@@ -46,7 +46,9 @@ const {
 const EventEmitter = new NativeEventEmitter(ReactNativeAgoraRtcNg);
 
 EventEmitter.addListener('onEvent', function (args) {
-  // console.info('onEvent', args);
+  if (__DEV__) {
+    console.info('onEvent', args);
+  }
   let event: string = args.event;
   let data: any;
   try {

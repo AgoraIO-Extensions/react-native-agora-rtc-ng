@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   SectionList,
@@ -21,15 +21,26 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createAgoraRtcEngine, SDKBuildInfo } from 'react-native-agora-rtc-ng';
 
 import Basic from './examples/basic';
 import Advanced from './examples/advanced';
+import Config from './config/agora.config.json';
 
 const Stack = createStackNavigator();
 
 const DATA = [Basic, Advanced];
 
 const App = () => {
+  const [version, setVersion] = useState<SDKBuildInfo>({});
+
+  useEffect(() => {
+    const engine = createAgoraRtcEngine();
+    engine.initialize({ appId: Config.appId });
+    setVersion(engine.getVersion());
+    engine.release();
+  }, []);
+
   return (
     <NavigationContainer>
       <SafeAreaView
@@ -50,6 +61,9 @@ const App = () => {
             )
           )}
         </Stack.Navigator>
+        <Text style={styles.version}>
+          Powered by Agora RTC SDK {version.version} build {version.build}
+        </Text>
       </SafeAreaView>
     </NavigationContainer>
   );
@@ -95,6 +109,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color: 'black',
+  },
+  version: {
+    backgroundColor: '#ffffffdd',
+    textAlign: 'center',
   },
 });
 
