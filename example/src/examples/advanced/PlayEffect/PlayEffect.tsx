@@ -7,15 +7,19 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
-import { ActionItem } from '../../../components/ActionItem';
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraSlider,
+  AgoraSwitch,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseAudioComponentState {
   soundId: number;
@@ -205,8 +209,7 @@ export default class PlayEffect
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ soundId: +text });
@@ -219,16 +222,14 @@ export default class PlayEffect
             soundId === this.createState().soundId ? '' : soundId.toString()
           }
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
           value={filePath}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
@@ -243,23 +244,48 @@ export default class PlayEffect
               : loopCount.toString()
           }
         />
-        {this.renderSlider('pitch', pitch, 0.5, 2.0, true)}
-        <Divider />
-        {this.renderSlider('pan', pan, -1.0, 1.0, true)}
-        <Divider />
-        {this.renderSlider('gain', gain, 0.0, 100.0, true)}
-        <Divider />
-        <ActionItem
+        <AgoraSlider
+          title={`pitch`}
+          minimumValue={0.5}
+          maximumValue={2.0}
+          step={0.1}
+          value={pitch}
+          onSlidingComplete={(value) => {
+            this.setState({ pitch: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`pan`}
+          minimumValue={-1.0}
+          maximumValue={1.0}
+          step={0.1}
+          value={pan}
+          onSlidingComplete={(value) => {
+            this.setState({ pan: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`gain`}
+          minimumValue={0}
+          maximumValue={100}
+          step={0.1}
+          value={gain}
+          onSlidingComplete={(value) => {
+            this.setState({ gain: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSwitch
           title={'publish'}
-          isShowSwitch={true}
-          switchValue={publish}
-          onSwitchValueChange={(value) => {
+          value={publish}
+          onValueChange={(value) => {
             this.setState({ publish: value });
           }}
         />
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ startPos: +text });
@@ -280,11 +306,11 @@ export default class PlayEffect
     const { playEffect, pauseEffect } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${playEffect ? 'stop' : 'play'} Effect`}
           onPress={playEffect ? this.stopEffect : this.playEffect}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!playEffect}
           title={`${pauseEffect ? 'resume' : 'pause'} Effect`}
           onPress={pauseEffect ? this.resumeEffect : this.pauseEffect}

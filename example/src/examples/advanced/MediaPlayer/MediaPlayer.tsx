@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import {
   createAgoraRtcEngine,
   IMediaPlayer,
@@ -12,15 +12,19 @@ import {
   VideoSourceType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraSlider,
+  AgoraStyle,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseComponentState {
   url: string;
@@ -109,19 +113,20 @@ export default class MediaPlayer
   /**
    * Step 3-3 (Optional): seek
    */
-  seek = (percent: number) => {
-    if (percent < 0 || percent > 1) {
-      console.error(`percent is invalid`);
-      return;
-    }
-
+  seek = (position: number) => {
     const { duration } = this.state;
+
     if (duration <= 0) {
       console.error(`duration is invalid`);
       return;
     }
 
-    this.player?.seek(duration * percent);
+    if (position < 0 || position > duration) {
+      console.error(`percent is invalid`);
+      return;
+    }
+
+    this.player?.seek(position);
   };
 
   /**
@@ -283,33 +288,42 @@ export default class MediaPlayer
       this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={'url'}
           value={url}
         />
-        <ActionItem
+        <AgoraSlider
           disabled={!open}
           title={`${position} ms : ${duration} ms`}
-          isShowSlider={true}
-          sliderValue={duration === 0 ? 0 : position / duration}
-          onSliderValueChange={(value) => {
+          minimumValue={0}
+          maximumValue={duration}
+          step={1000}
+          value={position}
+          onSlidingComplete={(value) => {
             this.seek(value);
           }}
         />
-        <Divider />
-        {this.renderSlider('playoutVolume', playoutVolume, 0, 400)}
-        <Button
+        <AgoraDivider />
+        <AgoraSlider
+          title={`playoutVolume`}
+          minimumValue={0}
+          maximumValue={400}
+          step={1}
+          value={playoutVolume}
+          onSlidingComplete={(value) => {
+            this.setState({ playoutVolume: value });
+          }}
+        />
+        <AgoraButton
           disabled={!open}
           title={'adjust Playout Volume'}
           onPress={this.adjustPlayoutVolume}
         />
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
@@ -324,12 +338,12 @@ export default class MediaPlayer
               : loopCount.toString()
           }
         />
-        <Button
+        <AgoraButton
           disabled={!open}
           title={'set Loop Count'}
           onPress={this.setLoopCount}
         />
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -340,7 +354,7 @@ export default class MediaPlayer
       <>
         {open ? (
           <RtcSurfaceView
-            style={STYLES.video}
+            style={AgoraStyle.videoLarge}
             canvas={{
               uid: this.player?.getMediaPlayerId(),
               sourceType: VideoSourceType.VideoSourceMediaPlayer,
@@ -355,23 +369,23 @@ export default class MediaPlayer
     const { open, play, pause, mute } = this.state;
     return (
       <>
-        <ActionItem disabled={open} title={`open`} onPress={this.open} />
-        <ActionItem
+        <AgoraButton disabled={open} title={`open`} onPress={this.open} />
+        <AgoraButton
           disabled={!open}
           title={`${play ? 'stop' : 'play'} Media Player`}
           onPress={play ? this.stop : this.play}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!play}
           title={`${pause ? 'resume' : 'pause'} Media Player`}
           onPress={pause ? this.resume : this.pause}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!play}
           title={`${mute ? 'un' : ''}mute`}
           onPress={mute ? this.unmute : this.mute}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!open}
           title={`get Stream Info`}
           onPress={this.getStreamInfo}

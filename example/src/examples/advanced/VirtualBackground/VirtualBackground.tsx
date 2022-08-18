@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   BackgroundBlurDegree,
   BackgroundSourceType,
@@ -10,15 +10,18 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDropdown,
+  AgoraTextInput,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   background_source_type: BackgroundSourceType;
@@ -172,16 +175,14 @@ export default class VirtualBackground
     const { background_source_type, color, source, blur_degree } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'backgroundSourceType'}
-            type={BackgroundSourceType}
-            selectedValue={background_source_type}
-            onValueChange={(value) => {
-              this.setState({ background_source_type: value });
-            }}
-          />
-        </View>
+        <AgoraDropdown
+          title={'backgroundSourceType'}
+          items={enumToItems(BackgroundSourceType)}
+          value={background_source_type}
+          onValueChange={(value) => {
+            this.setState({ background_source_type: value });
+          }}
+        />
         {background_source_type === BackgroundSourceType.BackgroundColor ? (
           <ColorPicker
             style={styles.picker}
@@ -193,11 +194,10 @@ export default class VirtualBackground
             color={`#${color?.toString(16)}`}
           />
         ) : undefined}
-        <Input
+        <AgoraTextInput
           editable={
             background_source_type === BackgroundSourceType.BackgroundImg
           }
-          style={STYLES.input}
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               source: text,
@@ -206,19 +206,17 @@ export default class VirtualBackground
           placeholder={'source'}
           value={source}
         />
-        <View style={styles.container}>
-          <PickerView
-            enabled={
-              background_source_type === BackgroundSourceType.BackgroundBlur
-            }
-            title={'blurDegree'}
-            type={BackgroundBlurDegree}
-            selectedValue={blur_degree}
-            onValueChange={(value) => {
-              this.setState({ blur_degree: value });
-            }}
-          />
-        </View>
+        <AgoraDropdown
+          enabled={
+            background_source_type === BackgroundSourceType.BackgroundBlur
+          }
+          title={'blurDegree'}
+          items={enumToItems(BackgroundBlurDegree)}
+          value={blur_degree}
+          onValueChange={(value) => {
+            this.setState({ blur_degree: value });
+          }}
+        />
       </>
     );
   }
@@ -228,7 +226,7 @@ export default class VirtualBackground
       this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!(startPreview || joinChannelSuccess)}
           title={`${
             enableVirtualBackground ? 'disable' : 'enable'

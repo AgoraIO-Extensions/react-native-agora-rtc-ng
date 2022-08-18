@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -16,16 +16,23 @@ import {
   showRPSystemBroadcastPickerView,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+  AgoraStyle,
+  AgoraSwitch,
+  AgoraTextInput,
+  AgoraView,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   token2: string;
@@ -292,7 +299,7 @@ export default class ScreenShare
         {super.renderVideo()}
         {startScreenCapture ? (
           <RtcSurfaceView
-            style={STYLES.video}
+            style={AgoraStyle.videoLarge}
             canvas={{
               uid: 0,
               sourceType: VideoSourceType.VideoSourceScreen,
@@ -319,8 +326,7 @@ export default class ScreenShare
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
@@ -331,19 +337,17 @@ export default class ScreenShare
           placeholder={`uid2 (must > 0)`}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
-        <ActionItem
+        <AgoraSwitch
           title={`captureAudio`}
-          isShowSwitch={true}
-          switchValue={captureAudio}
-          onSwitchValueChange={(value) => {
+          value={captureAudio}
+          onValueChange={(value) => {
             this.setState({ captureAudio: value });
           }}
         />
-        <Divider />
+        <AgoraDivider />
         {captureAudio ? (
           <>
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ sampleRate: +text });
@@ -362,8 +366,7 @@ export default class ScreenShare
                   : sampleRate.toString()
               }
             />
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ channels: +text });
@@ -382,29 +385,32 @@ export default class ScreenShare
                   : channels.toString()
               }
             />
-            {this.renderSlider(
-              'captureSignalVolume',
-              captureSignalVolume,
-              0,
-              100
-            )}
-            <Divider />
+            <AgoraSlider
+              title={'captureSignalVolume'}
+              minimumValue={0}
+              maximumValue={100}
+              step={1}
+              value={captureSignalVolume}
+              onSlidingComplete={(value) => {
+                this.setState({ captureSignalVolume: value });
+              }}
+            />
+            <AgoraDivider />
           </>
         ) : undefined}
-        <ActionItem
+        <AgoraSwitch
           title={`captureVideo`}
-          isShowSwitch={true}
-          switchValue={captureVideo}
-          onSwitchValueChange={(value) => {
+          value={captureVideo}
+          onValueChange={(value) => {
             this.setState({ captureVideo: value });
           }}
         />
-        <Divider />
+        <AgoraDivider />
         {captureVideo ? (
           <>
-            <View style={styles.container}>
-              <Input
-                style={STYLES.input}
+            <AgoraView style={styles.container}>
+              <AgoraTextInput
+                style={AgoraStyle.fullSize}
                 onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
@@ -419,8 +425,8 @@ export default class ScreenShare
                   width === this.createState().width ? '' : width.toString()
                 }
               />
-              <Input
-                style={STYLES.input}
+              <AgoraTextInput
+                style={AgoraStyle.fullSize}
                 onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
@@ -435,9 +441,8 @@ export default class ScreenShare
                   height === this.createState().height ? '' : height.toString()
                 }
               />
-            </View>
-            <Input
-              style={STYLES.input}
+            </AgoraView>
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ frameRate: +text });
@@ -456,8 +461,7 @@ export default class ScreenShare
                   : frameRate.toString()
               }
             />
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ bitrate: +text });
@@ -472,16 +476,14 @@ export default class ScreenShare
                 bitrate === this.createState().bitrate ? '' : bitrate.toString()
               }
             />
-            <View style={styles.container}>
-              <PickerView
-                title={'contentHint'}
-                type={VideoContentHint}
-                selectedValue={contentHint}
-                onValueChange={(value: VideoContentHint) => {
-                  this.setState({ contentHint: value });
-                }}
-              />
-            </View>
+            <AgoraDropdown
+              title={'contentHint'}
+              items={enumToItems(VideoContentHint)}
+              value={contentHint}
+              onValueChange={(value) => {
+                this.setState({ contentHint: value });
+              }}
+            />
           </>
         ) : undefined}
       </>
@@ -492,7 +494,7 @@ export default class ScreenShare
     const { startScreenCapture } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${startScreenCapture ? 'stop' : 'start'} Screen Capture`}
           onPress={
             startScreenCapture
@@ -500,7 +502,7 @@ export default class ScreenShare
               : this.startScreenCapture
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startScreenCapture}
           title={`publish Screen Capture`}
           onPress={this.publishScreenCapture}

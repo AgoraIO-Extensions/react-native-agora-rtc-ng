@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   AudioScenarioType,
   ChannelProfileType,
@@ -8,16 +8,21 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraStyle,
+  AgoraTextInput,
+  AgoraView,
+} from '../../../components/ui';
+import { arrayToItems } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   range: number;
@@ -188,8 +193,7 @@ export default class LocalSpatialAudioEngine
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ range: +text });
@@ -200,32 +204,25 @@ export default class LocalSpatialAudioEngine
           placeholder={`range (defaults: ${this.createState().range})`}
           value={range === this.createState().range ? '' : range.toString()}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`set Audio Recv Range`}
           onPress={this.setAudioRecvRange}
         />
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'targetUid'}
-            type={[
-              '0',
-              0,
-              ...remoteUsers.map((value) => value.toString()),
-              ...remoteUsers,
-            ]}
-            selectedValue={targetUid}
-            onValueChange={(value) => {
-              this.setState({ targetUid: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <View style={styles.container}>
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'targetUid'}
+          items={arrayToItems([0, ...remoteUsers])}
+          value={targetUid}
+          onValueChange={(value) => {
+            this.setState({ targetUid: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraView style={styles.container}>
           {position.map((value, index) => (
-            <Input
-              style={{ ...STYLES.input, flex: 1 }}
+            <AgoraTextInput
+              style={AgoraStyle.fullSize}
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 position[index] = +text;
@@ -246,11 +243,11 @@ export default class LocalSpatialAudioEngine
               }
             />
           ))}
-        </View>
-        <View style={styles.container}>
+        </AgoraView>
+        <AgoraView style={styles.container}>
           {axisForward.map((value, index) => (
-            <Input
-              style={{ ...STYLES.input, flex: 1 }}
+            <AgoraTextInput
+              style={AgoraStyle.fullSize}
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisForward[index] = +text;
@@ -271,11 +268,11 @@ export default class LocalSpatialAudioEngine
               }
             />
           ))}
-        </View>
-        <View style={styles.container}>
+        </AgoraView>
+        <AgoraView style={styles.container}>
           {axisRight.map((value, index) => (
-            <Input
-              style={{ ...STYLES.input, flex: 1 }}
+            <AgoraTextInput
+              style={AgoraStyle.fullSize}
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisRight[index] = +text;
@@ -296,11 +293,11 @@ export default class LocalSpatialAudioEngine
               }
             />
           ))}
-        </View>
-        <View style={styles.container}>
+        </AgoraView>
+        <AgoraView style={styles.container}>
           {axisUp.map((value, index) => (
-            <Input
-              style={{ ...STYLES.input, flex: 1 }}
+            <AgoraTextInput
+              style={AgoraStyle.fullSize}
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 axisUp[index] = +text;
@@ -321,7 +318,7 @@ export default class LocalSpatialAudioEngine
               }
             />
           ))}
-        </View>
+        </AgoraView>
       </>
     );
   }
@@ -330,7 +327,7 @@ export default class LocalSpatialAudioEngine
     const { joinChannelSuccess, targetUid } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`update ${targetUid === 0 ? 'Self' : 'Remote'} Position`}
           onPress={

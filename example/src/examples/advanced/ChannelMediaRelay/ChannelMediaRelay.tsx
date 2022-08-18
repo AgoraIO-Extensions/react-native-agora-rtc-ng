@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, Text } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelMediaRelayError,
   ChannelMediaRelayEvent,
@@ -10,15 +10,18 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraText,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   destChannelNames: string[];
@@ -197,16 +200,15 @@ export default class ChannelMediaRelay
     const { destChannelNames } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ destChannelNames: text.split(' ') });
           }}
           placeholder={'destChannelNames (split by blank)'}
           value={destChannelNames.join(' ')}
         />
-        <Text>{`destCount: ${destChannelNames.length}`}</Text>
-        <Divider />
+        <AgoraText>{`destCount: ${destChannelNames.length}`}</AgoraText>
+        <AgoraDivider />
       </>
     );
   }
@@ -219,7 +221,7 @@ export default class ChannelMediaRelay
     } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`${
             startChannelMediaRelay ? 'stop' : 'start'
@@ -230,7 +232,7 @@ export default class ChannelMediaRelay
               : this.startChannelMediaRelay
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startChannelMediaRelay}
           title={`${
             pauseAllChannelMediaRelay ? 'resume' : 'pause'

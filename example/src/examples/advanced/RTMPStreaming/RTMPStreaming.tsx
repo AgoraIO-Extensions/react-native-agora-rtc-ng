@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   AudioCodecProfileType,
   AudioSampleRateType,
@@ -23,16 +17,23 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+  AgoraStyle,
+  AgoraSwitch,
+  AgoraTextInput,
+  AgoraView,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   url: string;
@@ -346,28 +347,26 @@ export default class RTMPStreaming
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
           value={url}
         />
-        <ActionItem
+        <AgoraSwitch
           disabled={startRtmpStream}
           title={'startRtmpStreamWithTranscoding'}
-          isShowSwitch={true}
-          switchValue={startRtmpStreamWithTranscoding}
-          onSwitchValueChange={(value) => {
+          value={startRtmpStreamWithTranscoding}
+          onValueChange={(value) => {
             this.setState({ startRtmpStreamWithTranscoding: value });
           }}
         />
         {startRtmpStreamWithTranscoding ? (
           <>
-            <Divider />
+            <AgoraDivider />
             <>
-              <Text>backgroundColor</Text>
+              <AgoraView>backgroundColor</AgoraView>
               <ColorPicker
                 style={styles.picker}
                 onColorChange={(selectedColor) => {
@@ -378,10 +377,10 @@ export default class RTMPStreaming
                 color={`#${backgroundColor?.toString(16)}`}
               />
             </>
-            <Divider />
-            <View style={styles.container}>
-              <Input
-                style={STYLES.input}
+            <AgoraDivider />
+            <AgoraView style={styles.container}>
+              <AgoraTextInput
+                style={AgoraStyle.fullSize}
                 onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
@@ -396,8 +395,8 @@ export default class RTMPStreaming
                   width === this.createState().width ? '' : width.toString()
                 }
               />
-              <Input
-                style={STYLES.input}
+              <AgoraTextInput
+                style={AgoraStyle.fullSize}
                 onEndEditing={({ nativeEvent: { text } }) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
@@ -412,9 +411,8 @@ export default class RTMPStreaming
                   height === this.createState().height ? '' : height.toString()
                 }
               />
-            </View>
-            <Input
-              style={STYLES.input}
+            </AgoraView>
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoBitrate: +text });
@@ -433,8 +431,7 @@ export default class RTMPStreaming
                   : videoBitrate.toString()
               }
             />
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoFramerate: +text });
@@ -453,8 +450,7 @@ export default class RTMPStreaming
                   : videoFramerate.toString()
               }
             />
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoGop: +text });
@@ -473,57 +469,48 @@ export default class RTMPStreaming
                   : videoGop.toString()
               }
             />
-            <View style={styles.container}>
-              <PickerView
-                title={'videoCodecProfile'}
-                type={VideoCodecProfileType}
-                selectedValue={videoCodecProfile}
-                onValueChange={(value) => {
-                  this.setState({ videoCodecProfile: value });
-                }}
-              />
-            </View>
-            <Divider />
-            <View style={styles.container}>
-              <PickerView
-                title={'videoCodecType'}
-                type={VideoCodecTypeForStream}
-                selectedValue={videoCodecType}
-                onValueChange={(value) => {
-                  this.setState({ videoCodecType: value });
-                }}
-              />
-            </View>
-            <Divider />
-            <Input
-              style={STYLES.input}
+            <AgoraDropdown
+              title={'videoCodecProfile'}
+              items={enumToItems(VideoCodecProfileType)}
+              value={videoCodecProfile}
+              onValueChange={(value) => {
+                this.setState({ videoCodecProfile: value });
+              }}
+            />
+            <AgoraDivider />
+            <AgoraDropdown
+              title={'videoCodecType'}
+              items={enumToItems(VideoCodecTypeForStream)}
+              value={videoCodecType}
+              onValueChange={(value) => {
+                this.setState({ videoCodecType: value });
+              }}
+            />
+            <AgoraDivider />
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 this.setState({ watermarkUrl: text });
               }}
               placeholder={'watermarkUrl'}
               value={watermarkUrl}
             />
-            <Input
-              style={STYLES.input}
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 this.setState({ backgroundImageUrl: text });
               }}
               placeholder={'backgroundImageUrl'}
               value={backgroundImageUrl}
             />
-            <View style={styles.container}>
-              <PickerView
-                title={'audioSampleRate'}
-                type={AudioSampleRateType}
-                selectedValue={audioSampleRate}
-                onValueChange={(value) => {
-                  this.setState({ audioSampleRate: value });
-                }}
-              />
-            </View>
-            <Divider />
-            <Input
-              style={STYLES.input}
+            <AgoraDropdown
+              title={'audioSampleRate'}
+              items={enumToItems(AudioSampleRateType)}
+              value={audioSampleRate}
+              onValueChange={(value) => {
+                this.setState({ audioSampleRate: value });
+              }}
+            />
+            <AgoraDivider />
+            <AgoraTextInput
               onEndEditing={({ nativeEvent: { text } }) => {
                 if (isNaN(+text)) return;
                 this.setState({ audioBitrate: +text });
@@ -542,21 +529,28 @@ export default class RTMPStreaming
                   : audioBitrate.toString()
               }
             />
-            {this.renderSlider('audioChannels', audioChannels, 1, 5)}
-            <Divider />
-            <View style={styles.container}>
-              <PickerView
-                title={'audioCodecProfile'}
-                type={AudioCodecProfileType}
-                selectedValue={audioCodecProfile}
-                onValueChange={(value) => {
-                  this.setState({ audioCodecProfile: value });
-                }}
-              />
-            </View>
+            <AgoraSlider
+              title={`audioChannels`}
+              minimumValue={1}
+              maximumValue={5}
+              step={1}
+              value={audioChannels}
+              onSlidingComplete={(value) => {
+                this.setState({ audioChannels: value });
+              }}
+            />
+            <AgoraDivider />
+            <AgoraDropdown
+              title={'audioCodecProfile'}
+              items={enumToItems(AudioCodecProfileType)}
+              value={audioCodecProfile}
+              onValueChange={(value) => {
+                this.setState({ audioCodecProfile: value });
+              }}
+            />
           </>
         ) : undefined}
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -569,12 +563,12 @@ export default class RTMPStreaming
     } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`${startRtmpStream ? 'stop' : 'start'} Rtmp Stream`}
           onPress={startRtmpStream ? this.stopRtmpStream : this.startRtmpStream}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startRtmpStreamWithTranscoding || !startRtmpStream}
           title={`update Rtmp Transcoding`}
           onPress={this.updateRtmpTranscoding}

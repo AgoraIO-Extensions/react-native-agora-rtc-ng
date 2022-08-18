@@ -15,14 +15,13 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { Buffer } from 'buffer';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import { AgoraButton, AgoraTextInput } from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   imageBuffer: string;
@@ -213,8 +212,7 @@ export default class EncodedVideoFrame
     const { imageBuffer } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ imageBuffer: text });
           }}
@@ -229,7 +227,7 @@ export default class EncodedVideoFrame
     const { joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`push Encoded Video Image`}
           onPress={this.pushEncodedVideoImage}

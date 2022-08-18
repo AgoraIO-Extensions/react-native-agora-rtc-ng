@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -14,16 +14,20 @@ import {
 } from 'react-native-agora-rtc-ng';
 import RNFS from 'react-native-fs';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+  AgoraTextInput,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   storagePath: string;
@@ -200,38 +204,32 @@ export default class MediaRecorder
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ storagePath: text });
           }}
           placeholder={'storagePath'}
           value={storagePath}
         />
-        <View style={styles.container}>
-          <PickerView
-            title={'containerFormat'}
-            type={MediaRecorderContainerFormat}
-            selectedValue={containerFormat}
-            onValueChange={(value: MediaRecorderContainerFormat) => {
-              this.setState({ containerFormat: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'streamType'}
-            type={MediaRecorderStreamType}
-            selectedValue={streamType}
-            onValueChange={(value: MediaRecorderStreamType) => {
-              this.setState({ streamType: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDropdown
+          title={'containerFormat'}
+          items={enumToItems(MediaRecorderContainerFormat)}
+          value={containerFormat}
+          onValueChange={(value) => {
+            this.setState({ containerFormat: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'streamType'}
+          items={enumToItems(MediaRecorderStreamType)}
+          value={streamType}
+          onValueChange={(value) => {
+            this.setState({ streamType: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ maxDurationMs: +text });
@@ -248,12 +246,16 @@ export default class MediaRecorder
               : maxDurationMs.toString()
           }
         />
-        {this.renderSlider(
-          'recorderInfoUpdateInterval',
-          recorderInfoUpdateInterval,
-          1000,
-          10000
-        )}
+        <AgoraSlider
+          title={'recorderInfoUpdateInterval'}
+          minimumValue={1000}
+          maximumValue={10000}
+          step={1}
+          value={recorderInfoUpdateInterval}
+          onSlidingComplete={(value) => {
+            this.setState({ recorderInfoUpdateInterval: value });
+          }}
+        />
       </>
     );
   }
@@ -262,7 +264,7 @@ export default class MediaRecorder
     const { joinChannelSuccess, startRecoding } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`${startRecoding ? 'stop' : 'start'} Recording`}
           onPress={startRecoding ? this.stopRecording : this.startRecording}
@@ -271,11 +273,3 @@ export default class MediaRecorder
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

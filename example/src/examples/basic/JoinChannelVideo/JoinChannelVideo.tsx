@@ -4,7 +4,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  View,
 } from 'react-native';
 import {
   ChannelProfileType,
@@ -23,15 +22,20 @@ import {
   VideoViewSetupMode,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraStyle,
+  AgoraSwitch,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   switchCamera: boolean;
@@ -213,29 +217,29 @@ export default class JoinChannelVideo
         {startPreview || joinChannelSuccess ? (
           renderByTextureView ? (
             <RtcTextureView
-              style={STYLES.video}
+              style={AgoraStyle.videoLarge}
               canvas={{ uid: 0, setupMode }}
             />
           ) : (
             <RtcSurfaceView
-              style={STYLES.video}
+              style={AgoraStyle.videoLarge}
               canvas={{ uid: 0, setupMode }}
             />
           )
         ) : undefined}
         {remoteUsers !== undefined && remoteUsers.length > 0 ? (
-          <ScrollView horizontal={true} style={STYLES.videoContainer}>
+          <ScrollView horizontal={true} style={AgoraStyle.videoContainer}>
             {remoteUsers.map((value, index) =>
               renderByTextureView ? (
                 <RtcTextureView
                   key={`${value}-${index}`}
-                  style={STYLES.videoSmall}
+                  style={AgoraStyle.videoSmall}
                   canvas={{ uid: value, setupMode }}
                 />
               ) : (
                 <RtcSurfaceView
                   key={`${value}-${index}`}
-                  style={STYLES.videoSmall}
+                  style={AgoraStyle.videoSmall}
                   zOrderMediaOverlay={true}
                   canvas={{ uid: value, setupMode }}
                 />
@@ -252,45 +256,42 @@ export default class JoinChannelVideo
       this.state;
     return (
       <>
-        <ActionItem
+        <AgoraSwitch
           disabled={
             (!startPreview && !joinChannelSuccess) || Platform.OS !== 'android'
           }
           title={`renderByTextureView`}
-          isShowSwitch={true}
-          switchValue={renderByTextureView}
-          onSwitchValueChange={(value) => {
+          value={renderByTextureView}
+          onValueChange={(value) => {
             this.setState({ renderByTextureView: value });
           }}
         />
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'setupMode'}
-            type={VideoViewSetupMode}
-            selectedValue={setupMode}
-            onValueChange={(value: VideoViewSetupMode) => {
-              this.setState({ setupMode: value });
-            }}
-          />
-        </View>
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'setupMode'}
+          items={enumToItems(VideoViewSetupMode)}
+          value={setupMode}
+          onValueChange={(value) => {
+            this.setState({ setupMode: value });
+          }}
+        />
         {setupMode === VideoViewSetupMode.VideoViewSetupAdd ? (
           <>
-            <Divider />
+            <AgoraDivider />
             {renderByTextureView ? (
               <RtcTextureView
-                style={STYLES.videoSmall}
+                style={AgoraStyle.videoSmall}
                 canvas={{ uid: 0, setupMode }}
               />
             ) : (
               <RtcSurfaceView
-                style={STYLES.videoSmall}
+                style={AgoraStyle.videoSmall}
                 canvas={{ uid: 0, setupMode }}
               />
             )}
           </>
         ) : undefined}
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -299,7 +300,7 @@ export default class JoinChannelVideo
     const { startPreview, joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!startPreview && !joinChannelSuccess}
           title={`switchCamera`}
           onPress={this.switchCamera}

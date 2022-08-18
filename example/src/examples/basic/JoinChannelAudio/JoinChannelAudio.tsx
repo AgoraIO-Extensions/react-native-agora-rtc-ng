@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -21,14 +15,19 @@ import {
   UserOfflineReasonType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   enableLocalAudio: boolean;
@@ -317,51 +316,61 @@ export default class JoinChannelAudio
     } = this.state;
     return (
       <>
-        {this.renderSlider(
-          'recordingSignalVolume',
-          recordingSignalVolume,
-          0,
-          400
-        )}
-        <Button
+        <AgoraSlider
+          title={`recordingSignalVolume`}
+          minimumValue={0}
+          maximumValue={400}
+          step={1}
+          value={recordingSignalVolume}
+          onSlidingComplete={(value) => {
+            this.setState({ recordingSignalVolume: value });
+          }}
+        />
+        <AgoraButton
           title={'adjust Recording Signal Volume'}
           onPress={this.adjustRecordingSignalVolume}
         />
-        <Divider />
-        {this.renderSlider(
-          'playbackSignalVolume',
-          playbackSignalVolume,
-          0,
-          400
-        )}
-        <Button
+        <AgoraDivider />
+        <AgoraSlider
+          title={`playbackSignalVolume`}
+          minimumValue={0}
+          maximumValue={400}
+          step={1}
+          value={playbackSignalVolume}
+          onSlidingComplete={(value) => {
+            this.setState({ playbackSignalVolume: value });
+          }}
+        />
+        <AgoraButton
           title={'adjust Playback Signal Volume'}
           onPress={this.adjustPlaybackSignalVolume}
         />
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'includeAudioFilters'}
-            type={EarMonitoringFilterType}
-            selectedValue={includeAudioFilters}
-            onValueChange={(value: EarMonitoringFilterType) => {
-              this.setState({ includeAudioFilters: value });
-            }}
-          />
-        </View>
-        <Divider />
-        {this.renderSlider(
-          'inEarMonitoringVolume',
-          inEarMonitoringVolume,
-          0,
-          100
-        )}
-        <Button
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'includeAudioFilters'}
+          items={enumToItems(EarMonitoringFilterType)}
+          value={includeAudioFilters}
+          onValueChange={(value) => {
+            this.setState({ includeAudioFilters: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`inEarMonitoringVolume`}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          value={inEarMonitoringVolume}
+          onSlidingComplete={(value) => {
+            this.setState({ inEarMonitoringVolume: value });
+          }}
+        />
+        <AgoraButton
           disabled={!enableInEarMonitoring}
           title={`set In Ear Monitoring Volume`}
           onPress={this.setInEarMonitoringVolume}
         />
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -375,13 +384,13 @@ export default class JoinChannelAudio
     } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${enableLocalAudio ? 'disable' : 'enable'} Local Audio`}
           onPress={
             enableLocalAudio ? this.disableLocalAudio : this.enableLocalAudio
           }
         />
-        <ActionItem
+        <AgoraButton
           title={`${
             muteLocalAudioStream ? 'unmute' : 'mute'
           } Local Audio Stream`}
@@ -391,7 +400,7 @@ export default class JoinChannelAudio
               : this.muteLocalAudioStream
           }
         />
-        <ActionItem
+        <AgoraButton
           title={`${enableSpeakerphone ? 'disable' : 'enable'} Speakerphone`}
           onPress={
             enableSpeakerphone
@@ -399,7 +408,7 @@ export default class JoinChannelAudio
               : this.enableSpeakerphone
           }
         />
-        <ActionItem
+        <AgoraButton
           title={`${
             enableInEarMonitoring ? 'disable' : 'enable'
           } In Ear Monitoring`}
@@ -413,11 +422,3 @@ export default class JoinChannelAudio
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

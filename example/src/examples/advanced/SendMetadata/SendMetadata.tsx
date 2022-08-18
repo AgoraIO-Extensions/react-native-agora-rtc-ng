@@ -12,14 +12,13 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { Buffer } from 'buffer';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import { AgoraButton, AgoraTextInput } from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   metadataBuffer: string;
@@ -164,8 +163,7 @@ export default class SendMetadata
     const { metadataBuffer } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ metadataBuffer: text });
           }}
@@ -180,7 +178,7 @@ export default class SendMetadata
     const { joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`send Metadata`}
           onPress={this.sendMetaData}

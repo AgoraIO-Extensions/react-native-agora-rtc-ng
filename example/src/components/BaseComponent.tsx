@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, useEffect, useState } from 'react';
+import React, { Component, ReactNode, useState } from 'react';
 import {
   Alert,
   Button,
@@ -6,8 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  TextInputProps,
   View,
 } from 'react-native';
 import {
@@ -25,15 +23,10 @@ import {
   ExternalCachesDirectoryPath,
   MainBundlePath,
 } from 'react-native-fs';
-import * as RNEUI from '@rneui/base';
 import { StackScreenProps } from '@react-navigation/stack/src/types';
 
+import { AgoraDivider, AgoraStyle, AgoraTextInput } from './ui';
 import { LogSink } from './LogSink';
-import { ActionItem } from './ActionItem';
-
-export const Divider = () => {
-  return <RNEUI.Divider width={1} color={'grey'} />;
-};
 
 const Header = ({ getData }: { getData: () => Array<string> }) => {
   const [visible, setVisible] = useState(false);
@@ -51,23 +44,6 @@ const Header = ({ getData }: { getData: () => Array<string> }) => {
         onBackdropPress={toggleOverlay}
       />
     </>
-  );
-};
-
-export const Input = (props: TextInputProps) => {
-  const [value, setValue] = useState(props.value);
-
-  useEffect(() => {
-    setValue(props.value);
-  }, [props.value]);
-
-  return (
-    <TextInput
-      placeholderTextColor={'gray'}
-      {...props}
-      onChangeText={setValue}
-      value={value}
-    />
   );
 };
 
@@ -194,19 +170,19 @@ export abstract class BaseComponent<
     const bottom = this.renderBottom();
     return (
       <>
-        <View style={STYLES.top}>{this.renderTop()}</View>
+        <View style={AgoraStyle.fullWidth}>{this.renderTop()}</View>
         {enableVideo ? (
-          <View style={STYLES.video}>{this.renderVideo()}</View>
+          <View style={AgoraStyle.videoLarge}>{this.renderVideo()}</View>
         ) : undefined}
         {bottom ? (
           <>
-            <Divider />
-            <Text style={STYLES.title}>The Configuration of {route.name}</Text>
-            <Divider />
-            <ScrollView style={STYLES.bottom}>{bottom}</ScrollView>
+            <AgoraDivider />
+            <Text style={styles.title}>The Configuration of {route.name}</Text>
+            <AgoraDivider />
+            <ScrollView style={AgoraStyle.fullSize}>{bottom}</ScrollView>
           </>
         ) : undefined}
-        <View style={STYLES.float}>{this.renderFloat()}</View>
+        <View style={AgoraStyle.float}>{this.renderFloat()}</View>
       </>
     );
   }
@@ -215,8 +191,7 @@ export abstract class BaseComponent<
     const { channelId, joinChannelSuccess } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ channelId: text });
           }}
@@ -238,14 +213,14 @@ export abstract class BaseComponent<
     return (
       <>
         {startPreview || joinChannelSuccess ? (
-          <RtcSurfaceView style={STYLES.video} canvas={{ uid: 0 }} />
+          <RtcSurfaceView style={AgoraStyle.videoLarge} canvas={{ uid: 0 }} />
         ) : undefined}
         {remoteUsers !== undefined && remoteUsers.length > 0 ? (
-          <ScrollView horizontal={true} style={STYLES.videoContainer}>
+          <ScrollView horizontal={true} style={AgoraStyle.videoContainer}>
             {remoteUsers.map((value, index) => (
               <RtcSurfaceView
                 key={`${value}-${index}`}
-                style={STYLES.videoSmall}
+                style={AgoraStyle.videoSmall}
                 zOrderMediaOverlay={true}
                 canvas={{ uid: value }}
               />
@@ -262,30 +237,6 @@ export abstract class BaseComponent<
 
   protected renderFloat(): ReactNode {
     return undefined;
-  }
-
-  protected renderSlider(
-    key: string,
-    value: number,
-    min: number,
-    max: number,
-    useFloat: boolean = true
-  ): ReactNode {
-    return (
-      <ActionItem
-        title={`${key} ${value}`}
-        isShowSlider={true}
-        sliderValue={max - min !== 0 ? (value - min) / (max - min) : 0}
-        onSliderValueChange={(v) => {
-          // @ts-ignore
-          this.setState({
-            [key]: useFloat
-              ? Number.parseFloat(((max - min) * v + min).toFixed(2))
-              : +((max - min) * v + min).toFixed(0),
-          });
-        }}
-      />
-    );
   }
 
   private _logSink(
@@ -342,39 +293,9 @@ export abstract class BaseComponent<
   }
 }
 
-export const STYLES = StyleSheet.create({
-  top: {
-    width: '100%',
-  },
-  input: {
-    height: 50,
-    borderBottomColor: 'gray',
-    borderBottomWidth: 1,
-    color: 'black',
-  },
-  video: {
-    flex: 1,
-  },
-  videoContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  videoSmall: {
-    width: 120,
-    height: 120,
-  },
-  bottom: {
-    flex: 1,
-  },
+const styles = StyleSheet.create({
   title: {
     marginVertical: 10,
     fontWeight: 'bold',
-  },
-  float: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    alignItems: 'flex-end',
   },
 });

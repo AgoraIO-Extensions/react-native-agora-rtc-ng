@@ -7,14 +7,13 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import { AgoraButton, AgoraTextInput } from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   path: string;
@@ -201,8 +200,7 @@ export default class Extension
     return (
       <>
         {Platform.OS === 'android' ? (
-          <Input
-            style={STYLES.input}
+          <AgoraTextInput
             onEndEditing={({ nativeEvent: { text } }) => {
               this.setState({
                 path: text,
@@ -212,8 +210,7 @@ export default class Extension
             value={path}
           />
         ) : undefined}
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               provider: text,
@@ -222,8 +219,7 @@ export default class Extension
           placeholder={'provider'}
           value={provider}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               extension: text,
@@ -240,7 +236,7 @@ export default class Extension
     const { joinChannelSuccess, enableExtension } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={joinChannelSuccess}
           title={`${enableExtension ? 'disable' : 'enable'} Extension`}
           onPress={

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -8,14 +8,19 @@ import {
   LighteningContrastLevel,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   lighteningContrastLevel: LighteningContrastLevel;
@@ -173,61 +178,67 @@ export default class BeautyEffect
     } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'lighteningContrastLevel'}
-            type={LighteningContrastLevel}
-            selectedValue={lighteningContrastLevel}
-            onValueChange={(value) => {
-              this.setState({ lighteningContrastLevel: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <ActionItem
+        <AgoraDropdown
+          title={'lighteningContrastLevel'}
+          items={enumToItems(LighteningContrastLevel)}
+          value={lighteningContrastLevel}
+          onValueChange={(value) => {
+            this.setState({ lighteningContrastLevel: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
           title={`lighteningLevel ${lighteningLevel}`}
-          isShowSlider={true}
-          sliderValue={lighteningLevel}
-          onSliderValueChange={(value) => {
+          minimumValue={0}
+          maximumValue={1}
+          step={0.1}
+          value={lighteningLevel}
+          onSlidingComplete={(value) => {
             this.setState({
               lighteningLevel: value,
             });
           }}
         />
-        <Divider />
-        <ActionItem
+        <AgoraDivider />
+        <AgoraSlider
           title={`smoothnessLevel ${smoothnessLevel}`}
-          isShowSlider={true}
-          sliderValue={smoothnessLevel}
-          onSliderValueChange={(value) => {
+          minimumValue={0}
+          maximumValue={1}
+          step={0.1}
+          value={smoothnessLevel}
+          onSlidingComplete={(value) => {
             this.setState({
               smoothnessLevel: value,
             });
           }}
         />
-        <Divider />
-        <ActionItem
+        <AgoraDivider />
+        <AgoraSlider
           title={`rednessLevel ${rednessLevel}`}
-          isShowSlider={true}
-          sliderValue={rednessLevel}
-          onSliderValueChange={(value) => {
+          minimumValue={0}
+          maximumValue={1}
+          step={0.1}
+          value={rednessLevel}
+          onSlidingComplete={(value) => {
             this.setState({
               rednessLevel: value,
             });
           }}
         />
-        <Divider />
-        <ActionItem
+        <AgoraDivider />
+        <AgoraSlider
           title={`sharpnessLevel ${sharpnessLevel}`}
-          isShowSlider={true}
-          sliderValue={sharpnessLevel}
-          onSliderValueChange={(value) => {
+          minimumValue={0}
+          maximumValue={1}
+          step={0.1}
+          value={sharpnessLevel}
+          onSlidingComplete={(value) => {
             this.setState({
               sharpnessLevel: value,
             });
           }}
         />
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -236,7 +247,7 @@ export default class BeautyEffect
     const { startPreview, joinChannelSuccess, enableBeautyEffect } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!(startPreview || joinChannelSuccess)}
           title={`${enableBeautyEffect ? 'disable' : 'enable'} Beauty Effect`}
           onPress={
@@ -249,11 +260,3 @@ export default class BeautyEffect
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

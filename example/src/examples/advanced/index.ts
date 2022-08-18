@@ -81,7 +81,7 @@ const Advanced = {
       component: PlayEffect,
     },
     {
-      name: 'PushEncodedVideoImage',
+      name: 'EncodedVideoFrame',
       component: EncodedVideoFrame,
     },
     {

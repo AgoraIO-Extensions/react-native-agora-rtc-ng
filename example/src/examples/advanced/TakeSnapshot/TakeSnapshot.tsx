@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -16,14 +10,19 @@ import {
 } from 'react-native-agora-rtc-ng';
 import RNFS from 'react-native-fs';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraImage,
+} from '../../../components/ui';
+import { arrayToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   targetUid: number;
@@ -171,25 +170,18 @@ export default class TakeSnapshot
     const { remoteUsers, targetUid, filePath, takeSnapshot } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'targetUid'}
-            type={[
-              '0',
-              0,
-              ...remoteUsers.map((value) => value.toString()),
-              ...remoteUsers,
-            ]}
-            selectedValue={targetUid}
-            onValueChange={(value) => {
-              this.setState({ targetUid: value });
-            }}
-          />
-        </View>
+        <AgoraDropdown
+          title={'targetUid'}
+          items={arrayToItems([0, ...remoteUsers])}
+          value={targetUid}
+          onValueChange={(value) => {
+            this.setState({ targetUid: value });
+          }}
+        />
         {takeSnapshot ? (
           <>
-            <Divider />
-            <Image
+            <AgoraDivider />
+            <AgoraImage
               style={styles.image}
               source={{
                 uri: `${
@@ -199,7 +191,7 @@ export default class TakeSnapshot
             />
           </>
         ) : undefined}
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -208,7 +200,7 @@ export default class TakeSnapshot
     const { joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`take Snapshot`}
           onPress={this.takeSnapshot}
@@ -219,11 +211,6 @@ export default class TakeSnapshot
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   image: {
     width: 120,
     height: 120,

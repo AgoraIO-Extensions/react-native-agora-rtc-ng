@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   AudioScenarioType,
   ChannelProfileType,
@@ -8,14 +8,20 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraSlider,
+  AgoraSwitch,
+} from '../../../components/ui';
+import { arrayToItems } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   targetUid: number;
@@ -183,50 +189,79 @@ export default class SpatialAudio
     } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'targetUid'}
-            type={[
-              ...remoteUsers.map((value) => value.toString()),
-              ...remoteUsers,
-            ]}
-            selectedValue={targetUid}
-            onValueChange={(value) => {
-              this.setState({ targetUid: value });
-            }}
-          />
-        </View>
-        <Divider />
-        {this.renderSlider('speaker_azimuth', speaker_azimuth, 0, 360)}
-        <Divider />
-        {this.renderSlider('speaker_elevation', speaker_elevation, -90, 90)}
-        <Divider />
-        {this.renderSlider('speaker_distance', speaker_distance, 1, 50)}
-        <Divider />
-        {this.renderSlider('speaker_orientation', speaker_orientation, 0, 180)}
-        <Divider />
-        <ActionItem
+        <AgoraDropdown
+          title={'targetUid'}
+          items={arrayToItems(remoteUsers)}
+          value={targetUid}
+          onValueChange={(value) => {
+            this.setState({ targetUid: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`speaker_azimuth`}
+          minimumValue={0}
+          maximumValue={360}
+          step={1}
+          value={speaker_azimuth}
+          onSlidingComplete={(value) => {
+            this.setState({ speaker_azimuth: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`speaker_elevation`}
+          minimumValue={-90}
+          maximumValue={90}
+          step={1}
+          value={speaker_elevation}
+          onSlidingComplete={(value) => {
+            this.setState({ speaker_elevation: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`speaker_distance`}
+          minimumValue={1}
+          maximumValue={50}
+          step={1}
+          value={speaker_distance}
+          onSlidingComplete={(value) => {
+            this.setState({ speaker_distance: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`speaker_orientation`}
+          minimumValue={0}
+          maximumValue={180}
+          step={1}
+          value={speaker_orientation}
+          onSlidingComplete={(value) => {
+            this.setState({ speaker_orientation: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSwitch
           title={`enable_blur`}
-          isShowSwitch={true}
-          switchValue={enable_blur}
-          onSwitchValueChange={(value) => {
+          value={enable_blur}
+          onValueChange={(value) => {
             this.setState({
               enable_blur: value,
             });
           }}
         />
-        <Divider />
-        <ActionItem
+        <AgoraDivider />
+        <AgoraSwitch
           title={`enable_air_absorb`}
-          isShowSwitch={true}
-          switchValue={enable_air_absorb}
-          onSwitchValueChange={(value) => {
+          value={enable_air_absorb}
+          onValueChange={(value) => {
             this.setState({
               enable_air_absorb: value,
             });
           }}
         />
-        <Divider />
+        <AgoraDivider />
       </>
     );
   }
@@ -235,7 +270,7 @@ export default class SpatialAudio
     const { joinChannelSuccess, enableSpatialAudio } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`${enableSpatialAudio ? 'disable' : 'enable'} Spatial Audio`}
           onPress={
@@ -244,7 +279,7 @@ export default class SpatialAudio
               : this.enableSpatialAudio
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!enableSpatialAudio}
           title={`set Remote User Spatial Audio Params`}
           onPress={this.setRemoteUserSpatialAudioParams}
@@ -253,11 +288,3 @@ export default class SpatialAudio
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

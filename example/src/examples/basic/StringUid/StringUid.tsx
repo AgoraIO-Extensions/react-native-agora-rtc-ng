@@ -11,14 +11,13 @@ import {
   UserOfflineReasonType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import { AgoraButton, AgoraTextInput } from '../../../components/ui';
 
 interface State extends BaseAudioComponentState {
   userAccount: string;
@@ -154,9 +153,8 @@ export default class StringUid
     const { userAccount, joinChannelSuccess } = this.state;
     return (
       <>
-        <Input
+        <AgoraTextInput
           editable={!joinChannelSuccess}
-          style={STYLES.input}
           onEndEditing={({ nativeEvent: { text } }) =>
             this.setState({ userAccount: text })
           }
@@ -171,7 +169,7 @@ export default class StringUid
     const { joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`get User Info By User Account`}
           onPress={this.getUserInfoByUserAccount}

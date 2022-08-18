@@ -11,15 +11,18 @@ import {
   RtcStats,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
-import Config from '../../../config/agora.config.json';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraSlider,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseAudioComponentState {
   sound1: string;
@@ -200,26 +203,42 @@ export default class RhythmPlayer
     const { sound1, sound2, beatsPerMeasure, beatsPerMinute } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ sound1: text });
           }}
           placeholder={'sound1'}
           value={sound1}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ sound2: text });
           }}
           placeholder={'sound2'}
           value={sound2}
         />
-        {this.renderSlider('beatsPerMeasure', beatsPerMeasure, 1, 9, false)}
-        <Divider />
-        {this.renderSlider('beatsPerMinute', beatsPerMinute, 60, 360)}
-        <Divider />
+        <AgoraSlider
+          title={`beatsPerMeasure`}
+          minimumValue={1}
+          maximumValue={9}
+          step={1}
+          value={beatsPerMeasure}
+          onSlidingComplete={(value) => {
+            this.setState({ beatsPerMeasure: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraSlider
+          title={`beatsPerMinute`}
+          minimumValue={60}
+          maximumValue={360}
+          step={1}
+          value={beatsPerMinute}
+          onSlidingComplete={(value) => {
+            this.setState({ beatsPerMinute: value });
+          }}
+        />
+        <AgoraDivider />
       </>
     );
   }
@@ -228,13 +247,13 @@ export default class RhythmPlayer
     const { startRhythmPlayer } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${startRhythmPlayer ? 'stop' : 'start'} Rhythm Player`}
           onPress={
             startRhythmPlayer ? this.stopRhythmPlayer : this.startRhythmPlayer
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startRhythmPlayer}
           title={`config Rhythm Player`}
           onPress={this.configRhythmPlayer}

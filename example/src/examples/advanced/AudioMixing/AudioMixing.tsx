@@ -9,15 +9,18 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
-import { ActionItem } from '../../../components/ActionItem';
-import {
-  BaseComponent,
-  BaseAudioComponentState,
-  Divider,
-  STYLES,
-  Input,
-} from '../../../components/BaseComponent';
 import Config from '../../../config/agora.config.json';
+
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraSwitch,
+  AgoraTextInput,
+} from '../../../components/ui';
+import {
+  BaseAudioComponentState,
+  BaseComponent,
+} from '../../../components/BaseComponent';
 
 interface State extends BaseAudioComponentState {
   filePath: string;
@@ -202,25 +205,22 @@ export default class AudioMixing
     const { filePath, loopback, cycle, startPos } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
           value={filePath}
         />
-        <ActionItem
+        <AgoraSwitch
           title={'loopback'}
-          isShowSwitch={true}
-          switchValue={loopback}
-          onSwitchValueChange={(value) => {
+          value={loopback}
+          onValueChange={(value) => {
             this.setState({ loopback: value });
           }}
         />
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ cycle: +text });
@@ -231,8 +231,7 @@ export default class AudioMixing
           placeholder={`cycle (defaults: ${this.createState().cycle})`}
           value={cycle === this.createState().cycle ? '' : cycle.toString()}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             console.log('onEndEditing', text);
             if (isNaN(+text)) return;
@@ -254,20 +253,20 @@ export default class AudioMixing
     const { startAudioMixing, pauseAudioMixing } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${startAudioMixing ? 'stop' : 'start'} Audio Mixing`}
           onPress={
             startAudioMixing ? this.stopAudioMixing : this.startAudioMixing
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startAudioMixing}
           title={`${pauseAudioMixing ? 'resume' : 'pause'} Audio Mixing`}
           onPress={
             pauseAudioMixing ? this.resumeAudioMixing : this.pauseAudioMixing
           }
         />
-        <ActionItem
+        <AgoraButton
           disabled={!startAudioMixing}
           title={`get Audio Mixing Current Position`}
           onPress={this.getAudioMixingCurrentPosition}

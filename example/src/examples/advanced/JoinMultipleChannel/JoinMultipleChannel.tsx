@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   PermissionsAndroid,
   Platform,
   ScrollView,
@@ -20,14 +19,17 @@ import {
   UserOfflineReasonType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
-import Config from '../../../config/agora.config.json';
+import {
+  AgoraButton,
+  AgoraStyle,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   channelId2: string;
@@ -354,16 +356,14 @@ export default class JoinMultipleChannel
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ channelId: text });
           }}
           placeholder={`channelId`}
           value={channelId}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid: +text });
@@ -374,22 +374,20 @@ export default class JoinMultipleChannel
           placeholder={`uid (must > 0)`}
           value={uid > 0 ? uid.toString() : ''}
         />
-        <Button
+        <AgoraButton
           title={`${joinChannelSuccess ? 'leave' : 'join'} Channel`}
           onPress={() => {
             joinChannelSuccess ? this.leaveChannel() : this.joinChannel();
           }}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ channelId2: text });
           }}
           placeholder={`channelId2`}
           value={channelId2}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
@@ -400,7 +398,7 @@ export default class JoinMultipleChannel
           placeholder={`uid2 (must > 0)`}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
-        <Button
+        <AgoraButton
           title={`${joinChannelSuccess2 ? 'leave' : 'join'} Channel2`}
           onPress={() => {
             joinChannelSuccess2 ? this.leaveChannel2() : this.joinChannel2();
@@ -425,14 +423,14 @@ export default class JoinMultipleChannel
     return (
       <>
         {startPreview || joinChannelSuccess || joinChannelSuccess2 ? (
-          <RtcSurfaceView style={STYLES.video} canvas={{ uid: 0 }} />
+          <RtcSurfaceView style={AgoraStyle.videoLarge} canvas={{ uid: 0 }} />
         ) : undefined}
         {remoteUsers.length > 0 ? (
-          <ScrollView horizontal={true} style={STYLES.videoContainer}>
+          <ScrollView horizontal={true} style={AgoraStyle.videoContainer}>
             {remoteUsers.map((value, index) => (
               <RtcSurfaceView
                 key={`${value}-${index}`}
-                style={STYLES.videoSmall}
+                style={AgoraStyle.videoSmall}
                 canvas={{ uid: value }}
                 zOrderMediaOverlay={true}
                 connection={{ channelId, localUid: uid }}
@@ -445,7 +443,7 @@ export default class JoinMultipleChannel
             {remoteUsers2.map((value, index) => (
               <RtcSurfaceView
                 key={`${value}-${index}`}
-                style={STYLES.videoSmall}
+                style={AgoraStyle.videoSmall}
                 canvas={{ uid: value }}
                 connection={{ channelId: channelId2, localUid: uid2 }}
               />
@@ -460,12 +458,12 @@ export default class JoinMultipleChannel
     const { joinChannelSuccess, joinChannelSuccess2 } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`publish Stream To Channel`}
           onPress={this.publishStreamToChannel}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess2}
           title={`publish Stream To Channel2`}
           onPress={this.publishStreamToChannel2}

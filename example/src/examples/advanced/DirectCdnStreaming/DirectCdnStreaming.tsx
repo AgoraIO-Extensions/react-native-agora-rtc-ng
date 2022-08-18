@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -17,16 +17,21 @@ import {
   VideoMirrorModeType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraStyle,
+  AgoraTextInput,
+  AgoraView,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   url: string;
@@ -250,28 +255,25 @@ export default class DirectCdnStreaming
     } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
           value={url}
         />
-        <View style={styles.container}>
-          <PickerView
-            title={'codecType'}
-            type={VideoCodecType}
-            selectedValue={codecType}
-            onValueChange={(value) => {
-              this.setState({ codecType: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <View style={styles.container}>
-          <Input
-            style={STYLES.input}
+        <AgoraDropdown
+          title={'codecType'}
+          items={enumToItems(VideoCodecType)}
+          value={codecType}
+          onValueChange={(value) => {
+            this.setState({ codecType: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraView style={styles.container}>
+          <AgoraTextInput
+            style={AgoraStyle.fullSize}
             onEndEditing={({ nativeEvent: { text } }) => {
               if (isNaN(+text)) return;
               this.setState({ width: +text });
@@ -282,8 +284,8 @@ export default class DirectCdnStreaming
             placeholder={`width (defaults: ${this.createState().width})`}
             value={width === this.createState().width ? '' : width.toString()}
           />
-          <Input
-            style={STYLES.input}
+          <AgoraTextInput
+            style={AgoraStyle.fullSize}
             onEndEditing={({ nativeEvent: { text } }) => {
               if (isNaN(+text)) return;
               this.setState({ height: +text });
@@ -296,9 +298,8 @@ export default class DirectCdnStreaming
               height === this.createState().height ? '' : height.toString()
             }
           />
-        </View>
-        <Input
-          style={STYLES.input}
+        </AgoraView>
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ frameRate: +text });
@@ -313,8 +314,7 @@ export default class DirectCdnStreaming
               : frameRate.toString()
           }
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ bitrate: +text });
@@ -327,8 +327,7 @@ export default class DirectCdnStreaming
             bitrate === this.createState().bitrate ? '' : bitrate.toString()
           }
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ minBitrate: +text });
@@ -345,40 +344,34 @@ export default class DirectCdnStreaming
               : minBitrate.toString()
           }
         />
-        <View style={styles.container}>
-          <PickerView
-            title={'orientationMode'}
-            type={OrientationMode}
-            selectedValue={orientationMode}
-            onValueChange={(value) => {
-              this.setState({ orientationMode: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'degradationPreference'}
-            type={DegradationPreference}
-            selectedValue={degradationPreference}
-            onValueChange={(value) => {
-              this.setState({ degradationPreference: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <View style={styles.container}>
-          <PickerView
-            title={'mirrorMode'}
-            type={VideoMirrorModeType}
-            selectedValue={mirrorMode}
-            onValueChange={(value) => {
-              this.setState({ mirrorMode: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <ActionItem
+        <AgoraDropdown
+          title={'orientationMode'}
+          items={enumToItems(OrientationMode)}
+          value={orientationMode}
+          onValueChange={(value) => {
+            this.setState({ orientationMode: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'degradationPreference'}
+          items={enumToItems(DegradationPreference)}
+          value={degradationPreference}
+          onValueChange={(value) => {
+            this.setState({ degradationPreference: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraDropdown
+          title={'mirrorMode'}
+          items={enumToItems(VideoMirrorModeType)}
+          value={mirrorMode}
+          onValueChange={(value) => {
+            this.setState({ mirrorMode: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraButton
           disabled={startDirectCdnStreaming}
           title={`set Direct Cdn Streaming Video Configuration`}
           onPress={this.setDirectCdnStreamingVideoConfiguration}
@@ -391,7 +384,7 @@ export default class DirectCdnStreaming
     const { startDirectCdnStreaming } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${
             startDirectCdnStreaming ? 'stop' : 'start'
           } Direct Cdn Streaming`}

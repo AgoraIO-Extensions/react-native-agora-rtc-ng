@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform, Text } from 'react-native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -9,15 +9,19 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { Buffer } from 'buffer';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseAudioComponentState,
   BaseComponent,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraSwitch,
+  AgoraText,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseAudioComponentState {
   syncWithAudio: boolean;
@@ -208,30 +212,27 @@ export default class StreamMessage
     const { syncWithAudio, ordered, streamId, data } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraSwitch
           disabled={streamId !== undefined}
           title={`syncWithAudio`}
-          isShowSwitch={true}
-          switchValue={syncWithAudio}
-          onSwitchValueChange={(value) => {
+          value={syncWithAudio}
+          onValueChange={(value) => {
             this.setState({ syncWithAudio: value });
           }}
         />
-        <Divider />
-        <ActionItem
+        <AgoraDivider />
+        <AgoraSwitch
           disabled={streamId !== undefined}
           title={`ordered`}
-          isShowSwitch={true}
-          switchValue={ordered}
-          onSwitchValueChange={(value) => {
+          value={ordered}
+          onValueChange={(value) => {
             this.setState({ ordered: value });
           }}
         />
-        <Divider />
-        <Text>{`streamId: ${streamId}`}</Text>
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDivider />
+        <AgoraText>{`streamId: ${streamId}`}</AgoraText>
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ data: text });
           }}
@@ -246,12 +247,12 @@ export default class StreamMessage
     const { joinChannelSuccess, streamId } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`create Data Stream`}
           onPress={this.createDataStream}
         />
-        <ActionItem
+        <AgoraButton
           disabled={streamId === undefined}
           title={`send Stream Message`}
           onPress={this.sendStreamMessage}

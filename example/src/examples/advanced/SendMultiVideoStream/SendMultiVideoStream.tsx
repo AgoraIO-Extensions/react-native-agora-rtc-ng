@@ -16,14 +16,17 @@ import {
   VideoSourceType,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraStyle,
+  AgoraTextInput,
+} from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   token2: string;
@@ -256,8 +259,7 @@ export default class SendMultiVideoStream
     const { uid2, url } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
@@ -268,8 +270,7 @@ export default class SendMultiVideoStream
           placeholder={`uid2 (must > 0)`}
           value={uid2 > 0 ? uid2.toString() : ''}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ url: text });
           }}
@@ -287,7 +288,7 @@ export default class SendMultiVideoStream
         {super.renderVideo()}
         {open ? (
           <RtcSurfaceView
-            style={STYLES.video}
+            style={AgoraStyle.videoLarge}
             canvas={{
               uid: this.player?.getMediaPlayerId(),
               sourceType: VideoSourceType.VideoSourceMediaPlayer,
@@ -302,11 +303,11 @@ export default class SendMultiVideoStream
     const { open } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           title={`${open ? 'destroy' : 'create'} Media Player`}
           onPress={open ? this.destroyMediaPlayer : this.createMediaPlayer}
         />
-        <ActionItem
+        <AgoraButton
           disabled={!open}
           title={`publish Media Player Track`}
           onPress={this.publishMediaPlayerTrack}

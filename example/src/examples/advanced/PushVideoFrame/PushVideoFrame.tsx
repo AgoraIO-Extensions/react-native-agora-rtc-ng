@@ -13,14 +13,13 @@ import {
 // @ts-ignore
 import ImageTools from 'react-native-image-tool';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { ActionItem } from '../../../components/ActionItem';
+import { AgoraButton, AgoraTextInput } from '../../../components/ui';
 
 interface State extends BaseVideoComponentState {
   filePath: string;
@@ -160,8 +159,7 @@ export default class PushVideoFrame
     const { filePath } = this.state;
     return (
       <>
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ filePath: text });
           }}
@@ -176,7 +174,7 @@ export default class PushVideoFrame
     const { joinChannelSuccess } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!joinChannelSuccess}
           title={`push Video Frame`}
           onPress={this.pushVideoFrame}

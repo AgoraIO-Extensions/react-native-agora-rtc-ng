@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -17,16 +10,21 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import { ActionItem } from '../../../components/ActionItem';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraText,
+  AgoraTextInput,
+  AgoraView,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   modules: ContentInspectModule[];
@@ -168,16 +166,16 @@ export default class ContentInspect
     const { modules, type, interval } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
+        <AgoraView style={styles.container}>
+          <AgoraDropdown
             title={'type'}
-            type={ContentInspectType}
-            selectedValue={type}
+            items={enumToItems(ContentInspectType)}
+            value={type}
             onValueChange={(value) => {
               this.setState({ type: value });
             }}
           />
-          <Button
+          <AgoraButton
             title={'Add'}
             onPress={() => {
               if (interval <= 0) {
@@ -189,7 +187,7 @@ export default class ContentInspect
               });
             }}
           />
-          <Button
+          <AgoraButton
             title={'Remove'}
             onPress={() => {
               modules.pop();
@@ -198,12 +196,11 @@ export default class ContentInspect
               });
             }}
           />
-        </View>
-        <Divider />
-        <Text>{`moduleCount: ${modules.length}`}</Text>
-        <Divider />
-        <Input
-          style={STYLES.input}
+        </AgoraView>
+        <AgoraDivider />
+        <AgoraText>{`moduleCount: ${modules.length}`}</AgoraText>
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             if (isNaN(+text)) return;
             this.setState({ interval: +text });
@@ -225,7 +222,7 @@ export default class ContentInspect
       this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={!(startPreview || joinChannelSuccess)}
           onPress={
             enableContentInspect

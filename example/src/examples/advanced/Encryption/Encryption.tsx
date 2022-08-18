@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -16,16 +10,20 @@ import {
   RtcConnection,
 } from 'react-native-agora-rtc-ng';
 
+import Config from '../../../config/agora.config.json';
+
 import {
   BaseComponent,
   BaseVideoComponentState,
-  Divider,
-  STYLES,
-  Input,
 } from '../../../components/BaseComponent';
-import Config from '../../../config/agora.config.json';
-import { PickerView } from '../../../components/PickerView';
-import { ActionItem } from '../../../components/ActionItem';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraDropdown,
+  AgoraText,
+  AgoraTextInput,
+} from '../../../components/ui';
+import { enumToItems } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   encryptionMode: EncryptionMode;
@@ -165,27 +163,23 @@ export default class Encryption
     const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
     return (
       <>
-        <View style={styles.container}>
-          <PickerView
-            title={'encryptionMode'}
-            type={EncryptionMode}
-            selectedValue={encryptionMode}
-            onValueChange={(value) => {
-              this.setState({ encryptionMode: value });
-            }}
-          />
-        </View>
-        <Divider />
-        <Input
-          style={STYLES.input}
+        <AgoraDropdown
+          title={'encryptionMode'}
+          items={enumToItems(EncryptionMode)}
+          value={encryptionMode}
+          onValueChange={(value) => {
+            this.setState({ encryptionMode: value });
+          }}
+        />
+        <AgoraDivider />
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({ encryptionKey: text });
           }}
           placeholder={'encryptionKey'}
           value={encryptionKey}
         />
-        <Input
-          style={STYLES.input}
+        <AgoraTextInput
           onEndEditing={({ nativeEvent: { text } }) => {
             this.setState({
               encryptionKdfSalt: text.split(' ').map((value) => +value),
@@ -197,8 +191,8 @@ export default class Encryption
           placeholder={'encryptionKdfSalt (split by blank)'}
           value={encryptionKdfSalt.join(' ')}
         />
-        <Text>{`encryptionKdfSaltLength: ${encryptionKdfSalt.length}`}</Text>
-        <Divider />
+        <AgoraText>{`encryptionKdfSaltLength: ${encryptionKdfSalt.length}`}</AgoraText>
+        <AgoraDivider />
       </>
     );
   }
@@ -207,7 +201,7 @@ export default class Encryption
     const { joinChannelSuccess, enableEncryption } = this.state;
     return (
       <>
-        <ActionItem
+        <AgoraButton
           disabled={joinChannelSuccess}
           title={`${enableEncryption ? 'disable' : 'enable'} Encryption`}
           onPress={
@@ -218,11 +212,3 @@ export default class Encryption
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
