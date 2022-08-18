@@ -2,6 +2,7 @@ import React, { Component, ReactNode, useState } from 'react';
 import {
   Alert,
   Button,
+  KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
@@ -169,7 +170,10 @@ export abstract class BaseComponent<
     const { enableVideo } = this.state;
     const bottom = this.renderBottom();
     return (
-      <>
+      <KeyboardAvoidingView
+        style={AgoraStyle.fullSize}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
         <View style={AgoraStyle.fullWidth}>{this.renderTop()}</View>
         {enableVideo ? (
           <View style={AgoraStyle.videoLarge}>{this.renderVideo()}</View>
@@ -183,7 +187,7 @@ export abstract class BaseComponent<
           </>
         ) : undefined}
         <View style={AgoraStyle.float}>{this.renderFloat()}</View>
-      </>
+      </KeyboardAvoidingView>
     );
   }
 
