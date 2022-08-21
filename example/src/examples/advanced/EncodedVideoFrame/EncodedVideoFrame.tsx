@@ -15,7 +15,7 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { Buffer } from 'buffer';
 
-import Config from '../../../config/agora.config.json';
+import Config from '../../../config/agora.config';
 
 import {
   BaseComponent,

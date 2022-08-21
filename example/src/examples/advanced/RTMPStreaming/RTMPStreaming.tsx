@@ -17,7 +17,7 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { ColorPicker, fromHsv } from 'react-native-color-picker';
 
-import Config from '../../../config/agora.config.json';
+import Config from '../../../config/agora.config';
 
 import {
   BaseComponent,

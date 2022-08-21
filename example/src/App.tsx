@@ -30,7 +30,7 @@ import {
 
 import Basic from './examples/basic';
 import Advanced from './examples/advanced';
-import Config from './config/agora.config.json';
+import Config from './config/agora.config';
 
 const Stack = createStackNavigator();
 

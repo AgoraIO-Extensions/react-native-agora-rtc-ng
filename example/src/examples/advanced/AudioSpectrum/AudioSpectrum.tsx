@@ -11,7 +11,7 @@ import {
 } from 'react-native-agora-rtc-ng';
 import { LineChart } from 'react-native-chart-kit';
 
-import Config from '../../../config/agora.config.json';
+import Config from '../../../config/agora.config';
 
 import {
   BaseAudioComponentState,

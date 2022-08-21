@@ -10,7 +10,7 @@ import {
   IRtcEngineEventHandler,
 } from 'react-native-agora-rtc-ng';
 
-import Config from '../../../config/agora.config.json';
+import Config from '../../../config/agora.config';
 
 import {
   BaseComponent,

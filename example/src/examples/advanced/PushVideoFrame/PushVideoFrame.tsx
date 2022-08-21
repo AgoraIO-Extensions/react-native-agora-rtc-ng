@@ -13,7 +13,7 @@ import {
 // @ts-ignore
 import ImageTools from 'react-native-image-tool';
 
-import Config from '../../../config/agora.config.json';
+import Config from '../../../config/agora.config';
 
 import {
   BaseComponent,
