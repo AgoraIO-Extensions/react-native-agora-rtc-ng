@@ -6,6 +6,8 @@ export const showRPSystemBroadcastPickerView: Function =
 
 import { IRtcEngine } from './IAgoraRtcEngine';
 import { RtcEngineInternal } from './internal/RtcEngineInternal';
+import { IMediaPlayerCacheManager } from './IAgoraMediaPlayer';
+import { IMediaPlayerCacheManagerImpl } from './impl/IAgoraMediaPlayerImpl';
 
 export * from './AgoraBase';
 export * from './AgoraMediaBase';
@@ -21,6 +23,14 @@ export * from './IAgoraRtcEngineEx';
 export * from './IAgoraSpatialAudio';
 export * from './IAudioDeviceManager';
 export * from './AgoraRtcRenderView';
+/**
+ * @internal
+ */
+export {
+  isDebuggable,
+  setDebuggable,
+  callIrisApi,
+} from './internal/IrisApiEngine';
 
 const instance = new RtcEngineInternal();
 
@@ -33,4 +43,8 @@ const instance = new RtcEngineInternal();
  */
 export function createAgoraRtcEngine(): IRtcEngine {
   return instance;
+}
+
+export function getMediaPlayerCacheManager(): IMediaPlayerCacheManager {
+  return new IMediaPlayerCacheManagerImpl();
 }

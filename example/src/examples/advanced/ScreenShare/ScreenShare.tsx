@@ -6,17 +6,17 @@ import {
   createAgoraRtcEngine,
   IRtcEngineEventHandler,
   IRtcEngineEx,
+  LocalAudioStreamError,
+  LocalAudioStreamState,
   LocalVideoStreamError,
   LocalVideoStreamState,
   RtcConnection,
+  RtcStats,
   RtcSurfaceView,
+  showRPSystemBroadcastPickerView,
   UserOfflineReasonType,
   VideoContentHint,
   VideoSourceType,
-  showRPSystemBroadcastPickerView,
-  RtcStats,
-  LocalAudioStreamState,
-  LocalAudioStreamError,
 } from 'react-native-agora-rtc-ng';
 
 import Config from '../../../config/agora.config.json';
@@ -147,7 +147,6 @@ export default class ScreenShare
     // 2. If app certificate is turned on at dashboard, token is needed
     // when joining channel. The channel name and uid used to calculate
     // the token has to match the ones used for channel join
-    // this.engine?.joinChannel(token, channelId, '', uid);
     this.engine?.joinChannelWithOptions(token, channelId, uid, {
       // Make myself as the broadcaster to send stream to remote
       clientRoleType: ClientRoleType.ClientRoleBroadcaster,
@@ -252,6 +251,13 @@ export default class ScreenShare
   onJoinChannelSuccess(connection: RtcConnection, elapsed: number) {
     const { uid2 } = this.state;
     if (connection.localUid === uid2) {
+      this.info(
+        'onJoinChannelSuccess',
+        'connection',
+        connection,
+        'elapsed',
+        elapsed
+      );
       this.setState({ publishScreenCapture: true });
       return;
     }
@@ -261,14 +267,11 @@ export default class ScreenShare
   onLeaveChannel(connection: RtcConnection, stats: RtcStats) {
     const { uid2 } = this.state;
     if (connection.localUid === uid2) {
+      this.info('onLeaveChannel', 'connection', connection, 'stats', stats);
       this.setState({ publishScreenCapture: false });
       return;
     }
-    this.info('onLeaveChannel', 'connection', connection, 'stats', stats);
-    const state = this.createState();
-    delete state.startScreenCapture;
-    delete state.publishScreenCapture;
-    this.setState(state);
+    super.onLeaveChannel(connection, stats);
   }
 
   onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
@@ -321,12 +324,9 @@ export default class ScreenShare
       switch (state) {
         case LocalVideoStreamState.LocalVideoStreamStateStopped:
         case LocalVideoStreamState.LocalVideoStreamStateFailed:
-          if (
-            error ===
-            LocalVideoStreamError.LocalVideoStreamErrorDeviceNoPermission
-          ) {
-            this.stopScreenCapture();
-          }
+          // ⚠️ You should call stopScreenCapture if received the event with state Stopped or Failed,
+          // otherwise the SDK may keep capturing the screen
+          this.stopScreenCapture();
           this.setState({
             startScreenCapture: false,
           });

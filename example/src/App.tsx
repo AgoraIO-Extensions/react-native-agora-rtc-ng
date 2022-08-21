@@ -21,7 +21,12 @@ import {
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createAgoraRtcEngine, SDKBuildInfo } from 'react-native-agora-rtc-ng';
+import {
+  createAgoraRtcEngine,
+  SDKBuildInfo,
+  isDebuggable,
+  setDebuggable,
+} from 'react-native-agora-rtc-ng';
 
 import Basic from './examples/basic';
 import Advanced from './examples/advanced';
@@ -61,9 +66,15 @@ const App = () => {
             )
           )}
         </Stack.Navigator>
-        <Text style={styles.version}>
-          Powered by Agora RTC SDK {version.version} build {version.build}
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            setDebuggable(!isDebuggable);
+          }}
+        >
+          <Text style={styles.version}>
+            Powered by Agora RTC SDK {version.version} build {version.build}
+          </Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </NavigationContainer>
   );

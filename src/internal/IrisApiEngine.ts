@@ -45,8 +45,14 @@ const {
  */
 const EventEmitter = new NativeEventEmitter(ReactNativeAgoraRtcNg);
 
+export let isDebuggable = false;
+
+export function setDebuggable(flag: boolean) {
+  isDebuggable = flag;
+}
+
 EventEmitter.addListener('onEvent', function (args) {
-  if (__DEV__) {
+  if (isDebuggable) {
     console.info('onEvent', args);
   }
   let event: string = args.event;
@@ -99,7 +105,6 @@ EventEmitter.addListener('onEvent', function (args) {
         null
       ) >= 0
     ) {
-      console.warn('onEvent', args);
       return;
     }
     event = event.replace('AudioSpectrumObserver_', '');
@@ -305,14 +310,20 @@ export function callIrisApi<T>(funcName: string, params: any): any {
     });
     if (ret) {
       ret = JSON.parse(ret) ?? {};
-      if (typeof ret.result === 'number' && ret.result < 0) {
-        console.error('callApi', funcName, JSON.stringify(params), ret);
-      } else {
-        console.debug('callApi', funcName, JSON.stringify(params), ret);
+      if (isDebuggable) {
+        if (typeof ret.result === 'number' && ret.result < 0) {
+          console.error('callApi', funcName, JSON.stringify(params), ret);
+        } else {
+          console.debug('callApi', funcName, JSON.stringify(params), ret);
+        }
       }
       return ret;
     }
   } catch (e) {
-    console.error(e);
+    if (isDebuggable) {
+      console.error(e);
+    } else {
+      console.warn(e);
+    }
   }
 }
