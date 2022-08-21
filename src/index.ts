@@ -48,3 +48,5 @@ export function createAgoraRtcEngine(): IRtcEngine {
 export function getMediaPlayerCacheManager(): IMediaPlayerCacheManager {
   return new IMediaPlayerCacheManagerImpl();
 }
+
+export default createAgoraRtcEngine;
