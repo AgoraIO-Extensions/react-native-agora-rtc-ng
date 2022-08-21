@@ -193,7 +193,7 @@ export default class MediaRecorder
     }
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       storagePath,
       containerFormat,
@@ -259,7 +259,7 @@ export default class MediaRecorder
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, startRecoding } = this.state;
     return (
       <>

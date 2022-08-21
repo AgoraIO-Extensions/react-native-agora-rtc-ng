@@ -209,7 +209,7 @@ export default class EncodedVideoFrame
     return true;
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { imageBuffer } = this.state;
     return (
       <>
@@ -224,7 +224,7 @@ export default class EncodedVideoFrame
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess } = this.state;
     return (
       <>

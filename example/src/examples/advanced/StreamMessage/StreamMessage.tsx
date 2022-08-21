@@ -208,7 +208,7 @@ export default class StreamMessage
     );
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { syncWithAudio, ordered, streamId, data } = this.state;
     return (
       <>
@@ -243,7 +243,7 @@ export default class StreamMessage
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, streamId } = this.state;
     return (
       <>

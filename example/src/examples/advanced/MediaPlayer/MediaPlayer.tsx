@@ -279,11 +279,11 @@ export default class MediaPlayer
     );
   }
 
-  protected renderTop(): React.ReactNode {
+  protected renderChannel(): React.ReactNode {
     return undefined;
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { url, open, position, duration, playoutVolume, loopCount } =
       this.state;
     return (
@@ -365,7 +365,7 @@ export default class MediaPlayer
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { open, play, pause, mute } = this.state;
     return (
       <>

@@ -201,7 +201,7 @@ export default class AudioMixing
     this.info('AudioMixingFinished');
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { filePath, loopback, cycle, startPos } = this.state;
     return (
       <>
@@ -248,7 +248,7 @@ export default class AudioMixing
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startAudioMixing, pauseAudioMixing } = this.state;
     return (
       <>

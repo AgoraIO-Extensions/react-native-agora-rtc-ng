@@ -195,7 +195,7 @@ export default class Extension
     this.setState({ enableExtension: false });
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { path, provider, extension } = this.state;
     return (
       <>
@@ -232,7 +232,7 @@ export default class Extension
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, enableExtension } = this.state;
     return (
       <>

@@ -168,13 +168,13 @@ export abstract class BaseComponent<
   render() {
     const { route } = this.props;
     const { enableVideo } = this.state;
-    const bottom = this.renderBottom();
+    const bottom = this.renderConfiguration();
     return (
       <KeyboardAvoidingView
         style={AgoraStyle.fullSize}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={AgoraStyle.fullWidth}>{this.renderTop()}</View>
+        <View style={AgoraStyle.fullWidth}>{this.renderChannel()}</View>
         {enableVideo ? (
           <View style={AgoraStyle.videoLarge}>{this.renderVideo()}</View>
         ) : undefined}
@@ -186,12 +186,12 @@ export abstract class BaseComponent<
             <ScrollView style={AgoraStyle.fullSize}>{bottom}</ScrollView>
           </>
         ) : undefined}
-        <View style={AgoraStyle.float}>{this.renderFloat()}</View>
+        <View style={AgoraStyle.float}>{this.renderAction()}</View>
       </KeyboardAvoidingView>
     );
   }
 
-  protected renderTop(): ReactNode {
+  protected renderChannel(): ReactNode {
     const { channelId, joinChannelSuccess } = this.state;
     return (
       <>
@@ -235,11 +235,11 @@ export abstract class BaseComponent<
     );
   }
 
-  protected renderBottom(): ReactNode {
+  protected renderConfiguration(): ReactNode {
     return undefined;
   }
 
-  protected renderFloat(): ReactNode {
+  protected renderAction(): ReactNode {
     return undefined;
   }
 

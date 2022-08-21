@@ -196,7 +196,7 @@ export default class ChannelMediaRelay
     this.info('onChannelMediaRelayEvent', 'code', code);
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { destChannelNames } = this.state;
     return (
       <>
@@ -213,7 +213,7 @@ export default class ChannelMediaRelay
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const {
       joinChannelSuccess,
       startChannelMediaRelay,

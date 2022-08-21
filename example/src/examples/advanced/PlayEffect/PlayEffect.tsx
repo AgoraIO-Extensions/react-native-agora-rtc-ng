@@ -196,7 +196,7 @@ export default class PlayEffect
     this.setState({ playEffect: false });
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       soundId,
       filePath,
@@ -302,7 +302,7 @@ export default class PlayEffect
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { playEffect, pauseEffect } = this.state;
     return (
       <>

@@ -199,7 +199,7 @@ export default class RhythmPlayer
     }
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { sound1, sound2, beatsPerMeasure, beatsPerMinute } = this.state;
     return (
       <>
@@ -243,7 +243,7 @@ export default class RhythmPlayer
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startRhythmPlayer } = this.state;
     return (
       <>

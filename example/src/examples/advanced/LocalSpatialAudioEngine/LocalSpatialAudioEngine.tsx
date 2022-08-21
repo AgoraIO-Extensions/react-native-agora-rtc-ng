@@ -180,7 +180,7 @@ export default class LocalSpatialAudioEngine
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       joinChannelSuccess,
       remoteUsers,
@@ -323,7 +323,7 @@ export default class LocalSpatialAudioEngine
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, targetUid } = this.state;
     return (
       <>

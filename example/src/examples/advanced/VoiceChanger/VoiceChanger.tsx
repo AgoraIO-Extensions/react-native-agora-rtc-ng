@@ -213,7 +213,7 @@ export default class VoiceChanger
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     return (
       <>
         {this._renderVoiceBeautifierPreset()}

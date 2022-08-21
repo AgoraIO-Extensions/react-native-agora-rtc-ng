@@ -169,7 +169,7 @@ export default class VideoEncoderConfiguration
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       codecType,
       width,
@@ -296,7 +296,7 @@ export default class VideoEncoderConfiguration
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     return (
       <>
         <AgoraButton

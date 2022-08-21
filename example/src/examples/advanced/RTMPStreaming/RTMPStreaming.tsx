@@ -326,7 +326,7 @@ export default class RTMPStreaming
     this.debug('onTranscodingUpdated');
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       url,
       startRtmpStreamWithTranscoding,
@@ -556,7 +556,7 @@ export default class RTMPStreaming
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const {
       joinChannelSuccess,
       startRtmpStreamWithTranscoding,

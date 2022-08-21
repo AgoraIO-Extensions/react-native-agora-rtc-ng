@@ -345,7 +345,7 @@ export default class JoinMultipleChannel
     }
   }
 
-  protected renderTop(): React.ReactNode {
+  protected renderChannel(): React.ReactNode {
     const {
       channelId,
       channelId2,
@@ -454,7 +454,7 @@ export default class JoinMultipleChannel
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, joinChannelSuccess2 } = this.state;
     return (
       <>

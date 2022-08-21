@@ -306,7 +306,7 @@ export default class JoinChannelAudio
     this.info('onAudioRoutingChanged', 'routing', routing);
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       recordingSignalVolume,
       playbackSignalVolume,
@@ -375,7 +375,7 @@ export default class JoinChannelAudio
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const {
       enableLocalAudio,
       muteLocalAudioStream,

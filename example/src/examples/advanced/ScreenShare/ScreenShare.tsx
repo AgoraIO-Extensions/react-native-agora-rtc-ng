@@ -357,7 +357,7 @@ export default class ScreenShare
     );
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       uid2,
       captureAudio,
@@ -543,7 +543,7 @@ export default class ScreenShare
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startScreenCapture, publishScreenCapture } = this.state;
     return (
       <>

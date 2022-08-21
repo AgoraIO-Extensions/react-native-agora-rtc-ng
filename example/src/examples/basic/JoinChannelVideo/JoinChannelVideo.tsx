@@ -251,7 +251,7 @@ export default class JoinChannelVideo
     );
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { startPreview, joinChannelSuccess, renderByTextureView, setupMode } =
       this.state;
     return (
@@ -296,7 +296,7 @@ export default class JoinChannelVideo
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startPreview, joinChannelSuccess } = this.state;
     return (
       <>

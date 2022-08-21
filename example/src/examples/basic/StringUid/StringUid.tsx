@@ -149,7 +149,7 @@ export default class StringUid
     this.info('LocalUserRegistered', uid, userAccount);
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { userAccount, joinChannelSuccess } = this.state;
     return (
       <>
@@ -165,7 +165,7 @@ export default class StringUid
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess } = this.state;
     return (
       <>

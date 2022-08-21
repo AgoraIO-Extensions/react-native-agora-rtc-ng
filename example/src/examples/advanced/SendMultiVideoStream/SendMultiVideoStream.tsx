@@ -255,7 +255,7 @@ export default class SendMultiVideoStream
     this.player?.play();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { uid2, url } = this.state;
     return (
       <>
@@ -299,7 +299,7 @@ export default class SendMultiVideoStream
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { open } = this.state;
     return (
       <>

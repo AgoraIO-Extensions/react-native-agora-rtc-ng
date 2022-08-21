@@ -159,7 +159,7 @@ export default class SendMetadata
     );
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { metadataBuffer } = this.state;
     return (
       <>
@@ -174,7 +174,7 @@ export default class SendMetadata
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess } = this.state;
     return (
       <>

@@ -159,7 +159,7 @@ export default class Encryption
     );
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
     return (
       <>
@@ -197,7 +197,7 @@ export default class Encryption
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, enableEncryption } = this.state;
     return (
       <>

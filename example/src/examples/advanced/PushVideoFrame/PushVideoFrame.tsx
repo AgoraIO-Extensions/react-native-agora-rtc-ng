@@ -154,7 +154,7 @@ export default class PushVideoFrame
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { filePath } = this.state;
     return (
       <>
@@ -169,7 +169,7 @@ export default class PushVideoFrame
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess } = this.state;
     return (
       <>

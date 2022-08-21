@@ -176,7 +176,7 @@ export default class SpatialAudio
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       remoteUsers,
       targetUid,
@@ -266,7 +266,7 @@ export default class SpatialAudio
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess, enableSpatialAudio } = this.state;
     return (
       <>

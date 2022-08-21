@@ -168,7 +168,7 @@ export default class BeautyEffect
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       lighteningContrastLevel,
       lighteningLevel,
@@ -243,7 +243,7 @@ export default class BeautyEffect
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startPreview, joinChannelSuccess, enableBeautyEffect } = this.state;
     return (
       <>

@@ -171,7 +171,7 @@ export default class VirtualBackground
     this.engine?.release();
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { background_source_type, color, source, blur_degree } = this.state;
     return (
       <>
@@ -221,7 +221,7 @@ export default class VirtualBackground
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startPreview, joinChannelSuccess, enableVirtualBackground } =
       this.state;
     return (

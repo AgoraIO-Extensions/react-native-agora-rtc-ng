@@ -166,7 +166,7 @@ export default class TakeSnapshot
     }
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { remoteUsers, targetUid, filePath, takeSnapshot } = this.state;
     return (
       <>
@@ -196,7 +196,7 @@ export default class TakeSnapshot
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { joinChannelSuccess } = this.state;
     return (
       <>

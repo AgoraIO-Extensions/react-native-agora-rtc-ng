@@ -162,7 +162,7 @@ export default class ContentInspect
     this.info('onContentInspectResult', 'result', result);
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { modules, type, interval } = this.state;
     return (
       <>
@@ -217,7 +217,7 @@ export default class ContentInspect
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startPreview, joinChannelSuccess, enableContentInspect } =
       this.state;
     return (

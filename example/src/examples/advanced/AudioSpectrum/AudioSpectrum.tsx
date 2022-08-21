@@ -166,7 +166,7 @@ export default class AudioSpectrum
     return true;
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const { intervalInMS, enableAudioSpectrumMonitor, audioSpectrumData } =
       this.state;
     return (
@@ -213,7 +213,7 @@ export default class AudioSpectrum
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { enableAudioSpectrumMonitor } = this.state;
     return (
       <>

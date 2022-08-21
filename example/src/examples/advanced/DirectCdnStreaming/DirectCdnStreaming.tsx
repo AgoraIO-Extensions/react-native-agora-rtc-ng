@@ -239,7 +239,7 @@ export default class DirectCdnStreaming
     this.info('onDirectCdnStreamingStats', 'stats', stats);
   }
 
-  protected renderBottom(): React.ReactNode {
+  protected renderConfiguration(): React.ReactNode {
     const {
       url,
       codecType,
@@ -380,7 +380,7 @@ export default class DirectCdnStreaming
     );
   }
 
-  protected renderFloat(): React.ReactNode {
+  protected renderAction(): React.ReactNode {
     const { startDirectCdnStreaming } = this.state;
     return (
       <>
