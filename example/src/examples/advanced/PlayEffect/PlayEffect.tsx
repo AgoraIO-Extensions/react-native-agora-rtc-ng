@@ -20,6 +20,7 @@ import {
   AgoraSwitch,
   AgoraTextInput,
 } from '../../../components/ui';
+import { getAbsolutePath, getAssetPath } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   soundId: number;
@@ -48,7 +49,7 @@ export default class PlayEffect
       joinChannelSuccess: false,
       remoteUsers: [],
       soundId: 0,
-      filePath: this.getAssetPath('Sound_Horizon.mp3'),
+      filePath: getAssetPath('Sound_Horizon.mp3'),
       loopCount: 1,
       pitch: 1.0,
       pan: 0,
@@ -139,7 +140,7 @@ export default class PlayEffect
 
     this.engine?.playEffect(
       soundId,
-      await this.getAbsolutePath(filePath),
+      await getAbsolutePath(filePath),
       loopCount,
       pitch,
       pan,

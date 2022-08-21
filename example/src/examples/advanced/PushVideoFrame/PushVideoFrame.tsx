@@ -20,6 +20,7 @@ import {
   BaseVideoComponentState,
 } from '../../../components/BaseComponent';
 import { AgoraButton, AgoraTextInput } from '../../../components/ui';
+import { getAbsolutePath, getAssetPath } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   filePath: string;
@@ -42,7 +43,7 @@ export default class PushVideoFrame
       joinChannelSuccess: false,
       remoteUsers: [],
       startPreview: false,
-      filePath: this.getAssetPath('agora-logo.png'),
+      filePath: getAssetPath('agora-logo.png'),
     };
   }
 
@@ -125,7 +126,7 @@ export default class PushVideoFrame
       return;
     }
 
-    this.getAbsolutePath(filePath).then((path) => {
+    getAbsolutePath(filePath).then((path) => {
       ImageTools.GetImageRGBAs(path).then((value: any) => {
         console.log(value);
         this.engine?.getMediaEngine().pushVideoFrame({

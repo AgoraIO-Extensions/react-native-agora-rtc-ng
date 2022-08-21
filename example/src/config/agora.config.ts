@@ -3,7 +3,7 @@ const config = {
   appId: '',
   // Please refer to https://docs.agora.io/en/Agora%20Platform/token
   token: '',
-  channelId: '',
+  channelId: 'lxh',
   uid: 0,
 };
 

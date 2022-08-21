@@ -21,6 +21,7 @@ import {
   BaseAudioComponentState,
   BaseComponent,
 } from '../../../components/BaseComponent';
+import { getAssetPath } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   filePath: string;
@@ -44,7 +45,7 @@ export default class AudioMixing
       uid: Config.uid,
       joinChannelSuccess: false,
       remoteUsers: [],
-      filePath: this.getAssetPath('Sound_Horizon.mp3'),
+      filePath: getAssetPath('Sound_Horizon.mp3'),
       loopback: false,
       cycle: -1,
       startPos: 0,

@@ -23,6 +23,7 @@ import {
   AgoraSlider,
   AgoraTextInput,
 } from '../../../components/ui';
+import { getAbsolutePath, getAssetPath } from '../../../utils';
 
 interface State extends BaseAudioComponentState {
   sound1: string;
@@ -45,8 +46,8 @@ export default class RhythmPlayer
       uid: Config.uid,
       joinChannelSuccess: false,
       remoteUsers: [],
-      sound1: this.getAssetPath('ding.mp3'),
-      sound2: this.getAssetPath('dang.mp3'),
+      sound1: getAssetPath('ding.mp3'),
+      sound2: getAssetPath('dang.mp3'),
       beatsPerMeasure: 4,
       beatsPerMinute: 60,
       startRhythmPlayer: false,
@@ -124,8 +125,8 @@ export default class RhythmPlayer
     }
 
     this.engine?.startRhythmPlayer(
-      await this.getAbsolutePath(sound1),
-      await this.getAbsolutePath(sound2),
+      await getAbsolutePath(sound1),
+      await getAbsolutePath(sound2),
       {
         beatsPerMeasure,
         beatsPerMinute,

@@ -1,13 +1,10 @@
 import React, { Component, ReactNode, useState } from 'react';
 import {
   Alert,
-  Button,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
 import {
   ErrorCodeType,
@@ -18,15 +15,16 @@ import {
   RtcSurfaceView,
   UserOfflineReasonType,
 } from 'react-native-agora-rtc-ng';
-import {
-  copyFileAssets,
-  exists,
-  ExternalCachesDirectoryPath,
-  MainBundlePath,
-} from 'react-native-fs';
 import { StackScreenProps } from '@react-navigation/stack/src/types';
 
-import { AgoraDivider, AgoraStyle, AgoraTextInput } from './ui';
+import {
+  AgoraButton,
+  AgoraDivider,
+  AgoraStyle,
+  AgoraText,
+  AgoraTextInput,
+  AgoraView,
+} from './ui';
 import { LogSink } from './LogSink';
 
 const Header = ({ getData }: { getData: () => Array<string> }) => {
@@ -38,7 +36,7 @@ const Header = ({ getData }: { getData: () => Array<string> }) => {
 
   return (
     <>
-      <Button title="Logs" onPress={toggleOverlay} />
+      <AgoraButton title="Logs" onPress={toggleOverlay} />
       <LogSink
         visible={visible}
         data={getData()}
@@ -166,27 +164,32 @@ export abstract class BaseComponent<
   }
 
   render() {
-    const { route } = this.props;
     const { enableVideo } = this.state;
-    const bottom = this.renderConfiguration();
+    const configuration = this.renderConfiguration();
     return (
       <KeyboardAvoidingView
         style={AgoraStyle.fullSize}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={AgoraStyle.fullWidth}>{this.renderChannel()}</View>
+        <AgoraView style={AgoraStyle.fullWidth}>
+          {this.renderChannel()}
+        </AgoraView>
         {enableVideo ? (
-          <View style={AgoraStyle.videoLarge}>{this.renderVideo()}</View>
+          <AgoraView style={AgoraStyle.videoLarge}>
+            {this.renderVideo()}
+          </AgoraView>
         ) : undefined}
-        {bottom ? (
+        {configuration ? (
           <>
             <AgoraDivider />
-            <Text style={styles.title}>The Configuration of {route.name}</Text>
+            <AgoraText style={styles.title}>
+              The Configuration of {this.constructor.name}
+            </AgoraText>
             <AgoraDivider />
-            <ScrollView style={AgoraStyle.fullSize}>{bottom}</ScrollView>
+            <ScrollView style={AgoraStyle.fullSize}>{configuration}</ScrollView>
           </>
         ) : undefined}
-        <View style={AgoraStyle.float}>{this.renderAction()}</View>
+        <AgoraView style={AgoraStyle.float}>{this.renderAction()}</AgoraView>
       </KeyboardAvoidingView>
     );
   }
@@ -202,7 +205,7 @@ export abstract class BaseComponent<
           placeholder={`channelId`}
           value={channelId}
         />
-        <Button
+        <AgoraButton
           title={`${joinChannelSuccess ? 'leave' : 'join'} Channel`}
           onPress={() => {
             joinChannelSuccess ? this.leaveChannel() : this.joinChannel();
@@ -276,28 +279,6 @@ export abstract class BaseComponent<
 
   protected error(message?: any, ...optionalParams: any[]): void {
     this._logSink('error', message, optionalParams);
-  }
-
-  protected getAssetPath(fileName: string): string {
-    if (Platform.OS === 'android') {
-      return `/assets/${fileName}`;
-    }
-    return `${MainBundlePath}/${fileName}`;
-  }
-
-  protected async getAbsolutePath(filePath: string): Promise<string> {
-    if (Platform.OS === 'android') {
-      if (filePath.startsWith('/assets/')) {
-        // const fileName = filePath;
-        const fileName = filePath.replace('/assets/', '');
-        const destPath = `${ExternalCachesDirectoryPath}/${fileName}`;
-        if (!(await exists(destPath))) {
-          await copyFileAssets(fileName, destPath);
-        }
-        return destPath;
-      }
-    }
-    return filePath;
   }
 }
 

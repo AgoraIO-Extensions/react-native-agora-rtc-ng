@@ -21,7 +21,7 @@ import {
   AgoraDropdown,
   AgoraTextInput,
 } from '../../../components/ui';
-import { enumToItems } from '../../../utils';
+import { enumToItems, getAbsolutePath, getAssetPath } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
   background_source_type: BackgroundSourceType;
@@ -47,7 +47,7 @@ export default class VirtualBackground
       startPreview: false,
       background_source_type: BackgroundSourceType.BackgroundColor,
       color: 0xffffff,
-      source: this.getAssetPath('agora-logo.png'),
+      source: getAssetPath('agora-logo.png'),
       blur_degree: BackgroundBlurDegree.BlurDegreeMedium,
       enableVirtualBackground: false,
     };
@@ -141,7 +141,7 @@ export default class VirtualBackground
       {
         background_source_type,
         color,
-        source: await this.getAbsolutePath(source),
+        source: await getAbsolutePath(source),
         blur_degree,
       },
       {}
