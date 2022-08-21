@@ -251,7 +251,7 @@ export abstract class BaseComponent<
     if (level === 'error' && !__DEV__) {
       Alert.alert(message);
     } else {
-      console[level](message, optionalParams);
+      console[level](message, ...optionalParams);
     }
     const content = `${optionalParams.map((v) => JSON.stringify(v))}`;
     this._data.splice(0, 0, `[${level}] ${message} ${content}`);
