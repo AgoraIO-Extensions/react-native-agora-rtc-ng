@@ -52,7 +52,7 @@ export default class PushVideoFrame
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine() as IRtcEngineEx;
@@ -84,11 +84,11 @@ export default class PushVideoFrame
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -122,7 +122,7 @@ export default class PushVideoFrame
   pushVideoFrame = () => {
     const { filePath } = this.state;
     if (!filePath) {
-      console.error('filePath is invalid');
+      this.error('filePath is invalid');
       return;
     }
 
@@ -160,7 +160,7 @@ export default class PushVideoFrame
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ filePath: text });
           }}
           placeholder={`filePath`}

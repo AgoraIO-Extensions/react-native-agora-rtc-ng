@@ -70,7 +70,7 @@ export default class JoinMultipleChannel
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine() as IRtcEngineEx;
@@ -104,11 +104,11 @@ export default class JoinMultipleChannel
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid <= 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -139,11 +139,11 @@ export default class JoinMultipleChannel
   protected joinChannel2() {
     const { channelId2, token2, uid2 } = this.state;
     if (!channelId2) {
-      console.error('channelId2 is invalid');
+      this.error('channelId2 is invalid');
       return;
     }
     if (uid2 <= 0) {
-      console.error('uid2 is invalid');
+      this.error('uid2 is invalid');
       return;
     }
 
@@ -357,14 +357,14 @@ export default class JoinMultipleChannel
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ channelId: text });
           }}
           placeholder={`channelId`}
           value={channelId}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ uid: +text });
           }}
@@ -381,14 +381,14 @@ export default class JoinMultipleChannel
           }}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ channelId2: text });
           }}
           placeholder={`channelId2`}
           value={channelId2}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}

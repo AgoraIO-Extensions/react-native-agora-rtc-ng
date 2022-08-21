@@ -46,7 +46,7 @@ export default class StringUid
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -74,11 +74,11 @@ export default class StringUid
   protected joinChannel() {
     const { channelId, token, userAccount } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (!userAccount) {
-      console.error('userAccount is invalid');
+      this.error('userAccount is invalid');
       return;
     }
 
@@ -155,9 +155,9 @@ export default class StringUid
       <>
         <AgoraTextInput
           editable={!joinChannelSuccess}
-          onEndEditing={({ nativeEvent: { text } }) =>
-            this.setState({ userAccount: text })
-          }
+          onChangeText={(text) => {
+            this.setState({ userAccount: text });
+          }}
           placeholder={`userAccount`}
           value={userAccount}
         />

@@ -66,7 +66,7 @@ export default class PlayEffect
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -94,11 +94,11 @@ export default class PlayEffect
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -129,11 +129,11 @@ export default class PlayEffect
       startPos,
     } = this.state;
     if (!filePath) {
-      console.error('filePath is invalid');
+      this.error('filePath is invalid');
       return;
     }
     if (startPos < 0) {
-      console.error('startPos is invalid');
+      this.error('startPos is invalid');
       return;
     }
 
@@ -210,7 +210,7 @@ export default class PlayEffect
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ soundId: +text });
           }}
@@ -223,14 +223,14 @@ export default class PlayEffect
           }
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
           value={filePath}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}
@@ -286,7 +286,7 @@ export default class PlayEffect
         />
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}

@@ -59,7 +59,7 @@ export default class RhythmPlayer
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -87,11 +87,11 @@ export default class RhythmPlayer
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -115,11 +115,11 @@ export default class RhythmPlayer
   startRhythmPlayer = async () => {
     const { sound1, sound2, beatsPerMeasure, beatsPerMinute } = this.state;
     if (!sound1) {
-      console.error('sound1 is invalid');
+      this.error('sound1 is invalid');
       return;
     }
     if (!sound2) {
-      console.error('sound2 is invalid');
+      this.error('sound2 is invalid');
       return;
     }
 
@@ -204,14 +204,14 @@ export default class RhythmPlayer
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ sound1: text });
           }}
           placeholder={'sound1'}
           value={sound1}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ sound2: text });
           }}
           placeholder={'sound2'}

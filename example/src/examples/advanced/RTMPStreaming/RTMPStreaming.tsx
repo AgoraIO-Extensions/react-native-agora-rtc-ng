@@ -108,7 +108,7 @@ export default class RTMPStreaming
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -138,11 +138,11 @@ export default class RTMPStreaming
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -164,7 +164,7 @@ export default class RTMPStreaming
   startRtmpStream = () => {
     const { url, startRtmpStreamWithTranscoding } = this.state;
     if (!url) {
-      console.error('url is invalid');
+      this.error('url is invalid');
       return;
     }
 
@@ -266,7 +266,7 @@ export default class RTMPStreaming
   stopRtmpStream = () => {
     const { url } = this.state;
     if (!url) {
-      console.error('url is invalid');
+      this.error('url is invalid');
       return;
     }
 
@@ -349,7 +349,7 @@ export default class RTMPStreaming
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
@@ -382,7 +382,7 @@ export default class RTMPStreaming
             <AgoraView style={styles.container}>
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
-                onEndEditing={({ nativeEvent: { text } }) => {
+                onChangeText={(text) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
                 }}
@@ -398,7 +398,7 @@ export default class RTMPStreaming
               />
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
-                onEndEditing={({ nativeEvent: { text } }) => {
+                onChangeText={(text) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
                 }}
@@ -414,7 +414,7 @@ export default class RTMPStreaming
               />
             </AgoraView>
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoBitrate: +text });
               }}
@@ -433,7 +433,7 @@ export default class RTMPStreaming
               }
             />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoFramerate: +text });
               }}
@@ -452,7 +452,7 @@ export default class RTMPStreaming
               }
             />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ videoGop: +text });
               }}
@@ -489,14 +489,14 @@ export default class RTMPStreaming
             />
             <AgoraDivider />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 this.setState({ watermarkUrl: text });
               }}
               placeholder={'watermarkUrl'}
               value={watermarkUrl}
             />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 this.setState({ backgroundImageUrl: text });
               }}
               placeholder={'backgroundImageUrl'}
@@ -512,7 +512,7 @@ export default class RTMPStreaming
             />
             <AgoraDivider />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ audioBitrate: +text });
               }}

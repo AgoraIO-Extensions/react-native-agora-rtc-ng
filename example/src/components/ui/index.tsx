@@ -69,7 +69,10 @@ export const AgoraTextInput = (props: InputProps) => {
         containerStyle={[AgoraStyle.input, style]}
         placeholderTextColor={'gray'}
         {...others}
-        onChangeText={setValue}
+        onChangeText={(text) => {
+          setValue(text);
+          props.onChangeText?.call(this, text);
+        }}
         value={value}
       />
     </>
@@ -93,7 +96,10 @@ export const AgoraSlider = (props: SliderProps & { title: string }) => {
         thumbStyle={AgoraStyle.thumb}
         {...others}
         value={value}
-        onValueChange={setValue}
+        onValueChange={(v) => {
+          setValue(v);
+          props.onValueChange?.call(this, v);
+        }}
       />
     </>
   );

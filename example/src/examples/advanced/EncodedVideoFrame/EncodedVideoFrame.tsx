@@ -54,7 +54,7 @@ export default class EncodedVideoFrame
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine() as IRtcEngineEx;
@@ -92,11 +92,11 @@ export default class EncodedVideoFrame
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -144,7 +144,7 @@ export default class EncodedVideoFrame
   pushEncodedVideoImage = () => {
     const { imageBuffer } = this.state;
     if (!imageBuffer) {
-      console.error('imageBuffer is invalid');
+      this.error('imageBuffer is invalid');
       return;
     }
 
@@ -204,7 +204,9 @@ export default class EncodedVideoFrame
       'videoEncodedFrameInfo',
       videoEncodedFrameInfo
     );
-    Alert.alert(`Receive from uid:${uid}`, `${imageBuffer.toString()}`);
+    if (videoEncodedFrameInfo.codecType === VideoCodecType.VideoCodecGeneric) {
+      Alert.alert(`Receive from uid:${uid}`, `${imageBuffer.toString()}`);
+    }
     return true;
   }
 
@@ -213,7 +215,7 @@ export default class EncodedVideoFrame
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ imageBuffer: text });
           }}
           placeholder={`imageBuffer`}

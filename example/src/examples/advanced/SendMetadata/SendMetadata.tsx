@@ -48,7 +48,7 @@ export default class SendMetadata
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -80,11 +80,11 @@ export default class SendMetadata
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -116,7 +116,7 @@ export default class SendMetadata
   sendMetaData = () => {
     const { metadataBuffer } = this.state;
     if (!metadataBuffer) {
-      console.error('metadataBuffer is invalid');
+      this.error('metadataBuffer is invalid');
       return;
     }
 
@@ -164,7 +164,7 @@ export default class SendMetadata
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ metadataBuffer: text });
           }}
           placeholder={`metadataBuffer`}

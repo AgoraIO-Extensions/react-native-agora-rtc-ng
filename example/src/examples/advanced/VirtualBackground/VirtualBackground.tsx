@@ -59,7 +59,7 @@ export default class VirtualBackground
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -103,11 +103,11 @@ export default class VirtualBackground
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -132,7 +132,7 @@ export default class VirtualBackground
       background_source_type === BackgroundSourceType.BackgroundImg &&
       !source
     ) {
-      console.error('source is invalid');
+      this.error('source is invalid');
       return;
     }
 
@@ -198,7 +198,7 @@ export default class VirtualBackground
           editable={
             background_source_type === BackgroundSourceType.BackgroundImg
           }
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({
               source: text,
             });

@@ -50,8 +50,8 @@ interface State extends BaseVideoComponentState {
   frameRate: number;
   bitrate: number;
   contentHint: VideoContentHint;
-  startScreenCapture: boolean;
-  publishScreenCapture: boolean;
+  startScreenCapture?: boolean;
+  publishScreenCapture?: boolean;
 }
 
 export default class ScreenShare
@@ -94,7 +94,7 @@ export default class ScreenShare
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine() as IRtcEngineEx;
@@ -133,11 +133,11 @@ export default class ScreenShare
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -199,11 +199,11 @@ export default class ScreenShare
   publishScreenCapture = () => {
     const { channelId, token2, uid2 } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid2 <= 0) {
-      console.error('uid2 is invalid');
+      this.error('uid2 is invalid');
       return;
     }
 
@@ -264,7 +264,11 @@ export default class ScreenShare
       this.setState({ publishScreenCapture: false });
       return;
     }
-    super.onLeaveChannel(connection, stats);
+    this.info('onLeaveChannel', 'connection', connection, 'stats', stats);
+    const state = this.createState();
+    delete state.startScreenCapture;
+    delete state.publishScreenCapture;
+    this.setState(state);
   }
 
   onUserJoined(connection: RtcConnection, remoteUid: number, elapsed: number) {
@@ -372,7 +376,7 @@ export default class ScreenShare
       <>
         <AgoraTextInput
           editable={!publishScreenCapture}
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
@@ -395,7 +399,7 @@ export default class ScreenShare
             {Platform.OS === 'android' ? (
               <>
                 <AgoraTextInput
-                  onEndEditing={({ nativeEvent: { text } }) => {
+                  onChangeText={(text) => {
                     if (isNaN(+text)) return;
                     this.setState({ sampleRate: +text });
                   }}
@@ -414,7 +418,7 @@ export default class ScreenShare
                   }
                 />
                 <AgoraTextInput
-                  onEndEditing={({ nativeEvent: { text } }) => {
+                  onChangeText={(text) => {
                     if (isNaN(+text)) return;
                     this.setState({ channels: +text });
                   }}
@@ -460,7 +464,7 @@ export default class ScreenShare
             <AgoraView style={styles.container}>
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
-                onEndEditing={({ nativeEvent: { text } }) => {
+                onChangeText={(text) => {
                   if (isNaN(+text)) return;
                   this.setState({ width: +text });
                 }}
@@ -476,7 +480,7 @@ export default class ScreenShare
               />
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
-                onEndEditing={({ nativeEvent: { text } }) => {
+                onChangeText={(text) => {
                   if (isNaN(+text)) return;
                   this.setState({ height: +text });
                 }}
@@ -492,7 +496,7 @@ export default class ScreenShare
               />
             </AgoraView>
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ frameRate: +text });
               }}
@@ -511,7 +515,7 @@ export default class ScreenShare
               }
             />
             <AgoraTextInput
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 this.setState({ bitrate: +text });
               }}

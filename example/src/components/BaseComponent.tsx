@@ -196,7 +196,7 @@ export abstract class BaseComponent<
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ channelId: text });
           }}
           placeholder={`channelId`}
@@ -248,7 +248,11 @@ export abstract class BaseComponent<
     message?: any,
     ...optionalParams: any[]
   ): string {
-    console[level](message, optionalParams);
+    if (level === 'error' && !__DEV__) {
+      Alert.alert(message);
+    } else {
+      console[level](message, optionalParams);
+    }
     const content = `${optionalParams.map((v) => JSON.stringify(v))}`;
     this._data.splice(0, 0, `[${level}] ${message} ${content}`);
     return content;

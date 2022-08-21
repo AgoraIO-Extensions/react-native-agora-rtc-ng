@@ -55,7 +55,7 @@ export default class ChannelMediaRelay
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -85,11 +85,11 @@ export default class ChannelMediaRelay
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -111,7 +111,7 @@ export default class ChannelMediaRelay
   startChannelMediaRelay = () => {
     const { channelId, token, uid, destChannelNames } = this.state;
     if (destChannelNames.length <= 0) {
-      console.error('destChannelNames is invalid');
+      this.error('destChannelNames is invalid');
       return;
     }
 
@@ -201,7 +201,7 @@ export default class ChannelMediaRelay
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ destChannelNames: text.split(' ') });
           }}
           placeholder={'destChannelNames (split by blank)'}

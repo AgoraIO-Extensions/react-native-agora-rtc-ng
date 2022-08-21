@@ -59,7 +59,7 @@ export default class Encryption
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -89,11 +89,11 @@ export default class Encryption
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -115,7 +115,7 @@ export default class Encryption
   enableEncryption = () => {
     const { encryptionMode, encryptionKey, encryptionKdfSalt } = this.state;
     if (!encryptionKey) {
-      console.error('encryptionKey is invalid');
+      this.error('encryptionKey is invalid');
       return;
     }
 
@@ -173,14 +173,14 @@ export default class Encryption
         />
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ encryptionKey: text });
           }}
           placeholder={'encryptionKey'}
           value={encryptionKey}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({
               encryptionKdfSalt: text.split(' ').map((value) => +value),
             });

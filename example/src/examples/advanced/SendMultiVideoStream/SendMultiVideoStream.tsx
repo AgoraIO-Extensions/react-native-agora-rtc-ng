@@ -66,7 +66,7 @@ export default class SendMultiVideoStream
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine() as IRtcEngineEx;
@@ -96,11 +96,11 @@ export default class SendMultiVideoStream
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -122,7 +122,7 @@ export default class SendMultiVideoStream
   createMediaPlayer = () => {
     const { url } = this.state;
     if (!url) {
-      console.error('url is invalid');
+      this.error('url is invalid');
     }
 
     this.player = this.engine?.createMediaPlayer();
@@ -136,11 +136,11 @@ export default class SendMultiVideoStream
   publishMediaPlayerTrack = () => {
     const { channelId, token2, uid2 } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid2 <= 0) {
-      console.error('uid2 is invalid');
+      this.error('uid2 is invalid');
       return;
     }
 
@@ -162,7 +162,7 @@ export default class SendMultiVideoStream
    */
   destroyMediaPlayer = () => {
     if (!this.player) {
-      console.error('player is invalid');
+      this.error('player is invalid');
       return;
     }
 
@@ -260,7 +260,7 @@ export default class SendMultiVideoStream
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ uid2: +text });
           }}
@@ -271,7 +271,7 @@ export default class SendMultiVideoStream
           value={uid2 > 0 ? uid2.toString() : ''}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}

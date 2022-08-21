@@ -66,7 +66,7 @@ export default class MediaPlayer
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -92,7 +92,7 @@ export default class MediaPlayer
   open = () => {
     const { url } = this.state;
     if (!url) {
-      console.error('url is invalid');
+      this.error('url is invalid');
     }
 
     this.player?.open(url, 0);
@@ -117,12 +117,12 @@ export default class MediaPlayer
     const { duration } = this.state;
 
     if (duration <= 0) {
-      console.error(`duration is invalid`);
+      this.error(`duration is invalid`);
       return;
     }
 
     if (position < 0 || position > duration) {
-      console.error(`percent is invalid`);
+      this.error(`percent is invalid`);
       return;
     }
 
@@ -181,7 +181,7 @@ export default class MediaPlayer
   getStreamInfo = () => {
     const streamCount = this.player?.getStreamCount();
     if (streamCount === undefined || streamCount <= 0) {
-      console.error(`streamCount is invalid`);
+      this.error(`streamCount is invalid`);
     }
 
     const streamInfo = this.player?.getStreamInfo(0);
@@ -289,7 +289,7 @@ export default class MediaPlayer
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ url: text });
           }}
           placeholder={'url'}
@@ -324,7 +324,7 @@ export default class MediaPlayer
         />
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ loopCount: +text });
           }}

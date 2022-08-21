@@ -61,7 +61,7 @@ export default class LocalSpatialAudioEngine
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -102,11 +102,11 @@ export default class LocalSpatialAudioEngine
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -194,7 +194,7 @@ export default class LocalSpatialAudioEngine
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ range: +text });
           }}
@@ -223,7 +223,7 @@ export default class LocalSpatialAudioEngine
           {position.map((value, index) => (
             <AgoraTextInput
               style={AgoraStyle.fullSize}
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 position[index] = +text;
                 this.setState({ position });
@@ -248,7 +248,7 @@ export default class LocalSpatialAudioEngine
           {axisForward.map((value, index) => (
             <AgoraTextInput
               style={AgoraStyle.fullSize}
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisForward[index] = +text;
                 this.setState({ axisForward });
@@ -273,7 +273,7 @@ export default class LocalSpatialAudioEngine
           {axisRight.map((value, index) => (
             <AgoraTextInput
               style={AgoraStyle.fullSize}
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisRight[index] = +text;
                 this.setState({ axisRight });
@@ -298,7 +298,7 @@ export default class LocalSpatialAudioEngine
           {axisUp.map((value, index) => (
             <AgoraTextInput
               style={AgoraStyle.fullSize}
-              onEndEditing={({ nativeEvent: { text } }) => {
+              onChangeText={(text) => {
                 if (isNaN(+text)) return;
                 axisUp[index] = +text;
                 this.setState({ axisUp });

@@ -56,7 +56,7 @@ export default class StreamMessage
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -84,11 +84,11 @@ export default class StreamMessage
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -125,7 +125,7 @@ export default class StreamMessage
   sendStreamMessage = () => {
     const { streamId, data } = this.state;
     if (!data) {
-      console.error('data is invalid');
+      this.error('data is invalid');
       return;
     }
 
@@ -233,7 +233,7 @@ export default class StreamMessage
         <AgoraText>{`streamId: ${streamId}`}</AgoraText>
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ data: text });
           }}
           placeholder={`data`}

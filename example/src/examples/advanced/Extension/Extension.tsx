@@ -49,7 +49,7 @@ export default class Extension
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -79,15 +79,15 @@ export default class Extension
   enableExtension = () => {
     const { path, provider, extension } = this.state;
     if (!path) {
-      console.error('path is invalid');
+      this.error('path is invalid');
       return;
     }
     if (!provider) {
-      console.error('provider is invalid');
+      this.error('provider is invalid');
       return;
     }
     if (!extension) {
-      console.error('extension is invalid');
+      this.error('extension is invalid');
       return;
     }
 
@@ -113,11 +113,11 @@ export default class Extension
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -201,7 +201,7 @@ export default class Extension
       <>
         {Platform.OS === 'android' ? (
           <AgoraTextInput
-            onEndEditing={({ nativeEvent: { text } }) => {
+            onChangeText={(text) => {
               this.setState({
                 path: text,
               });
@@ -211,7 +211,7 @@ export default class Extension
           />
         ) : undefined}
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({
               provider: text,
             });
@@ -220,7 +220,7 @@ export default class Extension
           value={provider}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({
               extension: text,
             });

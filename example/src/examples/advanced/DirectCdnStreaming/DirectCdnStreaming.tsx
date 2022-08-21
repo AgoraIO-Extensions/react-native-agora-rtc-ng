@@ -81,7 +81,7 @@ export default class DirectCdnStreaming
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -111,11 +111,11 @@ export default class DirectCdnStreaming
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -137,7 +137,7 @@ export default class DirectCdnStreaming
   startDirectCdnStreaming = () => {
     const { url } = this.state;
     if (!url) {
-      console.error('url is invalid');
+      this.error('url is invalid');
       return;
     }
 
@@ -256,7 +256,7 @@ export default class DirectCdnStreaming
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ url: text });
           }}
           placeholder={`url`}
@@ -274,7 +274,7 @@ export default class DirectCdnStreaming
         <AgoraView style={styles.container}>
           <AgoraTextInput
             style={AgoraStyle.fullSize}
-            onEndEditing={({ nativeEvent: { text } }) => {
+            onChangeText={(text) => {
               if (isNaN(+text)) return;
               this.setState({ width: +text });
             }}
@@ -286,7 +286,7 @@ export default class DirectCdnStreaming
           />
           <AgoraTextInput
             style={AgoraStyle.fullSize}
-            onEndEditing={({ nativeEvent: { text } }) => {
+            onChangeText={(text) => {
               if (isNaN(+text)) return;
               this.setState({ height: +text });
             }}
@@ -300,7 +300,7 @@ export default class DirectCdnStreaming
           />
         </AgoraView>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ frameRate: +text });
           }}
@@ -315,7 +315,7 @@ export default class DirectCdnStreaming
           }
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ bitrate: +text });
           }}
@@ -328,7 +328,7 @@ export default class DirectCdnStreaming
           }
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ minBitrate: +text });
           }}

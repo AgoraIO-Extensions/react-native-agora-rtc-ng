@@ -59,7 +59,7 @@ export default class AudioMixing
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -87,11 +87,11 @@ export default class AudioMixing
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -113,15 +113,15 @@ export default class AudioMixing
   startAudioMixing = () => {
     const { filePath, loopback, cycle, startPos } = this.state;
     if (!filePath) {
-      console.error('filePath is invalid');
+      this.error('filePath is invalid');
       return;
     }
     if (cycle < -1) {
-      console.error('cycle is invalid');
+      this.error('cycle is invalid');
       return;
     }
     if (startPos < 0) {
-      console.error('startPos is invalid');
+      this.error('startPos is invalid');
       return;
     }
 
@@ -206,7 +206,7 @@ export default class AudioMixing
     return (
       <>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             this.setState({ filePath: text });
           }}
           placeholder={'filePath'}
@@ -221,7 +221,7 @@ export default class AudioMixing
         />
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ cycle: +text });
           }}
@@ -232,8 +232,7 @@ export default class AudioMixing
           value={cycle === this.createState().cycle ? '' : cycle.toString()}
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
-            console.log('onEndEditing', text);
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ startPos: +text });
           }}

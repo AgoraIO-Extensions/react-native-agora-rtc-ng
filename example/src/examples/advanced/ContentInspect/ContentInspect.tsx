@@ -60,7 +60,7 @@ export default class ContentInspect
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -99,11 +99,11 @@ export default class ContentInspect
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -125,7 +125,7 @@ export default class ContentInspect
   enableContentInspect = () => {
     const { modules } = this.state;
     if (modules.length <= 0 || modules.length > 32) {
-      console.error('modules length is invalid');
+      this.error('modules length is invalid');
       return;
     }
 
@@ -179,7 +179,7 @@ export default class ContentInspect
             title={'Add'}
             onPress={() => {
               if (interval <= 0) {
-                console.error('interval is invalid');
+                this.error('interval is invalid');
                 return;
               }
               this.setState({
@@ -201,7 +201,7 @@ export default class ContentInspect
         <AgoraText>{`moduleCount: ${modules.length}`}</AgoraText>
         <AgoraDivider />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ interval: +text });
           }}

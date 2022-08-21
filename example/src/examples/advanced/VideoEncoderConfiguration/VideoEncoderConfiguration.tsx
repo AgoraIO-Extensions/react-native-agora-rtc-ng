@@ -71,7 +71,7 @@ export default class VideoEncoderConfiguration
   protected async initRtcEngine() {
     const { appId } = this.state;
     if (!appId) {
-      console.error(`appId is invalid`);
+      this.error(`appId is invalid`);
     }
 
     this.engine = createAgoraRtcEngine();
@@ -105,11 +105,11 @@ export default class VideoEncoderConfiguration
   protected joinChannel() {
     const { channelId, token, uid } = this.state;
     if (!channelId) {
-      console.error('channelId is invalid');
+      this.error('channelId is invalid');
       return;
     }
     if (uid < 0) {
-      console.error('uid is invalid');
+      this.error('uid is invalid');
       return;
     }
 
@@ -195,7 +195,7 @@ export default class VideoEncoderConfiguration
         <AgoraView style={styles.container}>
           <AgoraTextInput
             style={AgoraStyle.fullSize}
-            onEndEditing={({ nativeEvent: { text } }) => {
+            onChangeText={(text) => {
               if (isNaN(+text)) return;
               this.setState({ width: +text });
             }}
@@ -207,7 +207,7 @@ export default class VideoEncoderConfiguration
           />
           <AgoraTextInput
             style={AgoraStyle.fullSize}
-            onEndEditing={({ nativeEvent: { text } }) => {
+            onChangeText={(text) => {
               if (isNaN(+text)) return;
               this.setState({ height: +text });
             }}
@@ -221,7 +221,7 @@ export default class VideoEncoderConfiguration
           />
         </AgoraView>
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ frameRate: +text });
           }}
@@ -236,7 +236,7 @@ export default class VideoEncoderConfiguration
           }
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ bitrate: +text });
           }}
@@ -249,7 +249,7 @@ export default class VideoEncoderConfiguration
           }
         />
         <AgoraTextInput
-          onEndEditing={({ nativeEvent: { text } }) => {
+          onChangeText={(text) => {
             if (isNaN(+text)) return;
             this.setState({ minBitrate: +text });
           }}
