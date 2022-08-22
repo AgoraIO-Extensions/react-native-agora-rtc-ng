@@ -176,7 +176,7 @@ export abstract class BaseComponent<
         </AgoraView>
         {enableVideo ? (
           <AgoraView style={AgoraStyle.videoLarge}>
-            {this.renderVideo()}
+            {this.renderUsers()}
           </AgoraView>
         ) : undefined}
         {configuration ? (
@@ -215,26 +215,31 @@ export abstract class BaseComponent<
     );
   }
 
-  protected renderVideo(): ReactNode {
+  protected renderUsers(): ReactNode {
     const { startPreview, joinChannelSuccess, remoteUsers } = this.state;
     return (
       <>
-        {startPreview || joinChannelSuccess ? (
-          <RtcSurfaceView style={AgoraStyle.videoLarge} canvas={{ uid: 0 }} />
-        ) : undefined}
+        {startPreview || joinChannelSuccess ? this.renderVideo(0) : undefined}
         {remoteUsers !== undefined && remoteUsers.length > 0 ? (
           <ScrollView horizontal={true} style={AgoraStyle.videoContainer}>
             {remoteUsers.map((value, index) => (
-              <RtcSurfaceView
-                key={`${value}-${index}`}
-                style={AgoraStyle.videoSmall}
-                zOrderMediaOverlay={true}
-                canvas={{ uid: value }}
-              />
+              <AgoraView key={`${value}-${index}`}>
+                {this.renderVideo(value)}
+              </AgoraView>
             ))}
           </ScrollView>
         ) : undefined}
       </>
+    );
+  }
+
+  protected renderVideo(uid: number): ReactNode {
+    return (
+      <RtcSurfaceView
+        style={uid === 0 ? AgoraStyle.videoLarge : AgoraStyle.videoSmall}
+        zOrderMediaOverlay={uid !== 0}
+        canvas={{ uid }}
+      />
     );
   }
 
@@ -252,7 +257,7 @@ export abstract class BaseComponent<
     ...optionalParams: any[]
   ): string {
     if (level === 'error' && !__DEV__) {
-      Alert.alert(message);
+      this.alert(message);
     } else {
       console[level](message, ...optionalParams);
     }
@@ -262,7 +267,7 @@ export abstract class BaseComponent<
   }
 
   protected debug(message?: any, ...optionalParams: any[]): void {
-    Alert.alert(message, this._logSink('debug', message, optionalParams));
+    this.alert(message, this._logSink('debug', message, optionalParams));
   }
 
   protected log(message?: any, ...optionalParams: any[]): void {
@@ -279,6 +284,10 @@ export abstract class BaseComponent<
 
   protected error(message?: any, ...optionalParams: any[]): void {
     this._logSink('error', message, optionalParams);
+  }
+
+  protected alert(title: string, message?: string): void {
+    Alert.alert(title, message);
   }
 }
 

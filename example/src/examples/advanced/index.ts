@@ -53,6 +53,10 @@ const Advanced = {
       component: DirectCdnStreaming,
     },
     {
+      name: 'EncodedVideoFrame',
+      component: EncodedVideoFrame,
+    },
+    {
       name: 'Encryption',
       component: Encryption,
     },
@@ -79,10 +83,6 @@ const Advanced = {
     {
       name: 'PlayEffect',
       component: PlayEffect,
-    },
-    {
-      name: 'EncodedVideoFrame',
-      component: EncodedVideoFrame,
     },
     {
       name: 'PushVideoFrame',

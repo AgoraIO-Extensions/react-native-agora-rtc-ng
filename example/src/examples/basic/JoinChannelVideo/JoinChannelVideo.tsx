@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import { PermissionsAndroid, Platform, ScrollView } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -203,7 +198,7 @@ export default class JoinChannelVideo
     );
   }
 
-  protected renderVideo(): React.ReactNode {
+  protected renderUsers(): React.ReactNode {
     const {
       startPreview,
       joinChannelSuccess,
@@ -309,11 +304,3 @@ export default class JoinChannelVideo
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});

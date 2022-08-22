@@ -348,7 +348,7 @@ export default class MediaPlayer
     );
   }
 
-  protected renderVideo(): React.ReactNode {
+  protected renderUsers(): React.ReactNode {
     const { open } = this.state;
     return (
       <>

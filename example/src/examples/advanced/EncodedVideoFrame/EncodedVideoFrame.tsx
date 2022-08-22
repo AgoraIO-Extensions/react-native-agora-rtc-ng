@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -204,7 +204,7 @@ export default class EncodedVideoFrame
       videoEncodedFrameInfo
     );
     if (videoEncodedFrameInfo.codecType === VideoCodecType.VideoCodecGeneric) {
-      Alert.alert(`Receive from uid:${uid}`, `${imageBuffer.toString()}`);
+      this.alert(`Receive from uid:${uid}`, `${imageBuffer.toString()}`);
     }
     return true;
   }

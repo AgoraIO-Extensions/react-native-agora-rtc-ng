@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -147,15 +147,9 @@ export default class SendMetadata
 
   onMetadataReceived(metadata: Metadata) {
     this.info('onMetadataReceived', 'metadata', metadata);
-    Alert.alert(
+    this.alert(
       `Receive from uid:${metadata.uid}`,
-      `${metadata.buffer?.toString()}`,
-      [
-        {
-          text: 'Ok',
-          onPress: () => {},
-        },
-      ]
+      `${metadata.buffer?.toString()}`
     );
   }
 

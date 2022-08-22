@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform, StyleSheet } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -19,7 +19,11 @@ import {
   BaseComponent,
   BaseVideoComponentState,
 } from '../../../components/BaseComponent';
-import { AgoraButton, AgoraTextInput } from '../../../components/ui';
+import {
+  AgoraButton,
+  AgoraImage,
+  AgoraTextInput,
+} from '../../../components/ui';
 import { getAbsolutePath, getAssetPath } from '../../../utils';
 
 interface State extends BaseVideoComponentState {
@@ -166,6 +170,16 @@ export default class PushVideoFrame
           placeholder={`filePath`}
           value={filePath}
         />
+        <AgoraImage
+          style={styles.image}
+          source={{
+            uri: `${
+              Platform.OS === 'android'
+                ? filePath.replace('/assets/', 'asset:/')
+                : filePath
+            }`,
+          }}
+        />
       </>
     );
   }
@@ -183,3 +197,10 @@ export default class PushVideoFrame
     );
   }
 }
+
+const styles = StyleSheet.create({
+  image: {
+    width: 120,
+    height: 120,
+  },
+});

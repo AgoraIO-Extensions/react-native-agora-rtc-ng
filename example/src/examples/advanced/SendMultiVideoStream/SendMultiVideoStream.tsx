@@ -281,11 +281,11 @@ export default class SendMultiVideoStream
     );
   }
 
-  protected renderVideo(): React.ReactNode {
+  protected renderUsers(): React.ReactNode {
     const { open } = this.state;
     return (
       <>
-        {super.renderVideo()}
+        {super.renderUsers()}
         {open ? (
           <RtcSurfaceView
             style={AgoraStyle.videoLarge}

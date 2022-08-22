@@ -162,7 +162,7 @@ export const AgoraDropdown = (
         textInputProps={{ style: AgoraStyle.input, chevronUp: true }}
         onValueChange={(v, index) => {
           setValue(v);
-          props.onValueChange(v, index);
+          props.onValueChange?.call(this, v, index);
         }}
       />
     </AgoraView>

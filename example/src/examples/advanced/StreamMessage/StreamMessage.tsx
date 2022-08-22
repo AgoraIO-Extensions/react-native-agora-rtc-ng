@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import {
   ChannelProfileType,
   ClientRoleType,
@@ -171,15 +171,9 @@ export default class StreamMessage
       'sentTs',
       sentTs
     );
-    Alert.alert(
+    this.alert(
       `Receive from uid:${remoteUid}`,
-      `StreamId ${streamId}: ${data.toString()}`,
-      [
-        {
-          text: 'Ok',
-          onPress: () => {},
-        },
-      ]
+      `StreamId ${streamId}: ${data.toString()}`
     );
   }
 

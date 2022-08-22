@@ -408,7 +408,7 @@ export default class JoinMultipleChannel
     );
   }
 
-  protected renderVideo(): React.ReactNode {
+  protected renderUsers(): React.ReactNode {
     const {
       startPreview,
       channelId,

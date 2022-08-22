@@ -339,11 +339,11 @@ export default class ScreenShare
     }
   }
 
-  protected renderVideo(): React.ReactNode {
+  protected renderUsers(): React.ReactNode {
     const { startScreenCapture } = this.state;
     return (
       <>
-        {super.renderVideo()}
+        {super.renderUsers()}
         {startScreenCapture ? (
           <RtcSurfaceView
             style={AgoraStyle.videoLarge}
