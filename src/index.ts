@@ -5,7 +5,7 @@ export const showRPSystemBroadcastPickerView: Function =
   ReactNativeAgoraRtcNg.showRPSystemBroadcastPickerView;
 
 import { IRtcEngine } from './IAgoraRtcEngine';
-import { RtcEngineInternal } from './internal/RtcEngineInternal';
+import { RtcEngineExInternal } from './internal/RtcEngineExInternal';
 import { IMediaPlayerCacheManager } from './IAgoraMediaPlayer';
 import { IMediaPlayerCacheManagerImpl } from './impl/IAgoraMediaPlayerImpl';
 
@@ -32,7 +32,7 @@ export {
   callIrisApi,
 } from './internal/IrisApiEngine';
 
-const instance = new RtcEngineInternal();
+const instance = new RtcEngineExInternal();
 
 /**
  * Creates the IRtcEngine object.

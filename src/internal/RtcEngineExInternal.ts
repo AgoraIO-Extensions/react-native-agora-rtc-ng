@@ -35,7 +35,7 @@ import { MediaEngineInternal } from './MediaEngineInternal';
 import { MediaRecorderInternal } from './MediaRecorderInternal';
 import { LocalSpatialAudioEngineInternal } from './LocalSpatialAudioEngineInternal';
 
-export class RtcEngineInternal extends IRtcEngineExImpl {
+export class RtcEngineExInternal extends IRtcEngineExImpl {
   static _handlers: (
     | IRtcEngineEventHandler
     | IDirectCdnStreamingEventHandler
@@ -60,9 +60,9 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     this._media_engine.release();
     this._media_recorder.release();
     this._local_spatial_audio_engine.release();
-    RtcEngineInternal._handlers = [];
-    RtcEngineInternal._audio_encoded_frame_observers = [];
-    RtcEngineInternal._audio_spectrum_observers = [];
+    RtcEngineExInternal._handlers = [];
+    RtcEngineExInternal._audio_encoded_frame_observers = [];
+    RtcEngineExInternal._audio_spectrum_observers = [];
     MediaPlayerInternal._source_observers.clear();
     super.release(sync);
   }
@@ -78,14 +78,14 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   }
 
   registerEventHandler(eventHandler: IRtcEngineEventHandler): boolean {
-    if (!RtcEngineInternal._handlers.find((value) => value === eventHandler)) {
-      RtcEngineInternal._handlers.push(eventHandler);
+    if (!RtcEngineExInternal._handlers.find((value) => value === eventHandler)) {
+      RtcEngineExInternal._handlers.push(eventHandler);
     }
     return true;
   }
 
   unregisterEventHandler(eventHandler: IRtcEngineEventHandler): boolean {
-    RtcEngineInternal._handlers = RtcEngineInternal._handlers.filter(
+    RtcEngineExInternal._handlers = RtcEngineExInternal._handlers.filter(
       (value) => value !== eventHandler
     );
     return true;
@@ -119,8 +119,8 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     publishUrl: string,
     options: DirectCdnStreamingMediaOptions
   ): number {
-    if (!RtcEngineInternal._handlers.find((value) => value === eventHandler)) {
-      RtcEngineInternal._handlers.push(eventHandler);
+    if (!RtcEngineExInternal._handlers.find((value) => value === eventHandler)) {
+      RtcEngineExInternal._handlers.push(eventHandler);
     }
     return super.startDirectCdnStreaming(eventHandler, publishUrl, options);
   }
@@ -129,8 +129,8 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     observer: IMetadataObserver,
     type: MetadataType
   ): number {
-    if (!RtcEngineInternal._handlers.find((value) => value === observer)) {
-      RtcEngineInternal._handlers.push(observer);
+    if (!RtcEngineExInternal._handlers.find((value) => value === observer)) {
+      RtcEngineExInternal._handlers.push(observer);
     }
     return super.registerMediaMetadataObserver(observer, type);
   }
@@ -139,7 +139,7 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     observer: IMetadataObserver,
     type: MetadataType
   ): number {
-    RtcEngineInternal._handlers = RtcEngineInternal._handlers.filter(
+    RtcEngineExInternal._handlers = RtcEngineExInternal._handlers.filter(
       (value) => value !== observer
     );
     return super.unregisterMediaMetadataObserver(observer, type);
@@ -266,11 +266,11 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
     observer: IAudioEncodedFrameObserver
   ): number {
     if (
-      !RtcEngineInternal._audio_encoded_frame_observers.find(
+      !RtcEngineExInternal._audio_encoded_frame_observers.find(
         (value) => value === observer
       )
     ) {
-      RtcEngineInternal._audio_encoded_frame_observers.push(observer);
+      RtcEngineExInternal._audio_encoded_frame_observers.push(observer);
     }
     return super.registerAudioEncodedFrameObserver(config, observer);
   }
@@ -278,8 +278,8 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
   unregisterAudioEncodedFrameObserver(
     observer: IAudioEncodedFrameObserver
   ): number {
-    RtcEngineInternal._audio_encoded_frame_observers =
-      RtcEngineInternal._audio_encoded_frame_observers.filter(
+    RtcEngineExInternal._audio_encoded_frame_observers =
+      RtcEngineExInternal._audio_encoded_frame_observers.filter(
         (value) => value !== observer
       );
     return super.unregisterAudioEncodedFrameObserver(observer);
@@ -287,18 +287,18 @@ export class RtcEngineInternal extends IRtcEngineExImpl {
 
   registerAudioSpectrumObserver(observer: IAudioSpectrumObserver): number {
     if (
-      !RtcEngineInternal._audio_spectrum_observers.find(
+      !RtcEngineExInternal._audio_spectrum_observers.find(
         (value) => value === observer
       )
     ) {
-      RtcEngineInternal._audio_spectrum_observers.push(observer);
+      RtcEngineExInternal._audio_spectrum_observers.push(observer);
     }
     return super.registerAudioSpectrumObserver(observer);
   }
 
   unregisterAudioSpectrumObserver(observer: IAudioSpectrumObserver): number {
-    RtcEngineInternal._audio_spectrum_observers =
-      RtcEngineInternal._audio_spectrum_observers.filter(
+    RtcEngineExInternal._audio_spectrum_observers =
+      RtcEngineExInternal._audio_spectrum_observers.filter(
         (value) => value !== observer
       );
     return super.unregisterAudioSpectrumObserver(observer);

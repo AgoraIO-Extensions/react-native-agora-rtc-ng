@@ -8,7 +8,7 @@ import {
   Metadata,
 } from '../IAgoraRtcEngine';
 import { IMediaPlayer } from '../IAgoraMediaPlayer';
-import { RtcEngineInternal } from './RtcEngineInternal';
+import { RtcEngineExInternal } from './RtcEngineExInternal';
 import {
   processIDirectCdnStreamingEventHandler,
   processIMetadataObserver,
@@ -113,7 +113,7 @@ EventEmitter.addListener('onEvent', function (args) {
     // }
     if (event.startsWith('RtcEngine_')) {
       event = event.replace('RtcEngine_', '');
-      RtcEngineInternal._audio_spectrum_observers.forEach((value) => {
+      RtcEngineExInternal._audio_spectrum_observers.forEach((value) => {
         processIAudioSpectrumObserver(value, event, data);
       });
     } else if (event.startsWith('MediaPlayer_')) {
@@ -133,7 +133,7 @@ EventEmitter.addListener('onEvent', function (args) {
         (data.frameBuffer as Uint8Array) = Buffer.from(buffers[0], 'base64');
         break;
     }
-    RtcEngineInternal._audio_encoded_frame_observers.forEach((value) => {
+    RtcEngineExInternal._audio_encoded_frame_observers.forEach((value) => {
       processIAudioEncodedFrameObserver(value, event, data);
     });
   } else if (event.startsWith('VideoEncodedFrameObserver_')) {
@@ -206,12 +206,12 @@ EventEmitter.addListener('onEvent', function (args) {
         }
         break;
     }
-    RtcEngineInternal._handlers.forEach((value) => {
+    RtcEngineExInternal._handlers.forEach((value) => {
       processIMetadataObserver(value as IMetadataObserver, event, data);
     });
   } else if (event.startsWith('DirectCdnStreamingEventHandler_')) {
     event = event.replace('DirectCdnStreamingEventHandler_', '');
-    RtcEngineInternal._handlers.forEach((value) => {
+    RtcEngineExInternal._handlers.forEach((value) => {
       processIDirectCdnStreamingEventHandler(
         value as IDirectCdnStreamingEventHandler,
         event,
@@ -225,7 +225,7 @@ EventEmitter.addListener('onEvent', function (args) {
         data.data = Buffer.from(buffers[0], 'base64');
         break;
     }
-    RtcEngineInternal._handlers.forEach((value) => {
+    RtcEngineExInternal._handlers.forEach((value) => {
       if (event.endsWith('Ex')) {
         event = event.replace('Ex', '');
       }

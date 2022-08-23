@@ -99,6 +99,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(newIrisApiEngine) {
         self.irisApiEngine = new IrisApiEngine;
         self.irisApiEngine->SetIrisRtcEngineEventHandler(self.eventHandler);
         self.irisApiEngine->SetIrisMediaPlayerEventHandler(self.eventHandler);
+        self.irisApiEngine->SetIrisMediaRecorderEventHandler(self.eventHandler);
     }
     return [NSNull null];
 }
@@ -107,6 +108,7 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(destroyIrisApiEngine) {
     if (self.irisApiEngine != nullptr) {
         self.irisApiEngine->UnsetIrisRtcEngineEventHandler(self.eventHandler);
         self.irisApiEngine->UnsetIrisMediaPlayerEventHandler(self.eventHandler);
+        self.irisApiEngine->UnsetIrisMediaRecorderEventHandler(self.eventHandler);
         delete self.irisApiEngine;
         self.irisApiEngine = nullptr;
     }
