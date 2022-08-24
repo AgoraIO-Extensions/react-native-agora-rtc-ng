@@ -445,6 +445,7 @@ export default class JoinMultipleChannel
                 key={`${value}-${index}`}
                 style={AgoraStyle.videoSmall}
                 canvas={{ uid: value }}
+                zOrderMediaOverlay={true}
                 connection={{ channelId: channelId2, localUid: uid2 }}
               />
             ))}
