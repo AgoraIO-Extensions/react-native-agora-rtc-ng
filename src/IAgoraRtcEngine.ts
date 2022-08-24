@@ -7,6 +7,7 @@ import {
   VideoFormat,
   Rectangle,
   ScreenCaptureParameters,
+  VideoMirrorModeType,
   ClientRoleType,
   AudienceLatencyLevelType,
   ChannelProfileType,
@@ -66,7 +67,6 @@ import {
   VoiceBeautifierPreset,
   AudioEffectPreset,
   VoiceConversionPreset,
-  VideoMirrorModeType,
   EarMonitoringFilterType,
   SenderOptions,
   AudioSessionOperationRestriction,
@@ -914,6 +914,10 @@ export class ImageTrackOptions {
    * @ignore
    */
   fps?: number;
+  /**
+   * @ignore
+   */
+  mirrorMode?: VideoMirrorModeType;
 }
 
 /**
@@ -1447,16 +1451,6 @@ export abstract class IRtcEngineEventHandler {
   ): void;
 
   /**
-   * @ignore
-   */
-  onVideoSourceFrameSizeChanged?(
-    connection: RtcConnection,
-    sourceType: VideoSourceType,
-    width: number,
-    height: number
-  ): void;
-
-  /**
    * Occurs when the first remote video frame is received and decoded.
    * The SDK triggers this callback under one of the following circumstances:
    * The remote user joins the channel and sends the video stream.
@@ -1499,6 +1493,7 @@ export abstract class IRtcEngineEventHandler {
    */
   onVideoSizeChanged?(
     connection: RtcConnection,
+    sourceType: VideoSourceType,
     uid: number,
     width: number,
     height: number,

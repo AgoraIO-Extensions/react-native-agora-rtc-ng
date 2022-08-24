@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 const { ReactNativeAgoraRtcNg } = NativeModules;
-export const showRPSystemBroadcastPickerView: Function =
+export const showRPSystemBroadcastPickerView: () => Promise<void> =
   ReactNativeAgoraRtcNg.showRPSystemBroadcastPickerView;
 
 import { IRtcEngine } from './IAgoraRtcEngine';
@@ -45,6 +45,9 @@ export function createAgoraRtcEngine(): IRtcEngine {
   return instance;
 }
 
+/**
+ * @ignore
+ */
 export function getMediaPlayerCacheManager(): IMediaPlayerCacheManager {
   return new IMediaPlayerCacheManagerImpl();
 }

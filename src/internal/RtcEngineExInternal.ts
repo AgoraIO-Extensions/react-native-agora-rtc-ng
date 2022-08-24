@@ -64,6 +64,9 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
     RtcEngineExInternal._audio_encoded_frame_observers = [];
     RtcEngineExInternal._audio_spectrum_observers = [];
     MediaPlayerInternal._source_observers.clear();
+    MediaPlayerInternal._audio_frame_observers.clear();
+    MediaPlayerInternal._video_frame_observers.clear();
+    MediaPlayerInternal._audio_spectrum_observers.clear();
     super.release(sync);
   }
 
@@ -78,7 +81,9 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
   }
 
   registerEventHandler(eventHandler: IRtcEngineEventHandler): boolean {
-    if (!RtcEngineExInternal._handlers.find((value) => value === eventHandler)) {
+    if (
+      !RtcEngineExInternal._handlers.find((value) => value === eventHandler)
+    ) {
       RtcEngineExInternal._handlers.push(eventHandler);
     }
     return true;
@@ -119,7 +124,9 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
     publishUrl: string,
     options: DirectCdnStreamingMediaOptions
   ): number {
-    if (!RtcEngineExInternal._handlers.find((value) => value === eventHandler)) {
+    if (
+      !RtcEngineExInternal._handlers.find((value) => value === eventHandler)
+    ) {
       RtcEngineExInternal._handlers.push(eventHandler);
     }
     return super.startDirectCdnStreaming(eventHandler, publishUrl, options);
