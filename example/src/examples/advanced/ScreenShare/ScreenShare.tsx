@@ -193,7 +193,40 @@ export default class ScreenShare
   };
 
   /**
-   * Step 3-2: publishScreenCapture
+   * Step 3-2 (Optional): updateScreenCaptureParameters
+   */
+  updateScreenCaptureParameters = () => {
+    const {
+      captureAudio,
+      sampleRate,
+      channels,
+      captureSignalVolume,
+      captureVideo,
+      width,
+      height,
+      frameRate,
+      bitrate,
+      contentHint,
+    } = this.state;
+    this.engine?.updateScreenCapture({
+      captureAudio,
+      audioParams: {
+        sampleRate,
+        channels,
+        captureSignalVolume,
+      },
+      captureVideo,
+      videoParams: {
+        dimensions: { width, height },
+        frameRate,
+        bitrate,
+        contentHint,
+      },
+    });
+  };
+
+  /**
+   * Step 3-3: publishScreenCapture
    */
   publishScreenCapture = () => {
     const { channelId, token2, uid2 } = this.state;
@@ -219,14 +252,14 @@ export default class ScreenShare
   };
 
   /**
-   * Step 3-3: stopScreenCapture
+   * Step 3-4: stopScreenCapture
    */
   stopScreenCapture = () => {
     this.engine?.stopScreenCapture();
   };
 
   /**
-   * Step 3-4: unpublishScreenCapture
+   * Step 3-5: unpublishScreenCapture
    */
   unpublishScreenCapture = () => {
     const { channelId, uid2 } = this.state;
@@ -554,6 +587,11 @@ export default class ScreenShare
               ? this.stopScreenCapture
               : this.startScreenCapture
           }
+        />
+        <AgoraButton
+          disabled={!startScreenCapture}
+          title={'updateScreenCaptureParameters'}
+          onPress={this.updateScreenCaptureParameters}
         />
         <AgoraButton
           title={`${
