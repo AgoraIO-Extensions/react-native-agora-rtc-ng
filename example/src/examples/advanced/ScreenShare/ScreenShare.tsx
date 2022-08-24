@@ -50,8 +50,8 @@ interface State extends BaseVideoComponentState {
   frameRate: number;
   bitrate: number;
   contentHint: VideoContentHint;
-  startScreenCapture?: boolean;
-  publishScreenCapture?: boolean;
+  startScreenCapture: boolean;
+  publishScreenCapture: boolean;
 }
 
 export default class ScreenShare
