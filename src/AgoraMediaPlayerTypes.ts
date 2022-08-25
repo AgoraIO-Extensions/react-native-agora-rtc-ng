@@ -3,8 +3,7 @@
  */
 export enum MediaPlayerState {
   /**
-   * 0: The default state.
-   * The media player returns this state code before you open the media resource or after you stop the playback.
+   * 0: The default state. The media player returns this state code before you open the media resource or after you stop the playback.
    */
   PlayerStateIdle = 0,
   /**
@@ -152,15 +151,15 @@ export enum MediaPlayerError {
  */
 export enum MediaStreamType {
   /**
-   * 0: The type is unknown.
+   *
    */
   StreamTypeUnknown = 0,
   /**
-   * 1: The video stream.
+   * @ignore
    */
   StreamTypeVideo = 1,
   /**
-   * 2: The audio stream.
+   * @ignore
    */
   StreamTypeAudio = 2,
   /**
@@ -270,7 +269,7 @@ export class PlayerStreamInfo {
    */
   streamIndex?: number;
   /**
-   * The type of the media stream. See MediaStreamType .
+   * The type of the media stream.See MediaStreamType .
    */
   streamType?: MediaStreamType;
   /**

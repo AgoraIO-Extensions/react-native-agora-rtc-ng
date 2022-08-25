@@ -9,7 +9,7 @@ export enum AudioRoute {
    */
   RouteDefault = -1,
   /**
-   * Audio output routing is a headset with microphone.
+   * 0: Audio output routing is a headset with microphone.
    */
   RouteHeadset = 0,
   /**
@@ -25,7 +25,7 @@ export enum AudioRoute {
    */
   RouteSpeakerphone = 3,
   /**
-   * 4: The audio route is an external speaker. (iOS only)
+   * 4: The audio route is an external speaker.(iOS only)
    */
   RouteLoudspeaker = 4,
   /**
@@ -83,11 +83,11 @@ export class AudioParameters {
  */
 export enum RawAudioFrameOpModeType {
   /**
-   * 0: Read-only mode:
+   * 0: Read-only mode,
    */
   RawAudioFrameOpModeReadOnly = 0,
   /**
-   * 2: Read and write mode:
+   * 2: Read and write mode,
    */
   RawAudioFrameOpModeReadWrite = 2,
 }
@@ -105,11 +105,11 @@ export enum MediaSourceType {
    */
   AudioRecordingSource = 1,
   /**
-   * @ignore
+   * 2: The primary camera.
    */
   PrimaryCameraSource = 2,
   /**
-   * @ignore
+   * 3: The secondary camera.
    */
   SecondaryCameraSource = 3,
   /**
@@ -149,7 +149,7 @@ export enum MediaSourceType {
    */
   TranscodedVideoSource = 12,
   /**
-   * @ignore
+   * 100: Unknown media source.
    */
   UnknownMediaSource = 100,
 }
@@ -397,11 +397,11 @@ export enum VideoBufferType {
    */
   VideoBufferRawData = 1,
   /**
-   * @ignore
+   * 2: The video buffer in the format of raw data.
    */
   VideoBufferArray = 2,
   /**
-   * @ignore
+   * 3: The video buffer in the format ofTexture.
    */
   VideoBufferTexture = 3,
 }
@@ -689,7 +689,7 @@ export class AudioParams {
 /**
  * @ignore
  */
-export abstract class IAudioFrameObserverBase {
+export interface IAudioFrameObserverBase {
   /**
    * @ignore
    */
@@ -709,7 +709,7 @@ export abstract class IAudioFrameObserverBase {
 /**
  * @ignore
  */
-export abstract class IAudioFrameObserver extends IAudioFrameObserverBase {
+export interface IAudioFrameObserver extends IAudioFrameObserverBase {
   /**
    * @ignore
    */
@@ -751,7 +751,7 @@ export class UserAudioSpectrumInfo {
 /**
  * @ignore
  */
-export abstract class IAudioSpectrumObserver {
+export interface IAudioSpectrumObserver {
   /**
    * @ignore
    */
@@ -769,7 +769,7 @@ export abstract class IAudioSpectrumObserver {
 /**
  * @ignore
  */
-export abstract class IVideoEncodedFrameObserver {
+export interface IVideoEncodedFrameObserver {
   /**
    * @ignore
    */
@@ -798,7 +798,7 @@ export enum VideoFrameProcessMode {
 /**
  * @ignore
  */
-export abstract class IVideoFrameObserver {
+export interface IVideoFrameObserver {
   /**
    * @ignore
    */
@@ -995,7 +995,7 @@ export class RecorderInfo {
 /**
  * @ignore
  */
-export abstract class IMediaRecorderObserver {
+export interface IMediaRecorderObserver {
   /**
    * @ignore
    */

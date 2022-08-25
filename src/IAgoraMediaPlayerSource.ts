@@ -10,7 +10,7 @@ import {
 /**
  * Provides callbacks for media players.
  */
-export abstract class IMediaPlayerSourceObserver {
+export interface IMediaPlayerSourceObserver {
   /**
    * Reports the playback state change.
    * When the state of the media player changes, the SDK triggers this callback to report the current playback state.
@@ -60,9 +60,7 @@ export abstract class IMediaPlayerSourceObserver {
 
   /**
    * Reports the playback duration that the buffered data can support.
-   * When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.
-   * When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PlayerEventBufferLow.
-   * When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PlayerEventBufferRecover.
+   * When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returnsPlayerEventBufferLow.When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returnsPlayerEventBufferRecover.
    *
    * @param playCachedBuffer The playback duration (ms) that the buffered data can support.
    */
@@ -82,7 +80,7 @@ export abstract class IMediaPlayerSourceObserver {
 
   /**
    * Occurs when the token is about to expire.
-   * If the ts is about to expire when you call the switchAgoraCDNLineByIndex method to switch the CDN route for playing the media resource, the SDK triggers this callback to remind you to renew the authentication information. You need to call the renewAgoraCDNSrcToken method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call switchAgoraCDNLineByIndex to complete the route switching.
+   * If thets is about to expire when you call the switchAgoraCDNLineByIndex method to switch the CDN route for playing the media resource, the SDK triggers this callback to remind you to renew the authentication information. You need to call the renewAgoraCDNSrcToken method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call switchAgoraCDNLineByIndex to complete the route switching.
    */
   onAgoraCDNTokenWillExpire?(): void;
 
