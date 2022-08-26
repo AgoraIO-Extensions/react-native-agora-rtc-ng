@@ -41,12 +41,20 @@ export interface RtcSurfaceViewProps extends RtcRendererViewProps {
   zOrderMediaOverlay?: boolean;
 }
 
+/**
+ * The RtcSurfaceView class.
+ * This class is used to render:Android: This class corresponds to the native SurfaceView.iOS: This class corresponds to the native UIView.
+ */
 export class RtcSurfaceView extends IAgoraRtcRenderView<RtcSurfaceViewProps> {
   get view(): HostComponent<{ callApi: object }> {
     return AgoraRtcSurfaceView;
   }
 }
 
+/**
+ * The RtcTextureView class.
+ * This class is used to render and corresponds to the Android native TextureView.This class is only available for the Android platform, not the iOS platform.
+ */
 export class RtcTextureView extends IAgoraRtcRenderView<RtcRendererViewProps> {
   get view(): HostComponent<{ callApi: object }> {
     return AgoraRtcTextureView;

@@ -1,5 +1,5 @@
 PODS:
-  - AgoraIrisRTC_iOS (4.0.0-beta.6)
+  - AgoraIrisRTC_iOS (4.0.0-beta.7)
   - boost-for-react-native (1.63.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -265,7 +265,7 @@ PODS:
     - React-perflogger (= 0.64.0)
   - React-jsinspector (0.64.0)
   - react-native-agora-rtc-ng (4.0.0-beta.1):
-    - AgoraIrisRTC_iOS (= 4.0.0-beta.6)
+    - AgoraIrisRTC_iOS (= 4.0.0-beta.7)
     - React-Core
   - react-native-image-tools (0.8.1):
     - React
@@ -354,7 +354,7 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
-  - AgoraIrisRTC_iOS (= 4.0.0-beta.6)
+  - AgoraIrisRTC_iOS (= 4.0.0-beta.7)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -510,7 +510,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AgoraIrisRTC_iOS: 64ae1cd039d047615b5a658dd58a724ebf5e3d19
+  AgoraIrisRTC_iOS: 0cbff5122d70861d834d41d653aaf9e5f1a4d690
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
@@ -537,7 +537,7 @@ SPEC CHECKSUMS:
   React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
-  react-native-agora-rtc-ng: bd952303122faabe8b6567c1bae9667ad474fc31
+  react-native-agora-rtc-ng: 8f170d6cb2f96052d7c086421b3504b3a6a37925
   react-native-image-tools: 88218449791389bbf550a2c475a3b564c8233c8b
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
@@ -562,6 +562,6 @@ SPEC CHECKSUMS:
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cfb1ee16047b55714ef7750bb5305482a2ab4131
+PODFILE CHECKSUM: abd1541609e0823137f6cd32ebea512a260efd69
 
 COCOAPODS: 1.11.3
