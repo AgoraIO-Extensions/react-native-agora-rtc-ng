@@ -230,7 +230,6 @@ export default class AudioMixing
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`cycle (defaults: ${this.createState().cycle})`}
-          value={cycle === this.createState().cycle ? '' : cycle.toString()}
         />
         <AgoraTextInput
           onChangeText={(text) => {
@@ -241,9 +240,6 @@ export default class AudioMixing
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`startPos (defaults: ${this.createState().startPos})`}
-          value={
-            startPos === this.createState().startPos ? '' : startPos.toString()
-          }
         />
       </>
     );

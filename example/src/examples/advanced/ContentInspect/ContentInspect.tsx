@@ -166,15 +166,15 @@ export default class ContentInspect
     const { modules, type, interval } = this.state;
     return (
       <>
+        <AgoraDropdown
+          title={'type'}
+          items={enumToItems(ContentInspectType)}
+          value={type}
+          onValueChange={(value) => {
+            this.setState({ type: value });
+          }}
+        />
         <AgoraView style={styles.container}>
-          <AgoraDropdown
-            title={'type'}
-            items={enumToItems(ContentInspectType)}
-            value={type}
-            onValueChange={(value) => {
-              this.setState({ type: value });
-            }}
-          />
           <AgoraButton
             title={'Add'}
             onPress={() => {
@@ -209,9 +209,6 @@ export default class ContentInspect
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`interval (defaults: ${this.createState().interval})`}
-          value={
-            interval === this.createState().interval ? '' : interval.toString()
-          }
         />
       </>
     );

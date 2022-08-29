@@ -219,9 +219,6 @@ export default class PlayEffect
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`soundId (defaults: ${this.createState().soundId})`}
-          value={
-            soundId === this.createState().soundId ? '' : soundId.toString()
-          }
         />
         <AgoraTextInput
           onChangeText={(text) => {
@@ -239,11 +236,6 @@ export default class PlayEffect
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`loopCount (defaults: ${this.createState().loopCount})`}
-          value={
-            loopCount === this.createState().loopCount
-              ? ''
-              : loopCount.toString()
-          }
         />
         <AgoraSlider
           title={`pitch`}
@@ -295,9 +287,6 @@ export default class PlayEffect
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`startPos (defaults: ${this.createState().startPos})`}
-          value={
-            startPos === this.createState().startPos ? '' : startPos.toString()
-          }
         />
       </>
     );

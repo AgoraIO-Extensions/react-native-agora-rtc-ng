@@ -444,11 +444,6 @@ export default class ScreenShare
                   placeholder={`sampleRate (defaults: ${
                     this.createState().sampleRate
                   })`}
-                  value={
-                    sampleRate === this.createState().sampleRate
-                      ? ''
-                      : sampleRate.toString()
-                  }
                 />
                 <AgoraTextInput
                   onChangeText={(text) => {
@@ -463,11 +458,6 @@ export default class ScreenShare
                   placeholder={`channels (defaults: ${
                     this.createState().channels
                   })`}
-                  value={
-                    channels === this.createState().channels
-                      ? ''
-                      : channels.toString()
-                  }
                 />
               </>
             ) : undefined}
@@ -507,9 +497,6 @@ export default class ScreenShare
                     : 'numbers-and-punctuation'
                 }
                 placeholder={`width (defaults: ${this.createState().width})`}
-                value={
-                  width === this.createState().width ? '' : width.toString()
-                }
               />
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
@@ -523,9 +510,6 @@ export default class ScreenShare
                     : 'numbers-and-punctuation'
                 }
                 placeholder={`height (defaults: ${this.createState().height})`}
-                value={
-                  height === this.createState().height ? '' : height.toString()
-                }
               />
             </AgoraView>
             <AgoraTextInput
@@ -541,11 +525,6 @@ export default class ScreenShare
               placeholder={`frameRate (defaults: ${
                 this.createState().frameRate
               })`}
-              value={
-                frameRate === this.createState().frameRate
-                  ? ''
-                  : frameRate.toString()
-              }
             />
             <AgoraTextInput
               onChangeText={(text) => {
@@ -558,9 +537,6 @@ export default class ScreenShare
                   : 'numbers-and-punctuation'
               }
               placeholder={`bitrate (defaults: ${this.createState().bitrate})`}
-              value={
-                bitrate === this.createState().bitrate ? '' : bitrate.toString()
-              }
             />
             <AgoraDropdown
               title={'contentHint'}

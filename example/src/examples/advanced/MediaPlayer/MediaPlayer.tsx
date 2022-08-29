@@ -332,11 +332,6 @@ export default class MediaPlayer
             Platform.OS === 'android' ? 'numeric' : 'numbers-and-punctuation'
           }
           placeholder={`loopCount (defaults: ${this.createState().loopCount})`}
-          value={
-            loopCount === this.createState().loopCount
-              ? ''
-              : loopCount.toString()
-          }
         />
         <AgoraButton
           disabled={!open}

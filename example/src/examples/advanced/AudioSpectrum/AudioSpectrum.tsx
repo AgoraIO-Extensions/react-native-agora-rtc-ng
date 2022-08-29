@@ -182,11 +182,6 @@ export default class AudioSpectrum
           placeholder={`intervalInMS (defaults: ${
             this.createState().intervalInMS
           })`}
-          value={
-            intervalInMS === this.createState().intervalInMS
-              ? ''
-              : intervalInMS.toString()
-          }
         />
         {enableAudioSpectrumMonitor && audioSpectrumData.length > 0 ? (
           <>

@@ -392,9 +392,6 @@ export default class RTMPStreaming
                     : 'numbers-and-punctuation'
                 }
                 placeholder={`width (defaults: ${this.createState().width})`}
-                value={
-                  width === this.createState().width ? '' : width.toString()
-                }
               />
               <AgoraTextInput
                 style={AgoraStyle.fullSize}
@@ -408,9 +405,6 @@ export default class RTMPStreaming
                     : 'numbers-and-punctuation'
                 }
                 placeholder={`height (defaults: ${this.createState().height})`}
-                value={
-                  height === this.createState().height ? '' : height.toString()
-                }
               />
             </AgoraView>
             <AgoraTextInput
@@ -426,11 +420,6 @@ export default class RTMPStreaming
               placeholder={`videoBitrate (defaults: ${
                 this.createState().videoBitrate
               })`}
-              value={
-                videoBitrate === this.createState().videoBitrate
-                  ? ''
-                  : videoBitrate.toString()
-              }
             />
             <AgoraTextInput
               onChangeText={(text) => {
@@ -445,11 +434,6 @@ export default class RTMPStreaming
               placeholder={`videoFramerate (defaults: ${
                 this.createState().videoFramerate
               })`}
-              value={
-                videoFramerate === this.createState().videoFramerate
-                  ? ''
-                  : videoFramerate.toString()
-              }
             />
             <AgoraTextInput
               onChangeText={(text) => {
@@ -464,11 +448,6 @@ export default class RTMPStreaming
               placeholder={`videoGop (defaults: ${
                 this.createState().videoGop
               })`}
-              value={
-                videoGop === this.createState().videoGop
-                  ? ''
-                  : videoGop.toString()
-              }
             />
             <AgoraDropdown
               title={'videoCodecProfile'}
@@ -524,11 +503,6 @@ export default class RTMPStreaming
               placeholder={`audioBitrate (defaults: ${
                 this.createState().audioBitrate
               })`}
-              value={
-                audioBitrate === this.createState().audioBitrate
-                  ? ''
-                  : audioBitrate.toString()
-              }
             />
             <AgoraSlider
               title={`audioChannels`}
