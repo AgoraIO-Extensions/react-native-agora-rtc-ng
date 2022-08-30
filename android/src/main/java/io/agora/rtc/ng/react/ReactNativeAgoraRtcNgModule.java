@@ -40,6 +40,7 @@ public class ReactNativeAgoraRtcNgModule
   @ReactMethod(isBlockingSynchronousMethod = true)
   public void newIrisApiEngine() {
     if (irisApiEngine == null) {
+      IrisApiEngine.enableUseJsonArray(true);
       irisApiEngine = new IrisApiEngine(getReactApplicationContext());
       irisApiEngine.setEventHandler(this);
     }
@@ -76,11 +77,6 @@ public class ReactNativeAgoraRtcNgModule
     }
   }
 
-  @ReactMethod(isBlockingSynchronousMethod = true)
-  public void loadExtensionProvider(String path) {
-    System.loadLibrary(path);
-  }
-
   @ReactMethod
   public void addListener(String eventName) {
     // Keep: Required for RN built in Event Emitter Calls.
@@ -99,7 +95,8 @@ public class ReactNativeAgoraRtcNgModule
     if (buffers != null) {
       WritableArray array = Arguments.createArray();
       for (byte[] buffer : buffers) {
-        array.pushString(Base64.encodeToString(buffer, 0, buffer.length, Base64.NO_WRAP));
+        String base64 = Base64.encodeToString(buffer, Base64.DEFAULT);
+        array.pushString(base64);
       }
       map.putArray("buffers", array);
     }

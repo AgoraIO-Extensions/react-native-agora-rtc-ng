@@ -1,13 +1,23 @@
 import { IMediaPlayerSourceObserver } from '../IAgoraMediaPlayerSource';
 import { ErrorCodeType } from '../AgoraBase';
+import { IAudioSpectrumObserver } from '../AgoraMediaBase';
 import { IMediaPlayerImpl } from '../impl/IAgoraMediaPlayerImpl';
-import { callIrisApi } from './IrisApiEngine';
+import {
+  IMediaPlayerAudioFrameObserver,
+  IMediaPlayerVideoFrameObserver,
+} from '../IAgoraMediaPlayer';
 
 export class MediaPlayerInternal extends IMediaPlayerImpl {
-  static _observers: Map<number, IMediaPlayerSourceObserver[]> = new Map<
+  static _source_observers: Map<number, IMediaPlayerSourceObserver[]> = new Map<
     number,
     IMediaPlayerSourceObserver[]
   >();
+  static _audio_frame_observers: Map<number, IMediaPlayerAudioFrameObserver[]> =
+    new Map<number, IMediaPlayerAudioFrameObserver[]>();
+  static _video_frame_observers: Map<number, IMediaPlayerVideoFrameObserver[]> =
+    new Map<number, IMediaPlayerVideoFrameObserver[]>();
+  static _audio_spectrum_observers: Map<number, IAudioSpectrumObserver[]> =
+    new Map<number, IAudioSpectrumObserver[]>();
   private readonly _mediaPlayerId: number;
 
   constructor(mediaPlayerId: number) {
@@ -20,56 +30,141 @@ export class MediaPlayerInternal extends IMediaPlayerImpl {
   }
 
   registerPlayerSourceObserver(observer: IMediaPlayerSourceObserver): number {
-    let observers = MediaPlayerInternal._observers.get(this._mediaPlayerId);
+    let observers = MediaPlayerInternal._source_observers.get(
+      this._mediaPlayerId
+    );
     if (observers === undefined) {
       observers = [];
-      MediaPlayerInternal._observers.set(this._mediaPlayerId, observers);
+      MediaPlayerInternal._source_observers.set(this._mediaPlayerId, observers);
     }
     if (!observers.find((value) => value === observer)) {
       observers.push(observer);
     }
-    return ErrorCodeType.ErrOk;
+    return super.registerPlayerSourceObserver(observer);
   }
 
   unregisterPlayerSourceObserver(observer: IMediaPlayerSourceObserver): number {
-    let observers = MediaPlayerInternal._observers.get(this._mediaPlayerId);
+    let observers = MediaPlayerInternal._source_observers.get(
+      this._mediaPlayerId
+    );
     if (observers === undefined) return -ErrorCodeType.ErrFailed;
-    MediaPlayerInternal._observers.set(
+    MediaPlayerInternal._source_observers.set(
       this._mediaPlayerId,
       observers.filter((value) => value !== observer)
     );
-    return ErrorCodeType.ErrOk;
+    return super.unregisterPlayerSourceObserver(observer);
   }
 
-  setPlayerOptionInInt(key: string, value: number): number {
-    const apiType = 'MediaPlayer_setPlayerOption';
-    const jsonParams = {
-      key,
-      value,
-      toJSON: () => {
-        return {
-          key,
-          value,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  registerAudioFrameObserver(observer: IMediaPlayerAudioFrameObserver): number {
+    let observers = MediaPlayerInternal._audio_frame_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) {
+      observers = [];
+      MediaPlayerInternal._audio_frame_observers.set(
+        this._mediaPlayerId,
+        observers
+      );
+    }
+    if (!observers.find((value) => value === observer)) {
+      observers.push(observer);
+    }
+    return super.registerAudioFrameObserver(observer);
   }
 
-  setPlayerOptionInString(key: string, value: string): number {
-    const apiType = 'MediaPlayer_setPlayerOption2';
-    const jsonParams = {
-      key,
-      value,
-      toJSON: () => {
-        return {
-          key,
-          value,
-        };
-      },
-    };
-    const jsonResults = callIrisApi.call(this, apiType, jsonParams);
-    return jsonResults.result;
+  unregisterAudioFrameObserver(
+    observer: IMediaPlayerAudioFrameObserver
+  ): number {
+    let observers = MediaPlayerInternal._audio_frame_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) return -ErrorCodeType.ErrFailed;
+    MediaPlayerInternal._audio_frame_observers.set(
+      this._mediaPlayerId,
+      observers.filter((value) => value !== observer)
+    );
+    return super.unregisterAudioFrameObserver(observer);
+  }
+
+  registerVideoFrameObserver(observer: IMediaPlayerVideoFrameObserver): number {
+    let observers = MediaPlayerInternal._video_frame_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) {
+      observers = [];
+      MediaPlayerInternal._video_frame_observers.set(
+        this._mediaPlayerId,
+        observers
+      );
+    }
+    if (!observers.find((value) => value === observer)) {
+      observers.push(observer);
+    }
+    return super.registerVideoFrameObserver(observer);
+  }
+
+  unregisterVideoFrameObserver(
+    observer: IMediaPlayerVideoFrameObserver
+  ): number {
+    let observers = MediaPlayerInternal._video_frame_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) return -ErrorCodeType.ErrFailed;
+    MediaPlayerInternal._video_frame_observers.set(
+      this._mediaPlayerId,
+      observers.filter((value) => value !== observer)
+    );
+    return super.unregisterVideoFrameObserver(observer);
+  }
+
+  registerMediaPlayerAudioSpectrumObserver(
+    observer: IAudioSpectrumObserver,
+    intervalInMS: number
+  ): number {
+    let observers = MediaPlayerInternal._audio_spectrum_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) {
+      observers = [];
+      MediaPlayerInternal._audio_spectrum_observers.set(
+        this._mediaPlayerId,
+        observers
+      );
+    }
+    if (!observers.find((value) => value === observer)) {
+      observers.push(observer);
+    }
+    return super.registerMediaPlayerAudioSpectrumObserver(
+      observer,
+      intervalInMS
+    );
+  }
+
+  unregisterMediaPlayerAudioSpectrumObserver(
+    observer: IAudioSpectrumObserver
+  ): number {
+    let observers = MediaPlayerInternal._audio_spectrum_observers.get(
+      this._mediaPlayerId
+    );
+    if (observers === undefined) return -ErrorCodeType.ErrFailed;
+    MediaPlayerInternal._audio_spectrum_observers.set(
+      this._mediaPlayerId,
+      observers.filter((value) => value !== observer)
+    );
+    return super.unregisterMediaPlayerAudioSpectrumObserver(observer);
+  }
+
+  protected getApiTypeFromSetPlayerOptionInInt(
+    key: string,
+    value: number
+  ): string {
+    return 'MediaPlayer_setPlayerOption';
+  }
+
+  protected getApiTypeFromSetPlayerOptionInString(
+    key: string,
+    value: string
+  ): string {
+    return 'MediaPlayer_setPlayerOption2';
   }
 }
