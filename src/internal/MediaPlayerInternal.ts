@@ -1,11 +1,21 @@
+import { DeviceEventEmitter, EventSubscription } from 'react-native';
+
 import { IMediaPlayerSourceObserver } from '../IAgoraMediaPlayerSource';
 import { ErrorCodeType } from '../AgoraBase';
 import { IAudioSpectrumObserver } from '../AgoraMediaBase';
-import { IMediaPlayerImpl } from '../impl/IAgoraMediaPlayerImpl';
+import {
+  IMediaPlayerImpl,
+  processIMediaPlayerAudioFrameObserver,
+  processIMediaPlayerVideoFrameObserver,
+} from '../impl/IAgoraMediaPlayerImpl';
 import {
   IMediaPlayerAudioFrameObserver,
   IMediaPlayerVideoFrameObserver,
 } from '../IAgoraMediaPlayer';
+import { processIMediaPlayerSourceObserver } from '../impl/IAgoraMediaPlayerSourceImpl';
+import { IMediaPlayerEvent } from '../extension/IAgoraMediaPlayerExtension';
+import { processIAudioSpectrumObserver } from '../impl/AgoraMediaBaseImpl';
+import { EVENT_TYPE } from './IrisApiEngine';
 
 export class MediaPlayerInternal extends IMediaPlayerImpl {
   static _source_observers: Map<number, IMediaPlayerSourceObserver[]> = new Map<
@@ -19,10 +29,66 @@ export class MediaPlayerInternal extends IMediaPlayerImpl {
   static _audio_spectrum_observers: Map<number, IAudioSpectrumObserver[]> =
     new Map<number, IAudioSpectrumObserver[]>();
   private readonly _mediaPlayerId: number;
+  private _events: Map<
+    any,
+    { eventType: string; listener: (...args: any[]) => any }
+  > = new Map<any, { eventType: string; listener: (...args: any[]) => any }>();
 
   constructor(mediaPlayerId: number) {
     super();
     this._mediaPlayerId = mediaPlayerId;
+  }
+
+  addListener<EventType extends keyof IMediaPlayerEvent>(
+    eventType: EventType,
+    listener: IMediaPlayerEvent[EventType]
+  ): EventSubscription {
+    const callback = (...data: any[]) => {
+      if (data[0] !== EVENT_TYPE.IMediaPlayer) {
+        return;
+      }
+      if (data[1].playerId === this._mediaPlayerId) {
+        processIMediaPlayerSourceObserver(
+          { [eventType]: listener },
+          eventType,
+          data[1]
+        );
+        processIMediaPlayerAudioFrameObserver(
+          { [eventType]: listener },
+          eventType,
+          data[1]
+        );
+        processIMediaPlayerVideoFrameObserver(
+          { [eventType]: listener },
+          eventType,
+          data[1]
+        );
+        processIAudioSpectrumObserver(
+          { [eventType]: listener },
+          eventType,
+          data[1]
+        );
+      }
+    };
+    this._events.set(listener, { eventType, listener: callback });
+    return DeviceEventEmitter.addListener(eventType, callback);
+  }
+
+  removeListener<EventType extends keyof IMediaPlayerEvent>(
+    eventType: EventType,
+    listener: IMediaPlayerEvent[EventType]
+  ) {
+    if (!this._events.has(listener)) return;
+    DeviceEventEmitter.removeListener(
+      eventType,
+      this._events.get(listener)!.listener
+    );
+  }
+
+  removeAllListeners<EventType extends keyof IMediaPlayerEvent>(
+    eventType?: EventType
+  ) {
+    DeviceEventEmitter.removeAllListeners(eventType);
   }
 
   getMediaPlayerId(): number {

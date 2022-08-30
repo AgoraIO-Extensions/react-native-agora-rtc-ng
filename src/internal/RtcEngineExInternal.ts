@@ -1,6 +1,8 @@
+import { DeviceEventEmitter, EventSubscription } from 'react-native';
+
 import { IRtcEngineExImpl } from '../impl/IAgoraRtcEngineExImpl';
 import { MediaPlayerInternal } from './MediaPlayerInternal';
-import { callIrisApi } from './IrisApiEngine';
+import { callIrisApi, EVENT_TYPE } from './IrisApiEngine';
 import {
   ChannelMediaOptions,
   DirectCdnStreamingMediaOptions,
@@ -34,6 +36,14 @@ import { ILocalSpatialAudioEngine } from '../IAgoraSpatialAudio';
 import { MediaEngineInternal } from './MediaEngineInternal';
 import { MediaRecorderInternal } from './MediaRecorderInternal';
 import { LocalSpatialAudioEngineInternal } from './LocalSpatialAudioEngineInternal';
+import {
+  processIDirectCdnStreamingEventHandler,
+  processIMetadataObserver,
+  processIRtcEngineEventHandler,
+} from '../impl/IAgoraRtcEngineImpl';
+import { IRtcEngineEvent } from '../extension/IAgoraRtcEngineExtension';
+import { processIAudioEncodedFrameObserver } from '../impl/AgoraBaseImpl';
+import { processIAudioSpectrumObserver } from '../impl/AgoraMediaBaseImpl';
 
 export class RtcEngineExInternal extends IRtcEngineExImpl {
   static _handlers: (
@@ -47,6 +57,10 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
   private _media_recorder: IMediaRecorder = new MediaRecorderInternal();
   private _local_spatial_audio_engine: ILocalSpatialAudioEngine =
     new LocalSpatialAudioEngineInternal();
+  private _events: Map<
+    any,
+    { eventType: string; listener: (...args: any[]) => any }
+  > = new Map<any, { eventType: string; listener: (...args: any[]) => any }>();
 
   initialize(context: RtcEngineContext): number {
     const ret = super.initialize(context);
@@ -67,7 +81,62 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
     MediaPlayerInternal._audio_frame_observers.clear();
     MediaPlayerInternal._video_frame_observers.clear();
     MediaPlayerInternal._audio_spectrum_observers.clear();
+    this._events.forEach((value) => {
+      DeviceEventEmitter.removeListener(value.eventType, value.listener);
+    });
+    this._events.clear();
     super.release(sync);
+  }
+
+  addListener<EventType extends keyof IRtcEngineEvent>(
+    eventType: EventType,
+    listener: IRtcEngineEvent[EventType]
+  ): EventSubscription {
+    const callback = (...data: any[]) => {
+      if (data[0] !== EVENT_TYPE.IRtcEngine) {
+        return;
+      }
+      processIRtcEngineEventHandler(
+        { [eventType]: listener },
+        eventType,
+        data[1]
+      );
+      processIDirectCdnStreamingEventHandler(
+        { [eventType]: listener },
+        eventType,
+        data[1]
+      );
+      processIMetadataObserver({ [eventType]: listener }, eventType, data[1]);
+      processIAudioEncodedFrameObserver(
+        { [eventType]: listener },
+        eventType,
+        data[1]
+      );
+      processIAudioSpectrumObserver(
+        { [eventType]: listener },
+        eventType,
+        data[1]
+      );
+    };
+    this._events.set(listener, { eventType, listener: callback });
+    return DeviceEventEmitter.addListener(eventType, callback);
+  }
+
+  removeListener<EventType extends keyof IRtcEngineEvent>(
+    eventType: EventType,
+    listener: IRtcEngineEvent[EventType]
+  ) {
+    if (!this._events.has(listener)) return;
+    DeviceEventEmitter.removeListener(
+      eventType,
+      this._events.get(listener)!.listener
+    );
+  }
+
+  removeAllListeners<EventType extends keyof IRtcEngineEvent>(
+    eventType?: EventType
+  ) {
+    DeviceEventEmitter.removeAllListeners(eventType);
   }
 
   getVersion(): SDKBuildInfo {
@@ -156,7 +225,7 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
     token: string,
     channelId: string,
     uid: number,
-    options?: ChannelMediaOptions
+    options: ChannelMediaOptions
   ): string {
     return 'RtcEngine_joinChannel2';
   }
