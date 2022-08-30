@@ -173,18 +173,7 @@ export class RtcEngineExInternal extends IRtcEngineExImpl {
 
   destroyMediaPlayer(mediaPlayer: IMediaPlayer): number {
     const ret = super.destroyMediaPlayer(mediaPlayer);
-    MediaPlayerInternal._source_observers.delete(
-      mediaPlayer.getMediaPlayerId()
-    );
-    MediaPlayerInternal._audio_frame_observers.delete(
-      mediaPlayer.getMediaPlayerId()
-    );
-    MediaPlayerInternal._video_frame_observers.delete(
-      mediaPlayer.getMediaPlayerId()
-    );
-    MediaPlayerInternal._audio_spectrum_observers.delete(
-      mediaPlayer.getMediaPlayerId()
-    );
+    mediaPlayer.release?.call(mediaPlayer);
     return ret;
   }
 

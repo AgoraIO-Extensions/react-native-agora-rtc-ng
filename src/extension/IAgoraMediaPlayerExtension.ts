@@ -27,5 +27,7 @@ declare module '../IAgoraMediaPlayer' {
     removeAllListeners?<EventType extends keyof IMediaPlayerEvent>(
       eventType?: EventType
     ): void;
+
+    release?(): void;
   }
 }

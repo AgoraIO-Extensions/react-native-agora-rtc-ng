@@ -39,6 +39,17 @@ export class MediaPlayerInternal extends IMediaPlayerImpl {
     this._mediaPlayerId = mediaPlayerId;
   }
 
+  release() {
+    MediaPlayerInternal._source_observers.delete(this._mediaPlayerId);
+    MediaPlayerInternal._audio_frame_observers.delete(this._mediaPlayerId);
+    MediaPlayerInternal._video_frame_observers.delete(this._mediaPlayerId);
+    MediaPlayerInternal._audio_spectrum_observers.delete(this._mediaPlayerId);
+    this._events.forEach((value) => {
+      DeviceEventEmitter.removeListener(value.eventType, value.listener);
+    });
+    this._events.clear();
+  }
+
   addListener<EventType extends keyof IMediaPlayerEvent>(
     eventType: EventType,
     listener: IMediaPlayerEvent[EventType]
