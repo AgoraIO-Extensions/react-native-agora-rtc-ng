@@ -48,7 +48,7 @@ import {
   IVideoEncodedFrameObserver,
   IVideoFrameObserver,
   VideoFrame,
-} from 'src/AgoraMediaBase';
+} from '../AgoraMediaBase';
 import { IAudioEncodedFrameObserver } from '../AgoraBase';
 import { IMediaPlayerSourceObserver } from '../IAgoraMediaPlayerSource';
 
@@ -79,7 +79,7 @@ export type EventProcessor = {
   suffix: string;
   type: EVENT_TYPE;
   func: Function[];
-  preprocess?: (event: string, data: any, buffers: string[]) => void;
+  preprocess?: (event: string, data: any, buffers: Uint8Array[]) => void;
   handlers: (
     data: any
   ) =>
@@ -114,12 +114,9 @@ export const EVENT_PROCESSORS = {
     suffix: 'AudioFrameObserver_',
     type: EVENT_TYPE.IMediaEngine,
     func: [processIAudioFrameObserver, processIAudioFrameObserverBase],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       if (data.audioFrame) {
-        (data.audioFrame as AudioFrame).buffer = Buffer.from(
-          buffers[0],
-          'base64'
-        );
+        (data.audioFrame as AudioFrame).buffer = buffers[0];
       }
     },
     handlers: () => MediaEngineInternal._audio_frame_observers,
@@ -128,22 +125,13 @@ export const EVENT_PROCESSORS = {
     suffix: 'VideoFrameObserver_',
     type: EVENT_TYPE.IMediaEngine,
     func: [processIVideoFrameObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       if (data.videoFrame) {
-        (data.videoFrame as VideoFrame).yBuffer = Buffer.from(
-          buffers[0],
-          'base64'
-        );
-        (data.videoFrame as VideoFrame).uBuffer = Buffer.from(
-          buffers[1],
-          'base64'
-        );
-        (data.videoFrame as VideoFrame).vBuffer = Buffer.from(
-          buffers[2],
-          'base64'
-        );
-        // (data.videoFrame as VideoFrame).metadata_buffer = Buffer.from(buffers[3], 'base64');
-        // (data.videoFrame as VideoFrame).alphaBuffer = Buffer.from(buffers[4], 'base64');
+        (data.videoFrame as VideoFrame).yBuffer = buffers[0];
+        (data.videoFrame as VideoFrame).uBuffer = buffers[1];
+        (data.videoFrame as VideoFrame).vBuffer = buffers[2];
+        // (data.videoFrame as VideoFrame).metadata_buffer = buffers[3];
+        // (data.videoFrame as VideoFrame).alphaBuffer = buffers[4];
       }
     },
     handlers: () => MediaEngineInternal._video_frame_observers,
@@ -152,9 +140,9 @@ export const EVENT_PROCESSORS = {
     suffix: 'RtcEngine_AudioSpectrumObserver_',
     type: EVENT_TYPE.IRtcEngine,
     func: [processIAudioSpectrumObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       // if (data.data) {
-      //   (data.data as AudioSpectrumData).audioSpectrumData = Buffer.from(buffers[0], 'base64');
+      //   (data.data as AudioSpectrumData).audioSpectrumData = buffers[0];
       // }
     },
     handlers: () => RtcEngineExInternal._audio_spectrum_observers,
@@ -163,9 +151,9 @@ export const EVENT_PROCESSORS = {
     suffix: 'MediaPlayer_AudioSpectrumObserver_',
     type: EVENT_TYPE.IMediaPlayer,
     func: [processIAudioSpectrumObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       // if (data.data) {
-      //   (data.data as AudioSpectrumData).audioSpectrumData = Buffer.from(buffers[0], 'base64');
+      //   (data.data as AudioSpectrumData).audioSpectrumData = buffers[0];
       // }
     },
     handlers: (data: any) =>
@@ -175,12 +163,12 @@ export const EVENT_PROCESSORS = {
     suffix: 'AudioEncodedFrameObserver_',
     type: EVENT_TYPE.IRtcEngine,
     func: [processIAudioEncodedFrameObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       switch (event) {
         case 'OnRecordAudioEncodedFrame':
         case 'OnPlaybackAudioEncodedFrame':
         case 'OnMixedAudioEncodedFrame':
-          (data.frameBuffer as Uint8Array) = Buffer.from(buffers[0], 'base64');
+          (data.frameBuffer as Uint8Array) = buffers[0];
           break;
       }
     },
@@ -188,12 +176,12 @@ export const EVENT_PROCESSORS = {
   },
   IVideoEncodedFrameObserver: {
     suffix: 'VideoEncodedFrameObserver_',
-    func: [processIVideoEncodedFrameObserver],
     type: EVENT_TYPE.IMediaEngine,
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    func: [processIVideoEncodedFrameObserver],
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       switch (event) {
         case 'OnEncodedVideoFrameReceived':
-          (data.imageBuffer as Uint8Array) = Buffer.from(buffers[0], 'base64');
+          (data.imageBuffer as Uint8Array) = buffers[0];
           break;
       }
     },
@@ -210,9 +198,9 @@ export const EVENT_PROCESSORS = {
     suffix: 'MediaPlayerAudioFrameObserver_',
     type: EVENT_TYPE.IMediaPlayer,
     func: [processIMediaPlayerAudioFrameObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       // if (data.frame) {
-      //   (data.frame as AudioPcmFrame).data_ = Buffer.from(buffers[0], 'base64');
+      //   (data.frame as AudioPcmFrame).data_ = buffers[0];
       // }
     },
     handlers: (data: any) =>
@@ -222,19 +210,13 @@ export const EVENT_PROCESSORS = {
     suffix: 'MediaPlayerVideoFrameObserver_',
     type: EVENT_TYPE.IMediaPlayer,
     func: [processIMediaPlayerVideoFrameObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       if (data.frame) {
-        (data.frame as VideoFrame).yBuffer = Buffer.from(buffers[0], 'base64');
-        (data.frame as VideoFrame).uBuffer = Buffer.from(buffers[1], 'base64');
-        (data.frame as VideoFrame).vBuffer = Buffer.from(buffers[2], 'base64');
-        (data.frame as VideoFrame).metadata_buffer = Buffer.from(
-          buffers[3],
-          'base64'
-        );
-        (data.frame as VideoFrame).alphaBuffer = Buffer.from(
-          buffers[4],
-          'base64'
-        );
+        (data.frame as VideoFrame).yBuffer = buffers[0];
+        (data.frame as VideoFrame).uBuffer = buffers[1];
+        (data.frame as VideoFrame).vBuffer = buffers[2];
+        (data.frame as VideoFrame).metadata_buffer = buffers[3];
+        (data.frame as VideoFrame).alphaBuffer = buffers[4];
       }
     },
     handlers: (data: any) =>
@@ -254,14 +236,11 @@ export const EVENT_PROCESSORS = {
     suffix: 'MetadataObserver_',
     type: EVENT_TYPE.IRtcEngine,
     func: [processIMetadataObserver],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       switch (event) {
         case 'onMetadataReceived':
           if (data.metadata) {
-            (data.metadata as Metadata).buffer = Buffer.from(
-              buffers[0],
-              'base64'
-            );
+            (data.metadata as Metadata).buffer = buffers[0];
           }
           break;
       }
@@ -278,11 +257,11 @@ export const EVENT_PROCESSORS = {
     suffix: '',
     type: EVENT_TYPE.IRtcEngine,
     func: [processIRtcEngineEventHandler],
-    preprocess: (event: string, data: any, buffers: string[]) => {
+    preprocess: (event: string, data: any, buffers: Uint8Array[]) => {
       switch (event) {
         case 'onStreamMessage':
         case 'onStreamMessageEx':
-          data.data = Buffer.from(buffers[0], 'base64');
+          data.data = buffers[0];
           break;
       }
     },
@@ -312,7 +291,9 @@ function handleEvent(args: any) {
   } catch (e) {
     _data = {};
   }
-  const buffers: string[] = args.buffers;
+  const buffers: Uint8Array[] = (args.buffers as string[])?.map((value) => {
+    return Buffer.from(value, 'base64');
+  });
 
   if (_event.endsWith('Ex')) {
     _event = _event.replace('Ex', '');
