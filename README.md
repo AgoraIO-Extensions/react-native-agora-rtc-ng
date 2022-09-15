@@ -1,3 +1,7 @@
+## This repo is archived ⚠️⚠️⚠️
+
+please go to https://github.com/AgoraIO-Extensions/react-native-agora
+
 # react-native-agora
 
 [![npm](https://img.shields.io/npm/v/react-native-agora.svg)](https://www.npmjs.com/package/react-native-agora)
